@@ -1,0 +1,1 @@
+//TODO example readme depends on this hacktoberfest issue https://github.com/asyncapi/nodejs-template/issues/4
