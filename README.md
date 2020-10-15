@@ -88,7 +88,7 @@ npm install -g @asyncapi/generator
 
 The most straightforward command to use this Template is:
 ```bash
-ag https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
+ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
 For local development, you need different variations of this command. First of all, you need to know about there important CLI flags:
@@ -100,13 +100,13 @@ There are two ways you can work on template development:
 - Use global Generator and Template from your local sources:
   ```bash
   # assumption is that you run this command from the root of your Template
-  ag https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml ./ -o output
+  ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml ./ -o output
   ```
 - Use Generator from sources and Template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
   ```bash
   # assumption is that you run this command from the root of your Template
   # assumption is that generator sources are cloned on the same level as the Template
-  ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml ./ -o output
+  ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml ./ -o output
   ```
 
 # Learning Resources
@@ -124,7 +124,7 @@ To run templates, you need to [install](https://github.com/asyncapi/generator/#i
 
 ```bash
 # This repo has a special AsyncAPI example with complex schema dependencies to get a more complex Mermaid diagram as a sample
-ag https://raw.githubusercontent.com/asyncapi/generator/master/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
+ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 open output/index.html
 ```
 
