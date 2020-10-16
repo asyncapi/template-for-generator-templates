@@ -67,7 +67,7 @@ filter.generateMermaidDiagram = generateMermaidDiagram;
  * @param {Function} callback
  */
 function isAnonymousSchema(schemaId) {
-  return schemaId.startsWith('<');
+  return schemaId.startsWith('<anonymous-');
 }
 
 /**
