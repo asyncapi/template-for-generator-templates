@@ -13,6 +13,7 @@ https://github.com/asyncapi/parser-js/issues #}
             and how it works in a for loop #}
             {% for schema in asyncapi.components().schemas() | dictsort %}
                 {# Declare variables for values that you use more than once, just like you do with regular code #}
+                {# We access schema name like schema[0] instead of schema.uid() because dictsort to perform sorting returns an array of arrays from recived object. Such an array has schema name on first element and schema on the second one, so you could also do schema[1].uid() #}
                 {% set schemaName = schema[0] %}
                 <li> <a href="schemas/{{ schemaName }}-example.html">{{ schemaName }}</a></li>
             {% endfor %}

@@ -186,9 +186,11 @@ Important things to notice:
 
 ### Hooks
 
+Hooks are functions called by the generator on a specific moment in the generation process. For more details, read about [hooks](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#hooks).
+
 #### Custom Template Hooks
 
-Check out  [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to see an example of the hook. It is a hook that is invoked by the Generator after the template generation process is completed. Generator passes its context to hooks, which means you have access to data like `targetDir` that is a path to the directory where Template is generated, or `templateParams` with information about custom parameters passed by the user. This example hook provides optional features to the Template, like PNG/PDF/SVG generation, that the user decides on with custom parameters. That is not the only use case for the hook. There are more use cases like, for example, template cleanup operations after generation or modifications of the AsyncAPI document right before the generation.
+Check out [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to see an example of the hook. It is a hook that is invoked by the Generator after the template generation process is completed. Generator passes its context to hooks, which means you have access to data like `targetDir` that is a path to the directory where Template is generated, or `templateParams` with information about custom parameters passed by the user. This example hook provides optional features to the Template, like PNG/PDF/SVG generation, that the user decides on with custom parameters. That is not the only use case for the hook. There are more use cases like, for example, template cleanup operations after generation or modifications of the AsyncAPI document right before the generation.
 
 Important things to notice:
 - Hooks, like in the case of the filter, is a regular JavaScript function that can have its dependencies like `const puppeteer = require('puppeteer');` that you need to add to your `package.json` file.
@@ -423,7 +425,7 @@ This macro is used in the [template/index.html](template/index.html) file:
 
 ### File Templates
 
-The Generator has a feature called `file templates` that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
 - `schema` that is a Schema object map
 - `schemaName` that is the name of the schema
 
