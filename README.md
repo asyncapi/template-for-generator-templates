@@ -49,6 +49,7 @@ Generator knows what to generate because you supplement it with a generator temp
       - [filters](#filters)
       - [hooks](#hooks)
   * [Handling Circular References](#handling-circular-references)
+  * [Documenting The Template](#documenting-the-template)
   * [(Optional) Tests For Each Feature Of The Template](#optional-tests-for-each-feature-of-the-template)
   * [(Optional) Release Pipeline Based On GitHub Actions And Conventional Commits Specification](#optional-release-pipeline-based-on-github-actions-and-conventional-commits-specification)
   * [(Optional) Quality Assurance](#optional-quality-assurance)
@@ -556,6 +557,10 @@ recursiveSchema(propertySchema, callback, prop);
 ```
 
 The great thing is that if you are at an early stage of template development and do not have time to handle circular references, you can easily spot that given AsyncAPI document contains circular references. You just call this `asyncapi.hasCircular()` and drop a proper error message to the user. It is always better than `RangeError: Maximum call stack size exceeded`.
+
+## Documenting The Template
+
+[This](_README.md) is a sample readme provided for this template that others should also use as a template for other readmes.
 
 ## (Optional) Tests For Each Feature Of The Template
 
