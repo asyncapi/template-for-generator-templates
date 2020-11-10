@@ -1,6 +1,6 @@
 const parser = require('@asyncapi/parser');
 const { generateMermaidDiagram } = require('../../filters/mermaidDiagram.js');
-const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml';
+const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml';
 
 describe('generateMermaidDiagram()', () => {
   it('generates correct diagram', async () => {

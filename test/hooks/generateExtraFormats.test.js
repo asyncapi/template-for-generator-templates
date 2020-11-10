@@ -3,7 +3,7 @@ const { readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('@asyncapi/generator');
 const { 'generate:after': generatePdfPngSvg } = require('../../hooks/generateExtraFormats.js');
-const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.12/test/docs/dummy.yml';
+const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml';
 
 describe('generateExtraFormats()', () => {
   //you always want to generate to new directory to make sure test runs in clear environment
