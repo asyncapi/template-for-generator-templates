@@ -92,7 +92,7 @@ The most straightforward command to use this Template is:
 ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
-For local development, you need different variations of this command. First of all, you need to know about there important CLI flags:
+For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
 - `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler, 
 - `--watch-template` enables a watcher of changes that you make in the Template. It regenerates your Template whenever it detects a change,
 - `--install` enforces reinstallation of the Template

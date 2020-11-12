@@ -24,7 +24,7 @@ The good readme should be easy to navigate through, therefore remember to add `m
 The overview should explain in just a few sentences the template's purpose and its most essential features.
 -->
 
-This template generates an HTML page with an overview of the data model provided in your AsyncAPI file. Its core part is the diagram showing relations between the data model. Except for HTML, you can also generate PDFs from the HTML page or get the diagram into a separate PNG and SVG.
+This template generates an HTML page with an overview of the data model provided in your AsyncAPI file. Its core part is the diagram showing relations between the data model. Except for HTML, you can also generate a PDF file from the HTML page or get the diagram into a separate PNG and SVG.
 
 
 ## Technical requirements
@@ -92,9 +92,9 @@ You can configure this template by passing different parameters in the Generator
 Name | Description | Required | Default | Allowed Values | Example
 ---|---|---|---|---|---
 asyncapiFileDir | Custom location of the AsyncAPI file that you provided as an input in a generation. | No | The root of the output directory. | Path to the custom directory relative to the root of output directory provided as a string. | `/custom/dir`
-pdf | Generate PDF from initially generated HTML file. | No | `false` | `true`/`false` | `true`
-png | Generate PNG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
-svg | Generate SVG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
+pdf | Generates PDF from initially generated HTML file. | No | `false` | `true`/`false` | `true`
+png | Generates PNG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
+svg | Generates SVG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
 maxTextSize | It is possible that if an AsyncAPI document is extremely large, the default mermaid recommended text size will not be enough. In such a case, you need to configure it explicitly. | No | `50000` |  A number higher than 50000 | `70000`
 
 ## Custom hooks that you can disable
@@ -116,26 +116,26 @@ generate:after | createAsyncapiFile | It creates AsyncAPI file with content of t
 This section will look the same everywhere, just make sure it references your template.
 -->
 
-The most straightforward command to use this Template is:
+The most straightforward command to use this template is:
 ```bash
 ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
 For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
 - `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler. 
-- `--watch-template` enables a watcher of changes that you make in the Template. It regenerates your Template whenever it detects a change.
-- `--install` enforces reinstallation of the Template.
+- `--watch-template` enables a watcher of changes that you make in the template. It regenerates your template whenever it detects a change.
+- `--install` enforces reinstallation of the template.
 
 There are two ways you can work on template development:
-- Use global Generator and Template from your local sources:
+- Use global Generator and template from your local sources:
   ```bash
-  # assumption is that you run this command from the root of your Template
+  # assumption is that you run this command from the root of your template
   ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml ./ -o output
   ```
-- Use Generator from sources and Template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
+- Use Generator from sources and template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
   ```bash
-  # assumption is that you run this command from the root of your Template
-  # assumption is that generator sources are cloned on the same level as the Template
+  # assumption is that you run this command from the root of your template
+  # assumption is that generator sources are cloned on the same level as the template
   ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml ./ -o output
   ```
 
