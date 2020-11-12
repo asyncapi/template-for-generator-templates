@@ -103,7 +103,7 @@ maxTextSize | It is possible that if an AsyncAPI document is extremely large, th
 Document hooks that users can disable and template will still work as expected. Remember that a specific hook can be disabled only if it has a name. In other words, make sure your hook functions are not anonymous.
 -->
 
-The functionality of this template is extended with different hooks that you can disable like this in the Generator CLI: `-d HOOK_TYPE1=HOOK_NAME1 -d HOOK_TYPE1=HOOK_NAME2 -d HOOK_TYPE2`
+The functionality of this template is extended with different hooks that you can disable like this in the Generator CLI: `-d HOOK_TYPE1=HOOK_NAME1,HOOK_NAME2 -d HOOK_TYPE2`
 
 
 Type | Name | Description
