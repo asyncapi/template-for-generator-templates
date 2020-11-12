@@ -24,7 +24,8 @@ The good readme should be easy to navigate through, therefore remember to add `m
 The overview should explain in just a few sentences the template's purpose and its most essential features.
 -->
 
-This template generates an HTML page with an overview of the data model provided in your AsyncAPI file. Its core part is the diagram showing relations between the data model. Except for the HTML, you can also generate PDF from the HTML page or get the diagram into a separate PNG and SVG.
+This template generates an HTML page with an overview of the data model provided in your AsyncAPI file. Its core part is the diagram showing relations between the data model. Except for HTML, you can also generate PDFs from the HTML page or get the diagram into a separate PNG and SVG.
+
 
 ## Technical requirements
 
@@ -41,7 +42,7 @@ Specify what version of the Generator is your template compatible with. This inf
 The template might need some AsyncAPI properties that normally are optional. For example code generator might require some specific binding information for a given protocol. Even though you can provide defaults or fallbacks, you should describe in the readme what is the most optimal set of properties that the user should provide in the AsyncAPI file.
 -->
 
-Below table contains information about what parts of the specification are required by this template so it generates proper output.
+The table contains information on parts of the specification required by this template to generate the proper output.
 
 Property name | Reason | Fallback | Default
 ---|---|---|---
@@ -53,7 +54,7 @@ Property name | Reason | Fallback | Default
 Specify what protocols is your code generator supporting. This information should match the information provided in the template configuration under the `supportedProtocols` property. Don't put this section in your readme if your template doesn't generate code.
 -->
 
-_This template doesn't generate code and therefore is not limited to any specific protocols_
+_This template doesn't generate code and therefore is not limited to any specific protocols._
 
 ## How to use the template
 
@@ -61,7 +62,7 @@ _This template doesn't generate code and therefore is not limited to any specifi
 Make sure it is easy to try out the template and check what it generates. Instructions for CLI and Docker should be easy to use; just copy/paste to the terminal. In other words, you should always make sure to have ready to use docker-compose set up so the user can quickly check how generated code behaves.
 -->
 
-This template must be used with the AsyncAPI Generator. All available options on how to generate output are available [here](https://github.com/asyncapi/generator/).
+This template must be used with the AsyncAPI Generator. You can find all available options [here](https://github.com/asyncapi/generator/).
 
 ### CLI
 
@@ -85,16 +86,16 @@ asyncapi/generator -o /app/output https://raw.githubusercontent.com/asyncapi/gen
 This information should match the information provided in the template configuration under the `parameters` property.
 -->
 
-You can configure this template using different parameters. You pass them like this in the Generator CLI: `-p PARAM1_NAME=PARAM1_VALUE -p PARAM2_NAME=PARAM2_VALUE`
+You can configure this template by passing different parameters in the Generator CLI: `-p PARAM1_NAME=PARAM1_VALUE -p PARAM2_NAME=PARAM2_VALUE`
 
 
 Name | Description | Required | Default | Allowed Values | Example
 ---|---|---|---|---|---
-asyncapiFileDir | Custom location of the AsyncAPI file that you provided as an input in a generation. | No | The root of the output directory. | Path to the custom directory relative to the root of output directory provided as a string | `/custom/dir`
-pdf | Generate PDF from initially generated HTML file | No | `false` | `true`/`false` | `true`
+asyncapiFileDir | Custom location of the AsyncAPI file that you provided as an input in a generation. | No | The root of the output directory. | Path to the custom directory relative to the root of output directory provided as a string. | `/custom/dir`
+pdf | Generate PDF from initially generated HTML file. | No | `false` | `true`/`false` | `true`
 png | Generate PNG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
 svg | Generate SVG with a schemas relations diagram. | No | `false` | `true`/`false` | `true`
-maxTextSize | It is possible that in case of an extremely large AsyncAPI document default mermaid recommended text size will not be enough. Then you need to make it larger explicitly. | No | `50000` |  Number higher than 50000 | `70000`
+maxTextSize | It is possible that if an AsyncAPI document is extremely large, the default mermaid recommended text size will not be enough. In such a case, you need to configure it explicitly. | No | `50000` |  A number higher than 50000 | `70000`
 
 ## Custom hooks that you can disable
 
@@ -102,7 +103,7 @@ maxTextSize | It is possible that in case of an extremely large AsyncAPI documen
 Document hooks that users can disable and template will still work as expected. Remember that a specific hook can be disabled only if it has a name. In other words, make sure your hook functions are not anonymous.
 -->
 
-Functionality of this template is extended with different hooks that you can disable. You disable them like this in the Generator CLI: `-d HOOK_TYPE1=HOOK_NAME1 -d HOOK_TYPE1=HOOK_NAME2 -d HOOK_TYPE2`
+The functionality of this template is extended with different hooks that you can disable like this in the Generator CLI: `-d HOOK_TYPE1=HOOK_NAME1 -d HOOK_TYPE1=HOOK_NAME2 -d HOOK_TYPE2`
 
 
 Type | Name | Description
@@ -120,10 +121,10 @@ The most straightforward command to use this Template is:
 ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
-For local development, you need different variations of this command. First of all, you need to know about there important CLI flags:
-- `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler, 
-- `--watch-template` enables a watcher of changes that you make in the Template. It regenerates your Template whenever it detects a change,
-- `--install` enforces reinstallation of the Template
+For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
+- `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler. 
+- `--watch-template` enables a watcher of changes that you make in the Template. It regenerates your Template whenever it detects a change.
+- `--install` enforces reinstallation of the Template.
 
 There are two ways you can work on template development:
 - Use global Generator and Template from your local sources:
