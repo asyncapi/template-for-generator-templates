@@ -2,7 +2,7 @@
   <br>
   <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
   <br>
-  WIP - Template for Generator Templates
+  Template for Generator Templates
 </h5>
 <p align="center">
   <em>This repository is a template for generator templates to make it much easier to start writing your own generator template.</em>
@@ -54,6 +54,7 @@ Generator knows what to generate because you supplement it with a generator temp
   * [(Optional) Release Pipeline Based On GitHub Actions And Conventional Commits Specification](#optional-release-pipeline-based-on-github-actions-and-conventional-commits-specification)
   * [(Optional) Quality Assurance](#optional-quality-assurance)
   * [What About The `package.json` and `package-lock.json` Files](#what-about-the-packagejson-and-package-lockjson-files)
+- [Contributors](#contributors)
 
 <!-- tocstop -->
 
@@ -622,3 +623,24 @@ You should also remove the `lint` script from the `scripts` section of the `pack
 The `package.json` is the central part of the Template. You cannot remove it. You can only modify it by following instructions from previous sections.
 
 Whenever you make a change to `package.json` make sure you perform an update with `npm install` to synchronize with `package-lock.json` and validate if the file is not broken after your changes
+
+# Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://dev.to/derberg"><img src="https://avatars1.githubusercontent.com/u/6995927?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lukasz Gornicki</b></sub></a><br /><a href="https://github.com/asyncapi/Template for Generator Templates/commits?author=derberg" title="Code">💻</a> <a href="https://github.com/asyncapi/Template for Generator Templates/commits?author=derberg" title="Documentation">📖</a> <a href="#design-derberg" title="Design">🎨</a> <a href="#ideas-derberg" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-derberg" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/bszwarc"><img src="https://avatars1.githubusercontent.com/u/17266942?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Barbara Szwarc</b></sub></a><br /><a href="https://github.com/asyncapi/Template for Generator Templates/pulls?q=is%3Apr+reviewed-by%3Abszwarc" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
