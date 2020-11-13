@@ -1,0 +1,22 @@
+{% macro listChannels(channels, operationType) %}
+<h2>
+  Channels that you can {{ operationType }} to
+</h2>
+<hr />
+<br />
+<div class="container mx-auto px-8">
+  <ul class="list-disc"></ul>
+    {% for channelName, channel in channels %}
+      {% if operationType === 'publish' %} 
+          {% if channel.hasPublish() %} 
+              <li><strong>{{ channelName }}</strong></li>
+          {% endif %}
+      {% elif operationType === 'subscribe' %}
+          {% if channel.hasSubscribe() %} 
+              <li><strong>{{ channelName }}</strong></li>
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endmacro %}

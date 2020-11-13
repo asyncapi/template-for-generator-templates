@@ -1,0 +1,33 @@
+{# Notice how to specify multiple conditions with "and" instead of "&&" 
+Notice how it is checked if schemas are provided "asyncapi.components().schemas()". It is risky because
+schemas object can still be empty. It would be better if something like this would be possible "asyncapi.components().hasSchemas()"
+Always when you see something useful could be added to the API of parsed AsyncAPI document, please create an issue 
+https://github.com/asyncapi/parser-js/issues #}
+{% if asyncapi.hasComponents() and asyncapi.components().schemas() %}
+    <h2>Schemas</h2>
+    <hr>
+    You have the following schemas named in components section:
+    <div class="container mx-auto px-8">
+        <ul class="list-disc">
+           {# Usage of build-in "dictsort" Nunjucks filter for sorting items alphabetically 
+            and how it works in a for loop #}
+            {% for schema in asyncapi.components().schemas() | dictsort %}
+                {# Declare variables for values that you use more than once, just like you do with regular code #}
+                {# We access schema name like schema[0] instead of schema.uid() because dictsort to perform sorting returns an array of arrays from recived object. Such an array has schema name on first element and schema on the second one, so you could also do schema[1].uid() #}
+                {% set schemaName = schema[0] %}
+                <li> <a href="schemas/{{ schemaName }}-example.html">{{ schemaName }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {# Usage of template custom filter #}
+    <div class="mermaid">
+        {{ asyncapi | generateMermaidDiagram }}
+    </div>
+{% else %}
+    You have no schemas in components sections. It most probably means that you have them directly under payload without using references. 
+    This is not a good practice because this way you cannot name your schemas, and we cannot generate a nice meaningfull diagram for you basing on schemas with anonymous name.
+    <br><br>
+    Sorry about that. Come back to us once you restructure your document.
+    <br><br>
+    <img src="sample.gif" alt="no go gif" width="200" height="200">
+{% endif %}

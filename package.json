@@ -1,0 +1,112 @@
+{
+  "name": "template-for-generator-templates",
+  "version": "0.0.1",
+  "description": "Template for generator templates to make it much easier to start writing your own generator template",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "release": "semantic-release",
+    "get-version": "echo $npm_package_version",
+    "gen-readme-toc": "markdown-toc -i README.md",
+    "lint": "eslint --max-warnings 0 --fix --config .eslintrc ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncapi/template-for-generator-templates.git"
+  },
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "template"
+  ],
+  "author": "Lukasz Gornicki <lpgornicki@gmail.com> (https://github.com/derberg/)",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/asyncapi/template-for-generator-templates/issues"
+  },
+  "homepage": "https://github.com/asyncapi/template-for-generator-templates#readme",
+  "dependencies": {
+    "@asyncapi/generator-filters": "^1.1.0",
+    "@asyncapi/generator-hooks": "^0.1.0",
+    "puppeteer": "^5.2.1"
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
+  "generator": {
+    "parameters": {
+      "asyncapiFileDir": {
+        "description": "Custom location of the AsyncAPI file that you provided as an input in generation. By default it is located in the root of the output directory"
+      },
+      "pdf": {
+        "description": "Set to `true` to get index.pdf generated next to your index.html",
+        "default": false
+      },
+      "png": {
+        "description": "Set to `true` to get index.png generated next to your index.html",
+        "default": false
+      },
+      "svg": {
+        "description": "Set to `true` to get index.svg generated next to your index.html",
+        "default": false
+      },
+      "maxTextSize": {
+        "description": "It is possible that in case of an extremely large AsyncAPI document default mermaid recommended text size will not be enough. Then you need to explicitly make it larger",
+        "default": 50000
+      }
+    },
+    "nonRenderableFiles": [
+      "sample.gif"
+    ],
+    "generator": ">=0.50.0 <2.0.0",
+    "filters": [
+      "@asyncapi/generator-filters"
+    ],
+    "hooks": {
+      "@asyncapi/generator-hooks": "createAsyncapiFile"
+    }
+  },
+  "devDependencies": {
+    "@asyncapi/generator": "^1.0.1",
+    "@asyncapi/parser": "^1.1.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/github": "^7.0.7",
+    "@semantic-release/npm": "^7.0.5",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "conventional-changelog-conventionalcommits": "^4.4.0",
+    "eslint": "^7.7.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jest": "^26.4.2",
+    "markdown-toc": "^1.2.0",
+    "semantic-release": "^17.1.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "{filters,hooks}/**/*.js",
+      "!hooks/generateExtraFormats.js"
+    ]
+  }
+}

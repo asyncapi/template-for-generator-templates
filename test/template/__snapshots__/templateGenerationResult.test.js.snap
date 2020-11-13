@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateExtraFormats() generated correct index.html with diagram source 1`] = `
+"
+
+
+
+
+
+<!DOCTYPE html>
+<html lang=\\"en\\">
+
+<head>
+    <meta charset=\\"utf-8\\">
+    <link href=\\"https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css\\" rel=\\"stylesheet\\">
+    <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"style.css\\">
+</head>
+
+<body>
+    <div class=\\"container mx-auto px-4\\">        
+        <p> 
+            
+            <h1>Dummy example with all spec features included</h1>
+            
+            
+<h2>
+  Channels that you can subscribe to
+</h2>
+<hr />
+<br />
+<div class=\\"container mx-auto px-8\\">
+  <ul class=\\"list-disc\\"></ul>
+    
+      
+          
+      
+    
+      
+           
+              <li><strong>dummy/channel/without/parameter</strong></li>
+          
+      
+    
+  </ul>
+</div>
+
+            
+<h2>
+  Channels that you can publish to
+</h2>
+<hr />
+<br />
+<div class=\\"container mx-auto px-8\\">
+  <ul class=\\"list-disc\\"></ul>
+    
+       
+           
+              <li><strong>dummy/channel/with/{dummy}/parameter/create</strong></li>
+          
+      
+    
+       
+          
+      
+    
+  </ul>
+</div>
+
+            
+            
+
+    <h2>Schemas</h2>
+    <hr>
+    You have the following schemas named in components section:
+    <div class=\\"container mx-auto px-8\\">
+        <ul class=\\"list-disc\\">
+           
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyArrayWithArray-example.html\\">dummyArrayWithArray</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyArrayWithObject-example.html\\">dummyArrayWithObject</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyCreated-example.html\\">dummyCreated</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyInfo-example.html\\">dummyInfo</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyObject-example.html\\">dummyObject</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyRecursiveObject-example.html\\">dummyRecursiveObject</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/sentAt-example.html\\">sentAt</a></li>
+            
+        </ul>
+    </div>
+    
+    <div class=\\"mermaid\\">
+        classDiagram
+class dummyCreated {
+          prop1 integer
+prop2 string
+sentAt string
+dummyArrayWithObject array
+dummyArrayWithArray array
+dummyObject object
+}
+          dummyCreated --|&gt; sentAt
+dummyCreated --|&gt; dummyArrayWithObject
+dummyCreated --|&gt; dummyArrayWithArray
+dummyCreated --|&gt; dummyObject
+
+class sentAt {
+          string}
+          
+class dummyArrayWithObject {
+          array}
+          dummyArrayWithObject --|&gt; dummyInfo
+
+class dummyInfo {
+          prop1 string
+sentAt string
+}
+          dummyInfo --|&gt; sentAt
+
+class dummyObject {
+          dummyObjectProp1 string
+dummyObjectProp2 [CIRCULAR] object
+}
+          dummyObject --|&gt; sentAt
+dummyObject --|&gt; dummyRecursiveObject
+
+class dummyRecursiveObject {
+          dummyRecursiveProp1 [CIRCULAR] object
+dummyRecursiveProp2 string
+}
+          dummyRecursiveObject --|&gt; dummyObject
+
+
+    </div>
+
+            
+            Share your feedback with us on <a href=\\"http://twitter.com/@AsyncAPISpec\\">Twitter</a>. 
+            
+                
+                Don't forget to visit our website <a href=\\"https://www.asyncapi.com\\">https://www.asyncapi.com</a>.
+            
+        </p> 
+    </div>
+    <script src=\\"https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js\\"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            /*
+             * You can access \\"maxTextSide\\" parameter value without any conditions in case user did not provide such a parameter. 
+             * It is possible thanks to the functionality that makes it possuble for template developer to specify default values for parameters.
+             * Check out package.json file and look for generator.parameters.maxTextSize and its description and default value.
+             */
+            maxTextSize: 50000
+        });
+    </script>
+</body>
+
+</html>"
+`;
