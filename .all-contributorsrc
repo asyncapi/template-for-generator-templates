@@ -1,0 +1,38 @@
+{
+  "projectName": "Template for Generator Templates",
+  "projectOwner": "asyncapi",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "derberg",
+      "name": "Lukasz Gornicki",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6995927?v=4",
+      "profile": "https://dev.to/derberg",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "bszwarc",
+      "name": "Barbara Szwarc",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/17266942?v=4",
+      "profile": "https://github.com/bszwarc",
+      "contributions": [
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 3,
+  "skipCi": true
+}
