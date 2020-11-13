@@ -79,7 +79,12 @@ exports[`generateExtraFormats() generated correct index.html with diagram source
                 
                 
                 
-                <li> <a href=\\"schemas/dummyArray-example.html\\">dummyArray</a></li>
+                <li> <a href=\\"schemas/dummyArrayWithArray-example.html\\">dummyArrayWithArray</a></li>
+            
+                
+                
+                
+                <li> <a href=\\"schemas/dummyArrayWithObject-example.html\\">dummyArrayWithObject</a></li>
             
                 
                 
@@ -115,19 +120,21 @@ class dummyCreated {
           prop1 integer
 prop2 string
 sentAt string
-dummyArray array
+dummyArrayWithObject array
+dummyArrayWithArray array
 dummyObject object
 }
           dummyCreated --|&gt; sentAt
-dummyCreated --|&gt; dummyArray
+dummyCreated --|&gt; dummyArrayWithObject
+dummyCreated --|&gt; dummyArrayWithArray
 dummyCreated --|&gt; dummyObject
 
 class sentAt {
           string}
           
-class dummyArray {
+class dummyArrayWithObject {
           array}
-          dummyArray --|&gt; dummyInfo
+          dummyArrayWithObject --|&gt; dummyInfo
 
 class dummyInfo {
           prop1 string

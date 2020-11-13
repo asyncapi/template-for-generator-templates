@@ -35,9 +35,11 @@ function generateMermaidDiagram(asyncapi) {
         if (!isAnonymousSchema(propSchemaId)) relations += `${schemaId} --|> ${propSchemaId}\n`;
       }
       break;
-      //in case of array we only want to indicate the type of the array items
+      //in case of array we only want to indicate the type of the array items. So far support for object in items is supported
     case 'array':
       classContent = schema.type();
+      if (Array.isArray(schema.items())) return;
+      
       const itemSchemaId = schema.items().uid();
       if (!isAnonymousSchema(itemSchemaId)) relations += `${schema.uid()} --|> ${itemSchemaId}\n`;
       break;

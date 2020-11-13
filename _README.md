@@ -68,7 +68,7 @@ This template must be used with the AsyncAPI Generator. You can find all availab
 
 ```bash
 npm install -g @asyncapi/generator
-ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
+ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 open output/index.html
 ```
 
@@ -77,7 +77,7 @@ open output/index.html
 ```bash
 docker run --rm -it \
 -v ${PWD}/output:/app/output \
-asyncapi/generator -o /app/output https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml @asyncapi/markdown-template --force-write
+asyncapi/generator -o /app/output https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml @asyncapi/markdown-template --force-write
 ```
 
 ## Template configuration
@@ -118,7 +118,7 @@ This section will look the same everywhere, just make sure it references your te
 
 The most straightforward command to use this template is:
 ```bash
-ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
+ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
 For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
@@ -130,13 +130,13 @@ There are two ways you can work on template development:
 - Use global Generator and template from your local sources:
   ```bash
   # assumption is that you run this command from the root of your template
-  ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml ./ -o output
+  ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml ./ -o output
   ```
 - Use Generator from sources and template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
   ```bash
   # assumption is that you run this command from the root of your template
   # assumption is that generator sources are cloned on the same level as the template
-  ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/v1.0.0-rc.15/test/docs/dummy.yml ./ -o output
+  ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml ./ -o output
   ```
 
 ## Contributors
