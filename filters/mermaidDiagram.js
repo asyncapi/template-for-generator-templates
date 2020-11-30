@@ -1,5 +1,4 @@
 const filter = module.exports;
-const OPERATIONS = ['publish', 'subscribe'];
 
 /* eslint-disable sonarjs/cognitive-complexity */
 /**
@@ -55,8 +54,7 @@ function generateMermaidDiagram(asyncapi) {
     }
     seenSchema.push(schemaId);
   };
-
-  traversePayloadSchemas(asyncapi, generateDiagram);
+  asyncapi.traverseSchemas(generateDiagram);
   return diagram ? `classDiagram\n${  diagram}` : '';
 };
 filter.generateMermaidDiagram = generateMermaidDiagram;
@@ -70,108 +68,4 @@ filter.generateMermaidDiagram = generateMermaidDiagram;
  */
 function isAnonymousSchema(schemaId) {
   return schemaId.startsWith('<anonymous-');
-}
-
-/**
- * Find all schemas from payloads provided directly under a message and execute callback
- * 
- * @private
- * @param {AsyncAPIDocument} asyncapi parsed AsyncAPI document 
- * @param {Function} callback
- */
-function traversePayloadSchemas(asyncapi, callback) {
-  if (asyncapi.hasChannels()) {
-    asyncapi.channelNames().forEach(channelName => {
-      const channel = asyncapi.channel(channelName);
-
-      OPERATIONS.map((opName) => {
-        const op = channel[opName]();
-        if (!op) return;
-        
-        op.messages().forEach(m => {
-          recursiveSchema(m.payload(), callback);
-        });
-      });
-    });
-  }
-}
-
-/**
- * Recursively go through each schema and execute callback.
- * 
- * @param {Schema} schema found.
- * @param {Function} callback(schema)
- *         the function that is called foreach schema found.
- *         schema {Schema}: the found schema.
- * @param {String} propName name of the property owning the schema.
- */
-function recursiveSchema(schema, callback, propName) {
-  if (schema === null) return;
-  callback(schema);
-
-  if (schema.type() !== undefined) {
-    switch (schema.type()) {
-    case 'object':
-      recursiveSchemaObject(schema, callback, propName);
-      break;
-    case 'array':
-      recursiveSchemaArray(schema, callback);
-      break;
-    }
-  } else {
-    //check for allOf, oneOf, anyOf
-    const checkCombiningSchemas = (combineArray) => {
-      if (combineArray !== null && combineArray.length > 0) {
-        combineArray.forEach(combineSchema => {
-          recursiveSchema(combineSchema, callback); ;
-        });
-      }
-    };
-    checkCombiningSchemas(schema.allOf());
-    checkCombiningSchemas(schema.anyOf());
-    checkCombiningSchemas(schema.oneOf());
-  }
-}
-
-/**
- * Traverse through the schema model of object type
- * 
- * @private
- * @param {Schema} schema schema model
- * @param {Function} callback
- */
-function recursiveSchemaObject(schema, callback, propName) {
-  if (schema.additionalProperties() !== undefined && typeof schema.additionalProperties() !== 'boolean') {
-    const additionalSchema = schema.additionalProperties();
-    recursiveSchema(additionalSchema, callback);
-  }
-  if (schema.properties() !== null) {
-    const props = schema.properties();
-    for (const [prop, propertySchema] of Object.entries(props)) {
-      if (propertySchema.circularProps() && propertySchema.circularProps().includes(propName)) return;
-      recursiveSchema(propertySchema, callback, prop);
-    }
-  }
-}
-
-/**
- * Traverse through the schema model of array type
- * 
- * @private
- * @param {Schema} schema schema model
- * @param {Function} callback
- */
-function recursiveSchemaArray(schema, callback) {
-  if (schema.additionalItems() !== undefined) {
-    const additionalArrayItems = schema.additionalItems();
-    recursiveSchema(additionalArrayItems, callback);
-  }
-  
-  if (schema.items() !== null) {
-    if (Array.isArray(schema.items())) {
-      schema.items().forEach(arraySchema => {
-        recursiveSchema(arraySchema, callback);
-      });
-    } else recursiveSchema(schema.items(), callback);
-  }
 }
