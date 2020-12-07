@@ -34,7 +34,10 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^1.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "puppeteer": "^5.2.1"
+    "@asyncapi/generator-react-sdk": "file:../generator-react-sdk",
+    "react": "^17.0.1",
+    "puppeteer": "^5.2.1",
+    "source-map-support": "^0.5.19"
   },
   "release": {
     "branches": [
@@ -58,6 +61,7 @@
     ]
   },
   "generator": {
+    "renderer": "react",
     "parameters": {
       "asyncapiFileDir": {
         "description": "Custom location of the AsyncAPI file that you provided as an input in generation. By default it is located in the root of the output directory"
@@ -80,12 +84,10 @@
       }
     },
     "nonRenderableFiles": [
-      "sample.gif"
+      "sample.gif",
+      "style.css"
     ],
-    "generator": ">=1.0.2 <2.0.0",
-    "filters": [
-      "@asyncapi/generator-filters"
-    ],
+    "generator": ">=1.0.0 <2.0.0",
     "hooks": {
       "@asyncapi/generator-hooks": "createAsyncapiFile"
     }
