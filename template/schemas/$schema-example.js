@@ -2,7 +2,7 @@ import React from "react";
 import { File } from "@asyncapi/generator-react-sdk";
 import { generateExample } from "@asyncapi/generator-filters";
 
-import { HTML, Head, Body, convertMapToObject, normalizeSchemaName } from "../../partials/common";
+import { HTML, Head, Body, normalizeSchemaName } from "../../partials/common";
 
 /*
  * You can also return an array containing unique File components as the result of the template.
@@ -10,8 +10,11 @@ import { HTML, Head, Body, convertMapToObject, normalizeSchemaName } from "../..
  * Note that you can conditionally name each file or return null, then the generator will skip the component.
  */
 export default function({ asyncapi }) {
-  const schemasMap = convertMapToObject(asyncapi.allSchemas());
-  return Object.entries(schemasMap).map(([schemaName, schema]) => {
+  if (!asyncapi.components().hasSchemas()) {
+    return null;
+  }
+
+  return Object.entries(asyncapi.components().schemas()).map(([schemaName, schema]) => {
     const name = normalizeSchemaName(schemaName);
     return (
       <File name={`${name}.html`}>

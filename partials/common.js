@@ -1,10 +1,10 @@
-import React from "react";
-import { Indent, IndentationTypes, Text, withIndendation } from "@asyncapi/generator-react-sdk";
-
 /*
  * Below you can see how to create reusable chunks/components/helpers.
  * Check the files in the `template` folder to see how to import and use them within a template.
  */
+
+import React from "react";
+import { Indent, IndentationTypes, Text, withIndendation } from "@asyncapi/generator-react-sdk";
 
  /*
   * Each component has a `childrenContent` property.
@@ -83,12 +83,4 @@ export function Line({ childrenContent }) {
 
 export function normalizeSchemaName(schemaName) {
   return schemaName.replace(/\<|\>/gm, '');
-}
-
-export function convertMapToObject(map) {
-  const tempObject = {};
-  for (const [key, value] of map.entries()) {
-    tempObject[key] = value;
-  }
-  return tempObject;
 }
