@@ -65,8 +65,7 @@ Most basic Template must have the following:
 - `template` directory where you keep files that at the end are ending up in the result of generation. In other words, the Generator processes all the files stored in this directory.
 - `package.json` file that is necessary even if your Template doesn't need any external dependencies. Before the generation process, the Generator must install the Template in its dependencies, and `package.json` is necessary to identify the template name.
 
-Why this Template has so many additional directories and files?
-It is because the purpose of this Template is to provide you with an example that has all the best practices included, generator features presented, plus the extra stuff that is needed to provide a production-ready template. In the next section, you learn what features are included and which ones are optional.
+Why this Template has so many additional directories and files? It is because the purpose of this Template is to provide you with an example that has all the best practices included, generator features presented, plus the extra stuff that is needed to provide a production-ready template. In the next section, you learn what features are included and which ones are optional.
 
 # How To Reuse This Template
 
@@ -77,12 +76,13 @@ There is nothing :sunglasses: here, no :fireworks: after creating a repository u
 # Technical Requirements
 
 The Generator is a Node.js application. Therefore, template features also depend on Node.js and generator technical requirements:
+
 - Node.js v12.16+
 - npm v6.13.7+
 
 Install both using [official installer](https://nodejs.org/en/download/).
 
-Now install the AsyncAPI Generator globally to use it as CLI:
+Now install the [AsyncAPI Generator](https://github.com/asyncapi/generator) globally to use it as CLI:
 
 ```bash
 npm install -g @asyncapi/generator
@@ -119,13 +119,25 @@ There are two ways you can work on template development:
   ../generator/cli.js https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml ./ -o output
   ```
 
+# Template render engine
+
+The [Generator](https://github.com/asyncapi/generator) supports feature called templating engine. You can write template using tool which you prefer more. The template engine at the moment can be either [React](https://github.com/asyncapi/generator-react-sdk) (recommended) or [Nunjucks](https://mozilla.github.io/nunjucks/) (default). This can be controlled with the `renderer` property in the [template configuration](#renderer).
+
 # Learning Resources
 
-Alwasy during template development consult for this documentation
+Alwasy during template development consult for this documentation:
 
 - [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs/authoring.md)
-- [Nunjucks documentation](https://mozilla.github.io/nunjucks/getting-started.html)
 - [AsyncAPI JavaScript Parser API reference](https://github.com/asyncapi/parser-js/blob/master/API.md)
+
+Additional resources for the React:
+
+- [React SDK documentation](https://github.com/asyncapi/generator-react-sdk)
+- [React documentation](https://en.reactjs.org/docs/getting-started.html)
+
+Additional resources for the Nunjucks:
+
+- [Nunjucks documentation](https://mozilla.github.io/nunjucks/getting-started.html)
 
 Also, remember that you can join us in [Slack](https://www.asyncapi.com/slack-invite/)
 
@@ -145,18 +157,34 @@ Every resource in this repository is essential for the overall template setup. N
 
 ## Sample Template That Presents Generator Features And Best Practices In Using Them
 
-Generator depends on [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. Keep that in mind when familiarizing with Generator functionality.
+Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) or [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. You can choose the one you prefer more. Each render engine has a different way of working and has different features. Keep that in mind when familiarizing with Generator functionality.
 
-The list of resources that are relevant for this Template:
+Templates are highly configurable. This Template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
+
+Both React and Nunjucks template has `hooks` directory. It's a place where you keep hooks that are special JavaScript functions. The [Hooks](#hooks) is a native generator feature, not related to React or Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
+
+This Template contains an example implementation of all features includes in the Generator, both in React and in Nunjucks.
+
+### React
+
+The list of resources that are relevant for this Template using React:
+
+- `template` is a directory where you keep all the files that will be processed by the Generator using React. Only files with the `.js`, `.jsx` and `.cjs` extensions are taken and processed by the Generator. The rest are skipped.
+- `partials` is a directory where you keep reusable parts (called also components) of the templates. You can also put there helper functions to handle perform actions on AsyncAPI data inside components.
+
+> **NOTE**: `partials` directory is recommended way to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder.
+
+> **NOTE**: If you are using React as a rendering engine, you should delete the given folders which are related to Nunjucks: `filters`, `template_njk`, `partials_njk`.
+
+### Nunjucks
+
+The list of resources that are relevant for this Template using Nunjucks:
 
 - `filters` is a directory where you keep filters later used in files from the `template` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
-- `hooks` is a directory where you keep hooks that are special JavaScript functions. The Hooks is a native generator feature, not related to Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
-- `template` is a directory where you keep all the files that will be processed by the Generator using Nunjucks. 
-- `partials` is a directory where you keep [reusable parts](https://mozilla.github.io/nunjucks/templating.html#include) of the templates. You can also put there [Nunjucks macros](https://mozilla.github.io/nunjucks/templating.html#macro) that are like includes but customizable as you can pass custom arguments to them like to functions. 
+- `template_njk` is a directory where you keep all the files that will be processed by the Generator using Nunjucks. 
+- `partials_njk` is a directory where you keep [reusable parts](https://mozilla.github.io/nunjucks/templating.html#include) of the templates. You can also put there [Nunjucks macros](https://mozilla.github.io/nunjucks/templating.html#macro) that are like includes but customizable as you can pass custom arguments to them like to functions.
 
-This Template contains an example implementation of all those features.
-
-Templates are highly configurable. This Template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the `generator` section.
+> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`.  You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials` and remove the `renderer` field from [`generator`](#configuration) section.
 
 ### Template Specific Filters
 
@@ -381,10 +409,10 @@ You can use more than one filter on values passed by Nunjucks. It is called chai
 
 ```html
 <pre class="hljs mb-4 border border-grey-darkest rounded">
-    <code>
-        <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-        {{ schema.json() | generateExample | safe }}
-    </code>
+  <code>
+    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+    {{ schema.json() | generateExample | safe }}
+  </code>
 </pre>
 ```
 
@@ -413,18 +441,19 @@ Nunjucks templating engine is very powerful with many different options. Wheneve
 
 ### Partials
 
-In the `partials` directory, you can find two files, one is an example of Nunjucks [include](https://mozilla.github.io/nunjucks/templating.html#include), and another one is a [macro](https://mozilla.github.io/nunjucks/templating.html#macro). Use this feature to partition your Template into smaller chunks that make future maintenance of the Template easier.
+In the `partials_njk` directory, you can find two files, one is an example of Nunjucks [include](https://mozilla.github.io/nunjucks/templating.html#include), and another one is a [macro](https://mozilla.github.io/nunjucks/templating.html#macro). Use this feature to partition your Template into smaller chunks that make future maintenance of the Template easier.
 
 #### Includes
 
 Check our [partials/diagramContent.html](partials/diagramContent.html) file to see how `includes` work. It is just a simple file with content that can be included in another file. Have a look at [template/index.html](template/index.html) file to understand how to use include:
-```html
+
+```njk
 {% include "partials/diagramContent.html" %}
 ```
 
 #### Macros
 
-Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials/listChannels.html](partials/listChannels.html) file to see an example macro called `listChannels`:
+Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials_njk/listChannels.html](partials/listChannels.html) file to see an example macro called `listChannels`:
 
 ```html
 {% macro listChannels(channels, operationType) %}
@@ -451,7 +480,7 @@ Macros are like dynamic includes that change depending on the input that you pas
 {% endmacro %}
 ```
 
-This macro is used in the [template/index.html](template/index.html) file:
+This macro is used in the [template_njk/index.html](template/index.html) file:
 
 ```njk
 {% from "partials/listChannels.html" import listChannels %}
@@ -495,6 +524,16 @@ This one HTML template file results in multiple HTML files, one per schema.
 ### Configuration
 
 Put configuration of the Generator in the `package.json` file in the `generator` section. This Template covers most of the configuration options.
+
+#### `renderer`
+
+The template engine can be either `react` (recommended) or `nunjucks` (default). This can be controlled with the `renderer` property.
+
+```json
+"generator": {
+  "renderer": "react"
+}
+```
 
 #### `parameters`
 
@@ -548,7 +587,7 @@ The `generator` property is used to specify the Generator's versions is your Tem
 
 ```json
 "generator": {
-  "generator": ">=0.50.0 <2.0.0",
+  "generator": ">=1.0.0 <2.0.0"
 }
 ```
 

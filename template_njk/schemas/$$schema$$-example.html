@@ -1,0 +1,20 @@
+{# Generator has a feature called "file templates" that allows you to create a template file with special name with $$ markers, like $$schema$$ (other types of file templates are available).
+In case of this example, generator creates as many files as schemas you have in the components section of your AsyncAPI document. $$schema$$ is replaced with the name of the schema #}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container mx-auto px-4">       
+            This is an example for {{schemaName}} schema:
+                <pre class="hljs mb-4 border border-grey-darkest rounded">
+                    <code>
+                        {# Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package #}
+                        {{ schema.json() | generateExample | safe }}
+                    </code>
+                </pre>
+        </div>
+    </body>
+</html>
