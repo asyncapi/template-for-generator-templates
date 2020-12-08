@@ -1,4 +1,3 @@
-const os = require('os');
 const { readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('@asyncapi/generator');
