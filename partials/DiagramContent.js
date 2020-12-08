@@ -54,7 +54,9 @@ Sorry about that. Come back to us once you restructure your document.
  * @param {AsyncAPIDocument} asyncapi parsed AsyncAPI document 
  */
 function generateMermaidDiagram(asyncapi) {
-  if (!asyncapi || typeof asyncapi.version !== 'function') throw new Error('You need to pass entire parsed AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"');
+  if (!asyncapi || typeof asyncapi.version !== 'function') {
+    throw new Error('You need to pass entire parsed AsyncAPI document as an argument. Try this "generateMermaidDiagram(asyncapi)"');
+  }
 
   let diagram = '';
   //we need to store information about processed schemas, to later make sure we do not duplicate schema classes in the diagram

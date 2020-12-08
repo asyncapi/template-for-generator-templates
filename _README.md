@@ -26,14 +26,13 @@ The overview should explain in just a few sentences the template's purpose and i
 
 This template generates an HTML page with an overview of the data model provided in your AsyncAPI file. Its core part is the diagram showing relations between the data model. Except for HTML, you can also generate a PDF file from the HTML page or get the diagram into a separate PNG and SVG.
 
-
 ## Technical requirements
 
 <!--  
 Specify what version of the Generator is your template compatible with. This information should match the information provided in the template configuration under the `generator` property.
 -->
 
-- 0.50.0 =< [Generator](https://github.com/asyncapi/generator/) < 2.0.0,
+- 1.0.0 =< [Generator](https://github.com/asyncapi/generator/) < 2.0.0,
 - Generator specific [requirements](https://github.com/asyncapi/generator/#requirements)
 
 ## Specification requirements
@@ -77,7 +76,7 @@ open output/index.html
 ```bash
 docker run --rm -it \
 -v ${PWD}/output:/app/output \
-asyncapi/generator -o /app/output https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml @asyncapi/markdown-template --force-write
+asyncapi/generator -o /app/output https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates --force-write
 ```
 
 ## Template configuration
@@ -87,7 +86,6 @@ This information should match the information provided in the template configura
 -->
 
 You can configure this template by passing different parameters in the Generator CLI: `-p PARAM1_NAME=PARAM1_VALUE -p PARAM2_NAME=PARAM2_VALUE`
-
 
 Name | Description | Required | Default | Allowed Values | Example
 ---|---|---|---|---|---
@@ -105,9 +103,8 @@ Document hooks that users can disable and template will still work as expected. 
 
 The functionality of this template is extended with different hooks that you can disable like this in the Generator CLI: `-d HOOK_TYPE1=HOOK_NAME1,HOOK_NAME2 -d HOOK_TYPE2`
 
-
 Type | Name | Description
----|---|---|---|---|---
+---|---|---
 generate:after | createAsyncapiFile | It creates AsyncAPI file with content of the spec file passed to the generator
 
 ## Development

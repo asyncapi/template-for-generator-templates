@@ -61,6 +61,7 @@ Generator knows what to generate because you supplement it with a generator temp
 # Minimum For Your Template
 
 Most basic Template must have the following:
+
 - `template` directory where you keep files that at the end are ending up in the result of generation. In other words, the Generator processes all the files stored in this directory.
 - `package.json` file that is necessary even if your Template doesn't need any external dependencies. Before the generation process, the Generator must install the Template in its dependencies, and `package.json` is necessary to identify the template name.
 
@@ -82,6 +83,7 @@ The Generator is a Node.js application. Therefore, template features also depend
 Install both using [official installer](https://nodejs.org/en/download/).
 
 Now install the AsyncAPI Generator globally to use it as CLI:
+
 ```bash
 npm install -g @asyncapi/generator
 ```
@@ -89,22 +91,28 @@ npm install -g @asyncapi/generator
 # Template Development Hints
 
 The most straightforward command to use this Template is:
+
 ```bash
 ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
 For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
+
 - `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler, 
 - `--watch-template` enables a watcher of changes that you make in the Template. It regenerates your Template whenever it detects a change,
 - `--install` enforces reinstallation of the Template
 
 There are two ways you can work on template development:
+
 - Use global Generator and Template from your local sources:
+
   ```bash
   # assumption is that you run this command from the root of your Template
   ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml ./ -o output
   ```
+
 - Use Generator from sources and Template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
+  
   ```bash
   # assumption is that you run this command from the root of your Template
   # assumption is that generator sources are cloned on the same level as the Template
@@ -114,6 +122,7 @@ There are two ways you can work on template development:
 # Learning Resources
 
 Alwasy during template development consult for this documentation
+
 - [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs/authoring.md)
 - [Nunjucks documentation](https://mozilla.github.io/nunjucks/getting-started.html)
 - [AsyncAPI JavaScript Parser API reference](https://github.com/asyncapi/parser-js/blob/master/API.md)
@@ -139,6 +148,7 @@ Every resource in this repository is essential for the overall template setup. N
 Generator depends on [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. Keep that in mind when familiarizing with Generator functionality.
 
 The list of resources that are relevant for this Template:
+
 - `filters` is a directory where you keep filters later used in files from the `template` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
 - `hooks` is a directory where you keep hooks that are special JavaScript functions. The Hooks is a native generator feature, not related to Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
 - `template` is a directory where you keep all the files that will be processed by the Generator using Nunjucks. 
@@ -153,37 +163,46 @@ Templates are highly configurable. This Template also showcases most of the conf
 Check out [filters/mermaidDiagram.js](filters/mermaidDiagram.js) file to see an example of the custom filter that template developers can write for their template files. It exports a JavaScript function called `generateMermaidDiagram` that accepts parsed AsyncAPI document as an argument and returns a [Mermaid class diagram](https://mermaid-js.github.io/mermaid/#/) that visualizes the data model basing on schemas provided in the document.
 
 Important things to notice:
+
 - The file contains multiple functions, but only one is exported. It means you can also have private functions and use them in your filter function to better structure your code.
-- It is good to properly validate the input passed to the filter and throw a clear error.  
+- It is good to properly validate the input passed to the filter and throw a clear error.
+
   ```js
    if (!asyncapi || typeof asyncapi.version !== 'function') throw new Error('You need to pass entire parsed AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"');
   ```
   As a result, you get a helpful error during template development like:
+
   ```js
   Error: You need to pass the AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"
   ```
-  Instead of 
+
+  Instead of:
+  
   ```js
   TypeError: asyncapi.hasChannels is not a function
   ```
+
   It is crucial because, by default, errors that are generated from Nunjucks do not tell you where exactly you have an error in your filter. You can try to use `--debug` flag when running generation during development, but it is helpful only in some instances.
+
 - Parsed AsyncAPI document that you can access in the filter comes from the AsyncAPI JavaScript Parser. It provides you with extensive [API](https://github.com/asyncapi/parser-js/blob/master/API.md) that you can use to navigate through the document to extract certain parts from it, like for example:
+  
   ```js
-    const OPERATIONS = ['publish', 'subscribe'];
+  const OPERATIONS = ['publish', 'subscribe'];
 
-    asyncapi.channelNames().forEach(channelName => {
-      const channel = asyncapi.channel(channelName);
+  asyncapi.channelNames().forEach(channelName => {
+    const channel = asyncapi.channel(channelName);
 
-      OPERATIONS.map((opName) => {
-        const op = channel[opName]();
-        if (!op) return;
+    OPERATIONS.map((opName) => {
+      const op = channel[opName]();
+      if (!op) return;
         
-        op.messages().forEach(m => {
-          //logic responsible for processing every message in every operation
-        });
+      op.messages().forEach(m => {
+        //logic responsible for processing every message in every operation
       });
     });
+  });
   ```
+
 - Example filter is used in [template/index.html](template/index.html) using Nunjucks syntax `{{ asyncapi | generateMermaidDiagram }}`
 
 ### Hooks
@@ -196,13 +215,16 @@ Check out [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to
 
 Important things to notice:
 - Hooks, like in the case of the filter, is a regular JavaScript function that can have its dependencies like `const puppeteer = require('puppeteer');` that you need to add to your `package.json` file.
-- Remember to specify what hook type your hook function belongs to
+- Remember to specify what hook type your hook function belongs to:
+  
   ```js
   module.exports = {
     'generate:after': yourFunction
   }
   ```
-- Generator is a library that also has a CLI. Parameters passed to the Template using CLI are always of String type. This means that even if your parameter accepts Boolean values like true/false, you still need to check them like a String value
+
+- Generator is a library that also has a CLI. Parameters passed to the Template using CLI are always of String type. This means that even if your parameter accepts Boolean values like true/false, you still need to check them like a String value:
+  
   ```js
   const parameters = generator.templateParams;
   if (parameters['pdf'] === 'true') await page.pdf({ format: 'A4', path: `${targetDir}/index.pdf` });
@@ -225,6 +247,7 @@ Hooks are reusable between templates. AsyncAPI Initiative provides a library of 
 ```
 
 Notice that you can specify one or many hooks you want to reuse from the library instead of all the hooks. In this Template, we use `createAsyncapiFile` responsible for creating the `asyncapi.yaml` file in the directory where template files get generated. This hook also supports custom parameter that I can specify in my configuration:
+
 ```json
 "generator": {
   "parameters": {
@@ -232,6 +255,7 @@ Notice that you can specify one or many hooks you want to reuse from the library
       "description": "Custom location of the AsyncAPI file that you provided as an input into generation. By default, it is located in the root of the output directory."
     }
   }
+}
 ```
 
 Using, for example, the Generator CLI, you can, for example, pass `-p asyncapiFileDir=nested/dir`, and as a result, you get `asyncapi.yaml` file in `nested/dir` directory.
@@ -263,6 +287,7 @@ To read more about Nunjucks Tag called set go to https://mozilla.github.io/nunju
 ```
 
 Accessing document data is made easier thanks to what AsyncAPI JavaScript Parser is doing to the AsyncAPI document. Have a look at [template/index.html](template/index.html) and this part of the Template:
+
 ```html
 Share your feedback with us on <a href="http://twitter.com/{{ asyncapi.info().extension('x-twitter') }}">Twitter</a>
 ```
@@ -273,7 +298,7 @@ When accessing AsyncAPI document contents, use Parser's [API documentation](http
 
 Check out [template/index.html](template/index.html) file to see an example of how you can access custom parameters passed by the user 
 
-```
+```njk
 /*
  * You can access "maxTextSide" parameter value without any conditions in case the user did not provide such a parameter. 
  * It is possible thanks to the functionality that makes it possible for template developers to specify default values for parameters.
@@ -285,6 +310,7 @@ maxTextSize: {{ params.maxTextSize }}
 #### Using Filters
 
 We can differentiate three types of filters in the Generator:
+
 - default filters that are part of the Nunjucks templating engine
 - generic filters provided by AsyncAPI Initiative
 - your custom template filters
@@ -296,17 +322,19 @@ All built-in filters are listed [here](https://mozilla.github.io/nunjucks/templa
 The most commonly used filter during template development is `dump` that internally calls `JSON.stringify` and allows you to render in your template file the entire object. Very useful during debugging. 
 
 In [partials/diagramContent.html](partials/diagramContent.html) file there is a use case for `dictsort` filter:
-```
+
+```njk
 <!-- Usage of build-in "dictsort" Nunjucks filter for sorting items alphabetically 
 and how it works in a for loop -->
 {% for schemaName in asyncapi.components().schemas() | dictsort %}
-    <li>{{ schemaName[0] }}</li>
+  <li>{{ schemaName[0] }}</li>
 {% endfor %}
 ```
 
 ##### Official AsyncAPI Filters
 
-AsyncAPI Initiative provides a library of filters. You can also create such a library for your templates. You add such a library to `dependencies` in the `package.json` file and configure in the `generator.filters` section like 
+AsyncAPI Initiative provides a library of filters. You can also create such a library for your templates. You add such a library to `dependencies` in the `package.json` file and configure in the `generator.filters` section like:
+
 ```json
 {
   ...
@@ -320,21 +348,24 @@ AsyncAPI Initiative provides a library of filters. You can also create such a li
 ```
 
 What you get in exchange:
-- Access to all the filters listed [here](https://github.com/asyncapi/generator-filters/blob/master/docs/api.md#functions) like super useful `log` filter that works similar to Nunjucks `dump` filter but instead of dumping information in the template file, it logs it to the terminal.
-- Access to all [Lodash](https://lodash.com/docs/4.17.15) functions that are made available as filters
 
-Check [partials/diagramContent.html](partials/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter
-```html
+- Access to all the filters listed [here](https://github.com/asyncapi/generator-filters/blob/master/docs/api.md#functions) like super useful `log` filter that works similar to Nunjucks `dump` filter but instead of dumping information in the template file, it logs it to the terminal.
+- Access to all [Lodash](https://lodash.com/docs/4.17.15) functions that are made available as filters.
+
+Check [partials/diagramContent.html](partials/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter:
+
+```njk
 {{ "Template cannot generate proper diagram because you have no schemas defined in components section" | log }}
 ```
 
 Also have a look at [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file to see `generateExample` filter in action:
+
 ```html
 <pre class="hljs mb-4 border border-grey-darkest rounded">
-    <code>
-        <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-        {{ schema.json() | generateExample | safe }}
-    </code>
+  <code>
+    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+    {{ schema.json() | generateExample | safe }}
+  </code>
 </pre>
 ```
 
@@ -347,6 +378,7 @@ Custom filters do not have to be part of the Template, they can be released as a
 #####  Chaining Filters
 
 You can use more than one filter on values passed by Nunjucks. It is called chaining and is done using pipe `|` as you can in [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file:
+
 ```html
 <pre class="hljs mb-4 border border-grey-darkest rounded">
     <code>
@@ -357,6 +389,7 @@ You can use more than one filter on values passed by Nunjucks. It is called chai
 ```
 
 Also have a look at the [template/index.html](template/index.html) file to see how using chaining and Nunjucks built-in filters you can get a HTML link out of the link represented as a string:
+
 ```html
 {% if asyncapi.hasExternalDocs() %}
   <!-- You can see chaining of filters here, where one value is processed by two filters, one after another -->
@@ -367,6 +400,7 @@ Also have a look at the [template/index.html](template/index.html) file to see h
 #### What Else I Can Do?
 
 You can for example have conditions like in [partials/diagramContent.html](partials/diagramContent.html) file:
+
 ```html
 {% if asyncapi.hasComponents() and asyncapi.components().schemas() %}
 ...
@@ -418,7 +452,8 @@ Macros are like dynamic includes that change depending on the input that you pas
 ```
 
 This macro is used in the [template/index.html](template/index.html) file:
-```
+
+```njk
 {% from "partials/listChannels.html" import listChannels %}
 ...
 {{ listChannels(asyncapi.channels(), 'subscribe') }}
@@ -428,6 +463,7 @@ This macro is used in the [template/index.html](template/index.html) file:
 ### File Templates
 
 The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+
 - `schema` that is a Schema object map
 - `schemaName` that is the name of the schema
 
@@ -436,22 +472,21 @@ Template file [template/schemas/$$schema$$-example.html](template/schemas/$$sche
 ```html
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body>
+  </head>
+  <body>
     <div class="container mx-auto px-4">       
-        This is an example for {{schemaName}} schema:
-            <pre class="hljs mb-4 border border-grey-darkest rounded">
-                <code>
-                    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-                    {{ schema.json() | generateExample | safe }}
-                </code>
-            </pre>
+      This is an example for {{schemaName}} schema:
+      <pre class="hljs mb-4 border border-grey-darkest rounded">
+        <code>
+          <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+          {{ schema.json() | generateExample | safe }}
+        </code>
+      </pre>
     </div>
-</body>
+  </body>
 </html>
 ```
 
@@ -461,10 +496,10 @@ This one HTML template file results in multiple HTML files, one per schema.
 
 Put configuration of the Generator in the `package.json` file in the `generator` section. This Template covers most of the configuration options.
 
-#### parameters
-
+#### `parameters`
 
 Templates can be customizable using parameters. Parameters allow you to create more flexible templates. They can be required and also have default values that make their usage in template code less complicated. In this Template, you have:
+
 - `asyncapiFileDir` parameter is used in a reusable hook. For more details, read [Official AsyncAPI hooks](#official-asyncapi-hooks).
 - `pdf`, `png` and `svg` parameters are used in custom template filter. For more details read [Template specific filters](#template-specific-filters).
 - `maxTextSize` parameter is used in a template file. For more details read [Parameters passed to generator by the user](#parameters-passed-to-generator-by-the-user).
@@ -495,9 +530,10 @@ Templates can be customizable using parameters. Parameters allow you to create m
 }
 ```
 
-#### nonRenderableFiles
+#### `nonRenderableFiles`
 
 This Template has a binary file that should not be rendered by the Generator to avoid generation errors.
+
 ```json
 "generator": {
   "nonRenderableFiles": [
@@ -506,16 +542,17 @@ This Template has a binary file that should not be rendered by the Generator to 
 }
 ```
 
-#### generator
+#### `generator`
 
 The `generator` property is used to specify the Generator's versions is your Template compatible with. The Template depends on the Generator filters. In case of new major releases of the Generator, you want to make sure your Template will not fail because of possible breaking changes.
+
 ```json
 "generator": {
   "generator": ">=0.50.0 <2.0.0",
 }
 ```
 
-#### filters
+#### `filters`
 
 This Template uses filters from the official AsyncAPI Generator Filters library. For more details, read [Official AsyncAPI filters](#official-asyncapi-filters).
 
@@ -527,7 +564,7 @@ This Template uses filters from the official AsyncAPI Generator Filters library.
 }
 ```
 
-#### hooks
+#### `hooks`
 
 This template uses hooks from the official AsyncAPI Generator Filters library. For more details, read [Official AsyncAPI hooks](#official-asyncapi-hooks).
 
@@ -545,13 +582,15 @@ Schemas provided in the AsyncAPI document may contain circular references. It is
 
 This Template showcases situation when you want to provide support for handling circular refs in objects and their properties. 
 
-In the `generateMermaidDiagram` filter in [filters/mermaidDiagram.js](filters/mermaidDiagram.js) you see usage of `circularProps()` function, where you check if the property that you want to add to the diagram, is a property that introduces a circle: 
+In the `generateMermaidDiagram` filter in [filters/mermaidDiagram.js](filters/mermaidDiagram.js) you see usage of `circularProps()` function, where you check if the property that you want to add to the diagram, is a property that introduces a circle:
+
 ```js
 const circularProp = schema.circularProps() && schema.circularProps().includes(propName);
 classContent += circularProp ? `${propName} [CIRCULAR] ${propValueMap.type()}\n` : `${propName} ${propValueMap.type()}\n`;
 ```
 
 Later in the same file you see how recursive traversing is stopped in case circular reference is spotted:
+
 ```js
 if (propertySchema.circularProps() && propertySchema.circularProps().includes(propName)) return;
 recursiveSchema(propertySchema, callback, prop);
@@ -573,6 +612,7 @@ You should also remove `@asyncapi/parser`, `@asyncapi/generator`, and `jest` fro
 This Template is tested using [Jest](https://jestjs.io/) framework. You can find here tests for all integral template parts, filters, hooks, and the template generation result itself. Jest-related configuration from the `package.json` file is there only because of the code coverage tool conflicts with [puppeeteer](https://github.com/puppeteer/puppeteer) library. It is possible that you do not need it in your Template.
 
 These are the contents of the `test` director:
+
 - `docs` where you can find a sample AsyncAPI file used for tests
 - `filters` where you can discover Unit tests for the filter that generates a diagram
 - `hooks` where you can find a snapshot test of the hook generating PNG and SVG files. In other words, a test that generates extra files, check their content and compares to the previous successful result of the test
@@ -582,28 +622,32 @@ This template generates static files, so you cannot find here examples of integr
   
 ## (Optional) Release Pipeline Based On GitHub Actions And Conventional Commits Specification
 
-
 Release pipeline is based on [GitHub Actions](https://github.com/features/actions) and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. In case you are using a different CI/CD solution or do not like to have commit messages prefixed with text like `fix: ` or `feat: ` then you should read the rest of this section carefully to understand what files should be removed.
 
 If you want to keep this pipeline, make sure that you modify not only proper files but also put valid [secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in your repository settings:
+
 - `NPM_TOKEN` is a token you need to take from [npm](https://www.npmjs.com/) to make it possible to publish Template to the package manager in the name of your user. In case you do not want to publish to any package manager and just use the Template directly from the Git repository, then only make sure to clean up the release pipeline.
 - `GITHUB_TOKEN` doesn't have to be provided in repository secrets. It is always there in the context of GitHub action and represents the `github-actions` user.
 
 This is the list of resources that are relevant for this part, and you can remove them if you do not want to use it:
+
 - [.github/workflows/pull-request-testing.yml](.github/workflows/pull-request-testing.yml) workflow handles automated testing of changes introduces in a pull request.
 - [.github/workflows/automerge.yml](.github/workflows/automerge.yml) workflow handless automated merging of a pull request created by the bot to bump the template version in the `package.json` file. The best approach is always to create a separate bot user that handles automation, but you can also use `github-actions` bot.
 - [.github/workflows/update-docs-on-docs-commits.yml](.github/workflows/update-docs-on-docs-commits.yml) workflow is responsible for updating the table of contents in the `README.md` file. You need to modify GitHub logins and emails by following comments from the file. In the `package.json` file, you can find the `markdown-toc` package in `devDependencies` and a corresponding script `gen-readme-toc`. In case you do not want to have a table of contents and related dependencies and automation, you need to remove all those resources and the `npm run gen-readme-toc` step from the `.github/workflows/release.yml` document
 - [.github/workflows/release.yml](.github/workflows/release.yml) workflow is responsible for releasing the package to [npm](https://www.npmjs.com/) and creating a pull request with version change in the `package.json` file. In the `package.json` file, you can find the following `devDependencies` related to the release process:
+
   - @semantic-release/commit-analyzer
   - @semantic-release/github
   - @semantic-release/npm
   - @semantic-release/release-notes-generator
   - conventional-changelog-conventionalcommits
-These dependencies are configured in the `package.json` file in the `release` section. In case you are not interested in such a workflow, remember to remove this file and remove not needed parts from the `package.json` file, including `release` and `get-version` scripts.
+
+  These dependencies are configured in the `package.json` file in the `release` section. In case you are not interested in such a workflow, remember to remove this file and remove not needed parts from the `package.json` file, including `release` and `get-version` scripts.
 
 ## (Optional) Quality Assurance
 
 This is the list of resources that are relevant for this part, and you can remove them if you do not want to use it:
+
 - `.eslintignore` is a file where you can specify resources that should not be validated.
 - `.eslintrc` is a file where you keep the configuration of [ESLint](https://eslint.org/) and related plugins. This Template, by default, uses plugins for:
   - [Jest](https://jestjs.io/) that is used in this template as a testing framework
@@ -611,6 +655,7 @@ This is the list of resources that are relevant for this part, and you can remov
   - [SonarJS ruleset](https://github.com/SonarSource/eslint-plugin-sonarjs) that is an official plugin from [SonarSource](https://www.sonarsource.com/). We recommend integrating [SonarCloud](https://sonarcloud.io/) with the Template, as we do for all our AsyncAPI projects.
 
 You can remove both files in case you do not want to use ESLint. Keep in mind, though, that after removing them, you should also remove related packages from the `package.json` from the `devDependencies` section:
+
 - `eslint`
 - `eslint-plugin-jest`
 - `eslint-plugin-security`
