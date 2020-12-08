@@ -7,7 +7,7 @@ describe('generateMermaidDiagram()', () => {
     const expectedDiagram = 'classDiagramclass dummyCreated {          prop1 integerprop2 stringsentAt stringdummyArrayWithObject arraydummyArrayWithArray arraydummyObject object}          dummyCreated --|> sentAtdummyCreated --|> dummyArrayWithObjectdummyCreated --|> dummyArrayWithArraydummyCreated --|> dummyObjectclass sentAt {          string}          class dummyArrayWithObject {          array}          dummyArrayWithObject --|> dummyInfoclass dummyInfo {          prop1 stringsentAt string}          dummyInfo --|> sentAtclass dummyObject {          dummyObjectProp1 stringdummyObjectProp2 object}          dummyObject --|> sentAtdummyObject --|> dummyRecursiveObjectclass dummyRecursiveObject {          dummyRecursiveProp1 [CIRCULAR] objectdummyRecursiveProp2 string}          dummyRecursiveObject --|> dummyObject';
     const parsedAsyncapiDoc = await parser.parseFromUrl(dummySpecUrl);
     const diagram = generateMermaidDiagram(parsedAsyncapiDoc);
-    //regex is for removign new lines and other stuff to get diagram in one line for easier testing with expectedDiagram
+    //regex is for removing new lines and other stuff to get diagram in one line for easier testing with expectedDiagram
     expect(diagram.replace(/(\r\n|\n|\r)/gm, '')).toEqual(expectedDiagram);
   });
 
