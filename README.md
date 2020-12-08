@@ -20,34 +20,48 @@ Generator knows what to generate because you supplement it with a generator temp
 - [How To Reuse This Template](#how-to-reuse-this-template)
 - [Technical Requirements](#technical-requirements)
 - [Template Development Hints](#template-development-hints)
+- [Template render engine](#template-render-engine)
 - [Learning Resources](#learning-resources)
 - [How To Use This Template Without Modifications](#how-to-use-this-template-without-modifications)
 - [What You Get With This Template](#what-you-get-with-this-template)
   * [Sample Template That Presents Generator Features And Best Practices In Using Them](#sample-template-that-presents-generator-features-and-best-practices-in-using-them)
-    + [Template Specific Filters](#template-specific-filters)
+    + [React](#react)
+      - [Template](#template)
+        * [File component](#file-component)
+        * [Template Context](#template-context)
+          + [AsyncAPI Document](#asyncapi-document)
+          + [Parameters Passed To Generator By The User](#parameters-passed-to-generator-by-the-user)
+      - [Custom (reusable) components](#custom-reusable-components)
+      - [Using JS in template](#using-js-in-template)
+      - [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
+      - [Render component to string](#render-component-to-string)
+      - [Render set of files](#render-set-of-files)
+    + [Nunjucks](#nunjucks)
+      - [Template](#template-1)
+        * [Template Context](#template-context-1)
+          + [AsyncAPI Document](#asyncapi-document-1)
+          + [Parameters Passed To Generator By The User](#parameters-passed-to-generator-by-the-user-1)
+        * [Using Filters](#using-filters)
+          + [Nunjucks Built-In Filters](#nunjucks-built-in-filters)
+          + [Official AsyncAPI Filters](#official-asyncapi-filters)
+          + [Chaining Filters](#chaining-filters)
+          + [Template Custom Filters](#template-custom-filters)
+      - [Template Specific Filters](#template-specific-filters)
+        * [What Else I Can Do?](#what-else-i-can-do)
+      - [Partials](#partials)
+        * [Includes](#includes)
+        * [Macros](#macros)
+      - [File Templates](#file-templates)
     + [Hooks](#hooks)
       - [Custom Template Hooks](#custom-template-hooks)
       - [Official AsyncAPI Hooks](#official-asyncapi-hooks)
-    + [Template](#template)
-      - [Template Context](#template-context)
-        * [AsyncAPI Document](#asyncapi-document)
-        * [Parameters Passed To Generator By The User](#parameters-passed-to-generator-by-the-user)
-      - [Using Filters](#using-filters)
-        * [Nunjucks Built-In Filters](#nunjucks-built-in-filters)
-        * [Official AsyncAPI Filters](#official-asyncapi-filters)
-        * [Template Custom Filters](#template-custom-filters)
-        * [Chaining Filters](#chaining-filters)
-      - [What Else I Can Do?](#what-else-i-can-do)
-    + [Partials](#partials)
-      - [Includes](#includes)
-      - [Macros](#macros)
-    + [File Templates](#file-templates)
     + [Configuration](#configuration)
-      - [parameters](#parameters)
-      - [nonRenderableFiles](#nonrenderablefiles)
-      - [generator](#generator)
-      - [filters](#filters)
-      - [hooks](#hooks)
+      - [`renderer`](#renderer)
+      - [`parameters`](#parameters)
+      - [`nonRenderableFiles`](#nonrenderablefiles)
+      - [`generator`](#generator)
+      - [`filters`](#filters)
+      - [`hooks`](#hooks)
   * [Handling Circular References](#handling-circular-references)
   * [Documenting The Template](#documenting-the-template)
   * [(Optional) Tests For Each Feature Of The Template](#optional-tests-for-each-feature-of-the-template)
@@ -172,9 +186,236 @@ The list of resources that are relevant for this Template using React:
 - `template` is a directory where you keep all the files that will be processed by the Generator using React. Only files with the `.js`, `.jsx` and `.cjs` extensions are taken and processed by the Generator. The rest are skipped.
 - `partials` is a directory where you keep reusable parts (called also components) of the templates. You can also put there helper functions to handle perform actions on AsyncAPI data inside components.
 
-> **NOTE**: `partials` directory is recommended way to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+> **NOTE**: `partials` directory is recommended place to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
 > **NOTE**: If you are using React as a rendering engine, you should delete the given folders which are related to Nunjucks: `filters`, `template_njk`, `partials_njk`.
+
+#### Template
+
+Checkout [`template`](template) directory to see how different features of the generator are presented.
+
+##### File component
+
+Each template, like in the [`template/index.js`](template/index.js) file should return in default export function as root the `<File>` component (or array of `<File>` components), which contains the necessary metadata for the Generator to render the file:
+
+```js
+/*
+ * Each template to be rendered must have as a root component a File component or an array of File components,
+ * otherwise it will be skipped.
+ * 
+ * If you don't want to render anything, you can return `null` and the Generator will skip the given template.
+ */
+export default function({ asyncapi, params }) {
+  if (!asyncapi.hasComponents()) {
+    return null;
+  }
+
+  // Notice that root component is the `File` component.
+  return (
+    <File name="index.html">
+      <HTML>
+        ...
+      </HTML>
+    </File>
+  )
+}
+```
+
+##### Template Context
+
+Generator passes to render engine extra context that you can access in templates:
+
+- `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
+- `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
+- `params` is an Object with all the parameters passed to the Generator by the user.
+
+###### AsyncAPI Document
+
+Check out [template/index.js](template/index.js) file to see an example of how you can access the contents of the AsyncAPI document:
+
+```js
+/*
+ * Notice also how to retrieve passed properties to custom component, by the destruction of the first argument.
+ * Accessing document data is made easier thanks to what AsyncAPI JavaScript Parser is doing to the AsyncAPI document.
+ */
+function BodyContent({ asyncapi }) {
+  const apiName = asyncapi.info().title();
+  const channels = asyncapi.channels();
+
+  // rest of implementation...
+}
+```
+
+When accessing AsyncAPI document contents, use Parser's [API documentation](https://github.com/asyncapi/parser-js/blob/master/API.md).
+
+###### Parameters Passed To Generator By The User
+
+Check out [template/index.js](template/index.js) file to see an example of how you can access custom parameters passed by the user:
+
+```js
+export default function({ asyncapi, params }) {
+  return (
+    <File name="index.html">
+      ...
+      <Scripts params={params} />
+      ...
+    </File>
+  );
+}
+
+/*
+ * You can access "maxTextSide" parameter value without any conditions in case user didn't provide such a parameter. 
+ * It is possible thanks to the functionality that makes it possible for template developer to specify default values for parameters.
+ * Check out package.json file and look for `generator.parameters.maxTextSize` and its description and default value.
+ */
+function Scripts({ params }) {
+  return `
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    maxTextSize: ${params.maxTextSize},
+  });
+</script>
+`;
+}
+```
+
+#### Custom (reusable) components
+
+Check out [template/index.js](template/index.js) file to see an example how you can create reusable components and use them inside template:
+
+```js
+// Import custom components from file 
+import { HTML, Head, Body } from "../partials/common";
+
+/* 
+ * Below you can see how reusable chunks (components) could be called.
+ * Just write a new component (or import it) and place it inside the File or another component.
+ * 
+ * Notice that you can pass parameters to components. In fact, underneath, each component is a pure Javascript function.
+ */
+export default function({ asyncapi, params }) {
+  ...
+  const cssLinks = [
+    'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css',
+    'style.css',
+  ];
+
+  // Notice that root component is the `File` component.
+  return (
+    <File name="index.html">
+      <HTML>
+        <Head cssLinks={cssLinks} />
+        <Body>
+          <BodyContent asyncapi={asyncapi} />
+          ...
+        </Body>
+      </HTML>
+    </File>
+  );
+}
+
+// Custom component inside template file
+function BodyContent({ asyncapi }) {
+  // implemntation...
+}
+```
+
+Each custom component must returns as output pure `string`, another custom component, `null` or `undefined`. Nothing will be rendered for the last two.
+
+Recommended place to create reusable chunks is the `partials` folder. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+
+#### Using JS in template
+
+When you use React, you are actually using JS, so you can apply conditions to rendering, split functionality into separate/reusable functions, create compisition, extend/mix functions etc.
+
+```js
+/* 
+ * If asyncapi has `externalDocs` property then the Generator will return appropriate string,
+ * otherwise won't render anything.
+ */
+function ExternalDocs({ asyncapi }) {
+  if (!asyncapi.hasExternalDocs()) return null;
+  return `Don't forget to visit our website ${asyncapi.externalDocs().url()}.`
+}
+```
+
+#### Retrieve rendered content from children
+
+Each component has a `childrenContent` property. It is the processed children content of a component into a pure string. You can use it for compositions in your component.
+
+```js
+function CustomComponent({ childrenContent }) {
+  return `some text at the beginning: ${childrenContent}`
+}
+
+function RootComponent() {
+  return (
+    <CustomComponent>
+      some text at the end.
+    </CustomComponent>
+  );
+}
+```
+
+Then output from `RootComponent` will be `some text at the beginning: some text at the end.`.
+
+#### Render component to string
+
+If you need process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms given component (and its children) and returns pure string. You can check [template/index.js](template/index.js) to see how it could by done:
+
+```js
+import { render } from "@asyncapi/generator-react-sdk";
+
+function BodyContent({ asyncapi }) {
+  ...
+  return `
+<div class="container mx-auto px-4">        
+  <p> 
+    <h1>${apiName}</h1>
+    ${render(<ListChannels channels={channels} operationType='subscribe' />)}
+    ${render(<ListChannels channels={channels} operationType='publish' />)}
+    ${render(<DiagramContent asyncapi={asyncapi} />)}
+    ${render(<Extension asyncapi={asyncapi} />)}
+    ${render(<ExternalDocs asyncapi={asyncapi} />)}
+  </p> 
+</div>  
+`;
+}
+```
+
+#### Render set of files
+
+Using the React render engine you can return from template an array of File components. It's very helpful when you want to render several files with a given structure but with different input data. Check out [template/schemas/$schema-example.js](template/schemas/$schema-example.js) file to see an example how you render an array of files:
+
+```js
+/*
+ * You can also return an array containing unique File components as the result of the template.
+ * Then the generator will reprocess each component and write the contents to a file.
+ * Note that you can conditionally name each file or return null by condition, then the generator will skip the component.
+ */
+export default function({ asyncapi }) {
+  if (!asyncapi.components().hasSchemas()) {
+    return null;
+  }
+
+  return Object.entries(asyncapi.components().schemas()).map(([schemaName, schema]) => {
+    const name = normalizeSchemaName(schemaName);
+    return (
+      <File name={`${name}.html`}>
+        <SchemaFile schemaName={schemaName} schema={schema} />
+      </File>
+    );
+  });
+}
+
+function SchemaFile({ schemaName, schema }) {
+  // implementation...
+}
+```
+
+This one template file results in multiple HTML files, one per schema.
 
 ### Nunjucks
 
@@ -188,11 +429,12 @@ The list of resources that are relevant for this Template using Nunjucks:
 
 #### Template
 
-Checkout `template_njk` directory to see how different features of the generator are presented.
+Checkout [`template_njk`](template_njk) directory to see how different features of the generator are presented.
 
 ##### Template Context
 
 Generator passes to render engine extra context that you can access in templates:
+
 - `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
 - `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
 - `params` is an Object with all the parameters passed to the Generator by the user.
@@ -222,7 +464,7 @@ When accessing AsyncAPI document contents, use Parser's [API documentation](http
 
 ###### Parameters Passed To Generator By The User
 
-Check out [template_njk/index.html](template_njk/index.html) file to see an example of how you can access custom parameters passed by the user 
+Check out [template_njk/index.html](template_njk/index.html) file to see an example of how you can access custom parameters passed by the user:
 
 ```njk
 /*
@@ -247,7 +489,7 @@ All built-in filters are listed [here](https://mozilla.github.io/nunjucks/templa
 
 The most commonly used filter during template development is `dump` that internally calls `JSON.stringify` and allows you to render in your template file the entire object. Very useful during debugging. 
 
-In [partials/diagramContent.html](partials/diagramContent.html) file there is a use case for `dictsort` filter:
+In [partials_njk/diagramContent.html](partials_njk/diagramContent.html) file there is a use case for `dictsort` filter:
 
 ```njk
 <!-- Usage of build-in "dictsort" Nunjucks filter for sorting items alphabetically 
@@ -278,13 +520,13 @@ What you get in exchange:
 - Access to all the filters listed [here](https://github.com/asyncapi/generator-filters/blob/master/docs/api.md#functions) like super useful `log` filter that works similar to Nunjucks `dump` filter but instead of dumping information in the template file, it logs it to the terminal.
 - Access to all [Lodash](https://lodash.com/docs/4.17.15) functions that are made available as filters.
 
-Check [partials/diagramContent.html](partials/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter:
+Check [partials_njk/diagramContent.html](partials_njk/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter:
 
 ```njk
 {{ "Template cannot generate proper diagram because you have no schemas defined in components section" | log }}
 ```
 
-Also have a look at [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file to see `generateExample` filter in action:
+Also have a look at [template_njk/schemas/$$schema$$-example.html](template_njk/schemas/$$schema$$-example.html) file to see `generateExample` filter in action:
 
 ```html
 <pre class="hljs mb-4 border border-grey-darkest rounded">
@@ -297,7 +539,7 @@ Also have a look at [template/schemas/$$schema$$-example.html](template/schemas/
 
 ###### Chaining Filters
 
-You can use more than one filter on values passed by Nunjucks. It is called chaining and is done using pipe `|` as you can in [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file:
+You can use more than one filter on values passed by Nunjucks. It is called chaining and is done using pipe `|` as you can in [template_njk/schemas/$$schema$$-example.html](template_njk/schemas/$$schema$$-example.html) file:
 
 ```html
 <pre class="hljs mb-4 border border-grey-darkest rounded">
@@ -308,7 +550,7 @@ You can use more than one filter on values passed by Nunjucks. It is called chai
 </pre>
 ```
 
-Also have a look at the [template/index.html](template/index.html) file to see how using chaining and Nunjucks built-in filters you can get a HTML link out of the link represented as a string:
+Also have a look at the [template_njk/index.html](template_njk/index.html) file to see how using chaining and Nunjucks built-in filters you can get a HTML link out of the link represented as a string:
 
 ```html
 {% if asyncapi.hasExternalDocs() %}
@@ -372,7 +614,7 @@ Important things to notice:
 
 ##### What Else I Can Do?
 
-You can for example have conditions like in [partials/diagramContent.html](partials/diagramContent.html) file:
+You can for example have conditions like in [partials_njk/diagramContent.html](partials_njk/diagramContent.html) file:
 
 ```html
 {% if asyncapi.hasComponents() and asyncapi.components().schemas() %}
@@ -390,7 +632,7 @@ In the `partials_njk` directory, you can find two files, one is an example of Nu
 
 ##### Includes
 
-Check our [partials/diagramContent.html](partials/diagramContent.html) file to see how `includes` work. It is just a simple file with content that can be included in another file. Have a look at [template/index.html](template/index.html) file to understand how to use include:
+Check our [partials_njk/diagramContent.html](partials_njk/diagramContent.html) file to see how `includes` work. It is just a simple file with content that can be included in another file. Have a look at [partials_njk/index.html](partials_njk/index.html) file to understand how to use include:
 
 ```njk
 {% include "partials/diagramContent.html" %}
@@ -398,7 +640,7 @@ Check our [partials/diagramContent.html](partials/diagramContent.html) file to s
 
 ##### Macros
 
-Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials_njk/listChannels.html](partials/listChannels.html) file to see an example macro called `listChannels`:
+Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials_njk/listChannels.html](partials_njk/listChannels.html) file to see an example macro called `listChannels`:
 
 ```html
 {% macro listChannels(channels, operationType) %}
@@ -425,7 +667,7 @@ Macros are like dynamic includes that change depending on the input that you pas
 {% endmacro %}
 ```
 
-This macro is used in the [template_njk/index.html](template/index.html) file:
+This macro is used in the [template_njk/index.html](template_njk/index.html) file:
 
 ```njk
 {% from "partials/listChannels.html" import listChannels %}
