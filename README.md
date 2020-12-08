@@ -171,7 +171,7 @@ Every resource in this repository is essential for the overall template setup. N
 
 ## Sample Template That Presents Generator Features And Best Practices In Using Them
 
-Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) or [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. You can choose the one you prefer more. Each render engine has a different way of working and has different features. Keep that in mind when familiarizing with Generator functionality.
+Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) or [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. You can choose the one you prefer. Each render engine has a different way of working and a different set of features. Keep that in mind when familiarizing with the Generator functionality.
 
 Templates are highly configurable. This Template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
 
@@ -196,7 +196,10 @@ Checkout [`template`](template) directory to see how different features of the g
 
 ##### File component
 
-Each template, like in the [`template/index.js`](template/index.js) file should return in default export function as root the `<File>` component (or array of `<File>` components), which contains the necessary metadata for the Generator to render the file:
+For the generator to render a file with React certain conditions are required:
+
+1. The file should export a default function (example see the [`template/index.js`](template/index.js) file).
+2. That function should return a `<File>` component as root component which contains the necessary metadata for the Generator to render the file. Returning `null`, `undefined` or another negative value forces the Generator to not create the file.
 
 ```js
 /*
@@ -236,7 +239,7 @@ Check out [template/index.js](template/index.js) file to see an example of how y
 ```js
 /*
  * Notice also how to retrieve passed properties to custom component, by the destruction of the first argument.
- * Accessing document data is made easier thanks to what AsyncAPI JavaScript Parser is doing to the AsyncAPI document.
+ * Accessing document data is made easier thanks to the AsyncAPI JavaScript Parser - https://github.com/asyncapi/parser-js.
  */
 function BodyContent({ asyncapi }) {
   const apiName = asyncapi.info().title();
@@ -333,7 +336,7 @@ When you use React, you are actually using JS, so you can apply conditions to re
 ```js
 /* 
  * If asyncapi has `externalDocs` property then the Generator will return appropriate string,
- * otherwise won't render anything.
+ * otherwise it won't render anything.
  */
 function ExternalDocs({ asyncapi }) {
   if (!asyncapi.hasExternalDocs()) return null;
@@ -363,7 +366,7 @@ Then output from `RootComponent` will be `some text at the beginning: some text 
 
 #### Render component to string
 
-If you need process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms given component (and its children) and returns pure string. You can check [template/index.js](template/index.js) to see how it could by done:
+If you need to process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms a given component (and its children) and returns the pure string representation. You can check the [template/index.js](template/index.js) to see how it could by done:
 
 ```js
 import { render } from "@asyncapi/generator-react-sdk";
@@ -387,7 +390,7 @@ function BodyContent({ asyncapi }) {
 
 #### Render set of files
 
-Using the React render engine you can return from template an array of File components. It's very helpful when you want to render several files with a given structure but with different input data. Check out [template/schemas/$schema-example.js](template/schemas/$schema-example.js) file to see an example how you render an array of files:
+Using the React render engine you can from the template file return an array of File components. It's very helpful when you want to render several files with a given structure but with different input data. Check out [template/schemas/$schema-example.js](template/schemas/$schema-example.js) file to see an example on how you render an array of files:
 
 ```js
 /*
