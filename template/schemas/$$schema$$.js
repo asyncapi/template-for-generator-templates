@@ -5,23 +5,19 @@ import { generateExample } from "@asyncapi/generator-filters";
 import { HTML, Head, Body, normalizeSchemaName } from "../../partials/common";
 
 /*
- * You can also return an array containing unique File components as the result of the template.
- * Then the generator will reprocess each component and write the contents to a file.
- * Note that you can conditionally name each file or return null, then the generator will skip the component.
+ * Generator has a feature called "file templates" that allows you to create a template file with special name with $$ markers,
+ * like $$schema$$ (other types of file templates are available).
+ * In case of this example, generator creates as many files as schemas you have in the components section of your AsyncAPI document.
+ * $$schema$$ is replaced with the name of the schema
+ * More info is here https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates
  */
-export default function({ asyncapi }) {
-  if (!asyncapi.components().hasSchemas()) {
-    return null;
-  }
-
-  return Object.entries(asyncapi.components().schemas()).map(([schemaName, schema]) => {
-    const name = normalizeSchemaName(schemaName);
-    return (
-      <File name={`${name}.html`}>
-        <SchemaFile schemaName={schemaName} schema={schema} />
-      </File>
-    );
-  });
+export default function({ schemaName, schema }) {
+  const name = normalizeSchemaName(schemaName);
+  return (
+    <File name={`${name}-example.html`}>
+      <SchemaFile schemaName={schemaName} schema={schema} />
+    </File>
+  );
 }
 
 /*

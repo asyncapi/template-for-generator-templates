@@ -35,7 +35,7 @@ Generator knows what to generate because you supplement it with a generator temp
       - [Using JS in template](#using-js-in-template)
       - [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
       - [Render component to string](#render-component-to-string)
-      - [Render set of files](#render-set-of-files)
+      - [File Templates](#file-templates)
     + [Nunjucks](#nunjucks)
       - [Template](#template-1)
         * [Template Context](#template-context-1)
@@ -51,7 +51,7 @@ Generator knows what to generate because you supplement it with a generator temp
       - [Partials](#partials)
         * [Includes](#includes)
         * [Macros](#macros)
-      - [File Templates](#file-templates)
+      - [File Templates](#file-templates-1)
     + [Hooks](#hooks)
       - [Custom Template Hooks](#custom-template-hooks)
       - [Official AsyncAPI Hooks](#official-asyncapi-hooks)
@@ -231,6 +231,7 @@ Generator passes to render engine extra context that you can access in templates
 - `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
 - `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
 - `params` is an Object with all the parameters passed to the Generator by the user.
+- ...and other parameters related to the [`File templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) feature.
 
 ###### AsyncAPI Document
 
@@ -388,29 +389,23 @@ function BodyContent({ asyncapi }) {
 }
 ```
 
-#### Render set of files
+#### File Templates
 
-Using the React render engine you can from the template file return an array of File components. It's very helpful when you want to render several files with a given structure but with different input data. Check out [template/schemas/$schema-example.js](template/schemas/$schema-example.js) file to see an example on how you render an array of files:
+The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+
+- `schema` that is a Schema object map
+- `schemaName` that is the name of the schema
+
+Template file [template/schemas/$$schema$$.js](template/schemas/$$schema$$.js) is an example of such a file template:
 
 ```js
-/*
- * You can also return an array containing unique File components as the result of the template.
- * Then the generator will reprocess each component and write the contents to a file.
- * Note that you can conditionally name each file or return null by condition, then the generator will skip the component.
- */
-export default function({ asyncapi }) {
-  if (!asyncapi.components().hasSchemas()) {
-    return null;
-  }
-
-  return Object.entries(asyncapi.components().schemas()).map(([schemaName, schema]) => {
-    const name = normalizeSchemaName(schemaName);
-    return (
-      <File name={`${name}.html`}>
-        <SchemaFile schemaName={schemaName} schema={schema} />
-      </File>
-    );
-  });
+export default function({ schemaName, schema }) {
+  const name = normalizeSchemaName(schemaName);
+  return (
+    <File name={`${name}-example.html`}>
+      <SchemaFile schemaName={schemaName} schema={schema} />
+    </File>
+  );
 }
 
 function SchemaFile({ schemaName, schema }) {
@@ -441,6 +436,7 @@ Generator passes to render engine extra context that you can access in templates
 - `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
 - `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
 - `params` is an Object with all the parameters passed to the Generator by the user.
+- ...and other parameters related to the [`File templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) feature.
 
 ###### AsyncAPI Document
 
