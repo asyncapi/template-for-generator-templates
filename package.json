@@ -84,7 +84,8 @@
       }
     },
     "nonRenderableFiles": [
-      "style.css"
+      "style.css",
+      "sample.gif"
     ],
     "generator": ">=1.0.0 <2.0.0",
     "hooks": {

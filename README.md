@@ -161,7 +161,7 @@ Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) or
 
 Templates are highly configurable. This Template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
 
-Both React and Nunjucks template has `hooks` directory. It's a place where you keep hooks that are special JavaScript functions. The [Hooks](#hooks) is a native generator feature, not related to React or Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
+Both React and Nunjucks template has `hooks` directory. It's a place where you keep hooks that are special JavaScript functions. The [Hooks](#hooks) is a native Generator feature, not related to React or Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
 
 This Template contains an example implementation of all features includes in the Generator, both in React and in Nunjucks.
 
@@ -172,7 +172,7 @@ The list of resources that are relevant for this Template using React:
 - `template` is a directory where you keep all the files that will be processed by the Generator using React. Only files with the `.js`, `.jsx` and `.cjs` extensions are taken and processed by the Generator. The rest are skipped.
 - `partials` is a directory where you keep reusable parts (called also components) of the templates. You can also put there helper functions to handle perform actions on AsyncAPI data inside components.
 
-> **NOTE**: `partials` directory is recommended way to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder.
+> **NOTE**: `partials` directory is recommended way to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
 > **NOTE**: If you are using React as a rendering engine, you should delete the given folders which are related to Nunjucks: `filters`, `template_njk`, `partials_njk`.
 
@@ -180,13 +180,150 @@ The list of resources that are relevant for this Template using React:
 
 The list of resources that are relevant for this Template using Nunjucks:
 
-- `filters` is a directory where you keep filters later used in files from the `template` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
 - `template_njk` is a directory where you keep all the files that will be processed by the Generator using Nunjucks. 
 - `partials_njk` is a directory where you keep [reusable parts](https://mozilla.github.io/nunjucks/templating.html#include) of the templates. You can also put there [Nunjucks macros](https://mozilla.github.io/nunjucks/templating.html#macro) that are like includes but customizable as you can pass custom arguments to them like to functions.
+- `filters` is a directory where you keep filters later used in files from the `template_njk` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
 
-> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`.  You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials` and remove the `renderer` field from [`generator`](#configuration) section.
+> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`. You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials`, remove the `renderer` field from [`generator`](#configuration) section and remove `react`, `@asyncapi/generator-react-sdk` and `source-map-support` dependencies in the `package.json` file under `dependencies` field.
 
-### Template Specific Filters
+#### Template
+
+Checkout `template_njk` directory to see how different features of the generator are presented.
+
+##### Template Context
+
+Generator passes to render engine extra context that you can access in templates:
+- `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
+- `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
+- `params` is an Object with all the parameters passed to the Generator by the user.
+
+###### AsyncAPI Document
+
+Check out [template_njk/index.html](template_njk/index.html) file to see an example of how you can access the contents of the AsyncAPI document:
+
+```njk
+<!-- If you have some information that you want to use in the Template more than once, you can set a variable and reuse it
+Important to notice here is how the title of the AsyncAPI document is accessed. It is not protected from the situation that "info" or "title" 
+are not provided in the document because there are not many required fields. 
+To read more about Nunjucks Tag called set go to https://mozilla.github.io/nunjucks/templating.html#set -->
+{% set apiName = asyncapi.info().title() %}
+
+<!-- Below you can see how you access variable's value with double curly braces -->
+<h1>{{ apiName }}</h1>
+```
+
+Accessing document data is made easier thanks to what AsyncAPI JavaScript Parser is doing to the AsyncAPI document. Have a look at [template_njk/index.html](template_njk/index.html) and this part of the Template:
+
+```njk
+Share your feedback with us on <a href="http://twitter.com/{{ asyncapi.info().extension('x-twitter') }}">Twitter</a>
+```
+
+When accessing AsyncAPI document contents, use Parser's [API documentation](https://github.com/asyncapi/parser-js/blob/master/API.md).
+
+###### Parameters Passed To Generator By The User
+
+Check out [template_njk/index.html](template_njk/index.html) file to see an example of how you can access custom parameters passed by the user 
+
+```njk
+/*
+ * You can access "maxTextSide" parameter value without any conditions in case the user did not provide such a parameter. 
+ * It is possible thanks to the functionality that makes it possible for template developers to specify default values for parameters.
+ * Check out package.json file and look for generator.parameters.maxTextSize and its description and default value.
+ */
+maxTextSize: {{ params.maxTextSize }}
+```
+
+##### Using Filters
+
+We can differentiate three types of filters in the Generator:
+
+- default filters that are part of the Nunjucks templating engine
+- generic filters provided by AsyncAPI Initiative
+- your custom template filters
+
+###### Nunjucks Built-In Filters
+
+All built-in filters are listed [here](https://mozilla.github.io/nunjucks/templating.html#builtin-filters).
+
+The most commonly used filter during template development is `dump` that internally calls `JSON.stringify` and allows you to render in your template file the entire object. Very useful during debugging. 
+
+In [partials/diagramContent.html](partials/diagramContent.html) file there is a use case for `dictsort` filter:
+
+```njk
+<!-- Usage of build-in "dictsort" Nunjucks filter for sorting items alphabetically 
+and how it works in a for loop -->
+{% for schemaName in asyncapi.components().schemas() | dictsort %}
+  <li>{{ schemaName[0] }}</li>
+{% endfor %}
+```
+
+###### Official AsyncAPI Filters
+
+AsyncAPI Initiative provides a library of filters. You can also create such a library for your templates. You add such a library to `dependencies` in the `package.json` file and configure in the `generator.filters` section like:
+
+```json
+{
+  ...
+  "generator": {
+    ...
+    "filters": [
+      "@asyncapi/generator-filters"
+    ]
+  }
+}
+```
+
+What you get in exchange:
+
+- Access to all the filters listed [here](https://github.com/asyncapi/generator-filters/blob/master/docs/api.md#functions) like super useful `log` filter that works similar to Nunjucks `dump` filter but instead of dumping information in the template file, it logs it to the terminal.
+- Access to all [Lodash](https://lodash.com/docs/4.17.15) functions that are made available as filters.
+
+Check [partials/diagramContent.html](partials/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter:
+
+```njk
+{{ "Template cannot generate proper diagram because you have no schemas defined in components section" | log }}
+```
+
+Also have a look at [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file to see `generateExample` filter in action:
+
+```html
+<pre class="hljs mb-4 border border-grey-darkest rounded">
+  <code>
+    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+    {{ schema.json() | generateExample | safe }}
+  </code>
+</pre>
+```
+
+###### Chaining Filters
+
+You can use more than one filter on values passed by Nunjucks. It is called chaining and is done using pipe `|` as you can in [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file:
+
+```html
+<pre class="hljs mb-4 border border-grey-darkest rounded">
+  <code>
+    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+    {{ schema.json() | generateExample | safe }}
+  </code>
+</pre>
+```
+
+Also have a look at the [template/index.html](template/index.html) file to see how using chaining and Nunjucks built-in filters you can get a HTML link out of the link represented as a string:
+
+```html
+{% if asyncapi.hasExternalDocs() %}
+  <!-- You can see chaining of filters here, where one value is processed by two filters, one after another -->
+  Don't forget to visit our website {{ asyncapi.externalDocs().url() | urlize | safe }}.
+{% endif %}
+```
+
+###### Template Custom Filters
+
+Template custom filters are the ones attached to your Template. Check [Template specific filters](#template-specific-filters) section to understand how they work.
+
+Custom filters do not have to be part of the Template, they can be released as a separate package. You do it when you have more than one Template that uses the same filter. There is, for example, an official library of filters provided by the AsyncAPI Initiative. Check [Official AsyncAPI Filters](#official-asyncapi-filters) section for more details.
+
+#### Template Specific Filters
 
 Check out [filters/mermaidDiagram.js](filters/mermaidDiagram.js) file to see an example of the custom filter that template developers can write for their template files. It exports a JavaScript function called `generateMermaidDiagram` that accepts parsed AsyncAPI document as an argument and returns a [Mermaid class diagram](https://mermaid-js.github.io/mermaid/#/) that visualizes the data model basing on schemas provided in the document.
 
@@ -231,7 +368,103 @@ Important things to notice:
   });
   ```
 
-- Example filter is used in [template/index.html](template/index.html) using Nunjucks syntax `{{ asyncapi | generateMermaidDiagram }}`
+- Example filter is used in [template_njk/index.html](template_njk/index.html) using Nunjucks syntax `{{ asyncapi | generateMermaidDiagram }}`
+
+##### What Else I Can Do?
+
+You can for example have conditions like in [partials/diagramContent.html](partials/diagramContent.html) file:
+
+```html
+{% if asyncapi.hasComponents() and asyncapi.components().schemas() %}
+...
+{% else %}
+...
+{% endif %}
+```
+
+Nunjucks templating engine is very powerful with many different options. Whenever you develop a template, always consult not only with Generator docs but also [Nunjucks docs](https://mozilla.github.io/nunjucks/templating.html).
+
+#### Partials
+
+In the `partials_njk` directory, you can find two files, one is an example of Nunjucks [include](https://mozilla.github.io/nunjucks/templating.html#include), and another one is a [macro](https://mozilla.github.io/nunjucks/templating.html#macro). Use this feature to partition your Template into smaller chunks that make future maintenance of the Template easier.
+
+##### Includes
+
+Check our [partials/diagramContent.html](partials/diagramContent.html) file to see how `includes` work. It is just a simple file with content that can be included in another file. Have a look at [template/index.html](template/index.html) file to understand how to use include:
+
+```njk
+{% include "partials/diagramContent.html" %}
+```
+
+##### Macros
+
+Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials_njk/listChannels.html](partials/listChannels.html) file to see an example macro called `listChannels`:
+
+```html
+{% macro listChannels(channels, operationType) %}
+<h2>
+  Channels that you can {{ operationType }} to
+</h2>
+<hr />
+<br />
+<div class="container mx-auto px-8">
+  <ul class="list-disc"></ul>
+    {% for channelName, channel in channels %}
+      {% if operationType === 'publish' %} 
+          {% if channel.hasPublish() %} 
+              <li><strong>{{ channelName }}</strong></li>
+          {% endif %}
+      {% elif operationType === 'subscribe' %}
+          {% if channel.hasSubscribe() %} 
+              <li><strong>{{ channelName }}</strong></li>
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endmacro %}
+```
+
+This macro is used in the [template_njk/index.html](template/index.html) file:
+
+```njk
+{% from "partials/listChannels.html" import listChannels %}
+...
+{{ listChannels(asyncapi.channels(), 'subscribe') }}
+{{ listChannels(asyncapi.channels(), 'publish') }}
+```
+
+#### File Templates
+
+The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+
+- `schema` that is a Schema object map
+- `schemaName` that is the name of the schema
+
+Template file [template_njk/schemas/$$schema$$-example.html](template_njk/schemas/$$schema$$-example.html) is an example of such a file template:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mx-auto px-4">       
+      This is an example for {{schemaName}} schema:
+      <pre class="hljs mb-4 border border-grey-darkest rounded">
+        <code>
+          <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
+          {{ schema.json() | generateExample | safe }}
+        </code>
+      </pre>
+    </div>
+  </body>
+</html>
+```
+
+This one HTML template file results in multiple HTML files, one per schema.
 
 ### Hooks
 
@@ -242,6 +475,7 @@ Hooks are functions called by the generator on a specific moment in the generati
 Check out [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to see an example of the hook. It is a hook that is invoked by the Generator after the template generation process is completed. Generator passes its context to hooks, which means you have access to data like `targetDir` that is a path to the directory where Template is generated, or `templateParams` with information about custom parameters passed by the user. This example hook provides optional features to the Template, like PNG/PDF/SVG generation, that the user decides on with custom parameters. That is not the only use case for the hook. There are more use cases like, for example, template cleanup operations after generation or modifications of the AsyncAPI document right before the generation.
 
 Important things to notice:
+
 - Hooks, like in the case of the filter, is a regular JavaScript function that can have its dependencies like `const puppeteer = require('puppeteer');` that you need to add to your `package.json` file.
 - Remember to specify what hook type your hook function belongs to:
   
@@ -288,246 +522,13 @@ Notice that you can specify one or many hooks you want to reuse from the library
 
 Using, for example, the Generator CLI, you can, for example, pass `-p asyncapiFileDir=nested/dir`, and as a result, you get `asyncapi.yaml` file in `nested/dir` directory.
 
-### Template
-
-Checkout `template` directory to see how different features of the generator are presented.
-
-#### Template Context
-
-Generator passes to render engine extra context that you can access in templates:
-- `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
-- `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
-- `params` is an Object with all the parameters passed to the Generator by the user.
-
-##### AsyncAPI Document
-
-Check out [template/index.html](template/index.html) file to see an example of how you can access the contents of the AsyncAPI document:
-
-```html
-<!-- If you have some information that you want to use in the Template more than once, you can set a variable and reuse it
-Important to notice here is how the title of the AsyncAPI document is accessed. It is not protected from the situation that "info" or "title" 
-are not provided in the document because there are not many required fields. 
-To read more about Nunjucks Tag called set go to https://mozilla.github.io/nunjucks/templating.html#set -->
-{% set apiName = asyncapi.info().title() %}
-
-<!-- Below you can see how you access variable's value with double curly braces -->
-<h1>{{ apiName }}</h1>
-```
-
-Accessing document data is made easier thanks to what AsyncAPI JavaScript Parser is doing to the AsyncAPI document. Have a look at [template/index.html](template/index.html) and this part of the Template:
-
-```html
-Share your feedback with us on <a href="http://twitter.com/{{ asyncapi.info().extension('x-twitter') }}">Twitter</a>
-```
-
-When accessing AsyncAPI document contents, use Parser's [API documentation](https://github.com/asyncapi/parser-js/blob/master/API.md).
-
-##### Parameters Passed To Generator By The User
-
-Check out [template/index.html](template/index.html) file to see an example of how you can access custom parameters passed by the user 
-
-```njk
-/*
- * You can access "maxTextSide" parameter value without any conditions in case the user did not provide such a parameter. 
- * It is possible thanks to the functionality that makes it possible for template developers to specify default values for parameters.
- * Check out package.json file and look for generator.parameters.maxTextSize and its description and default value.
- */
-maxTextSize: {{ params.maxTextSize }}
-```
-
-#### Using Filters
-
-We can differentiate three types of filters in the Generator:
-
-- default filters that are part of the Nunjucks templating engine
-- generic filters provided by AsyncAPI Initiative
-- your custom template filters
-
-##### Nunjucks Built-In Filters
-
-All built-in filters are listed [here](https://mozilla.github.io/nunjucks/templating.html#builtin-filters).
-
-The most commonly used filter during template development is `dump` that internally calls `JSON.stringify` and allows you to render in your template file the entire object. Very useful during debugging. 
-
-In [partials/diagramContent.html](partials/diagramContent.html) file there is a use case for `dictsort` filter:
-
-```njk
-<!-- Usage of build-in "dictsort" Nunjucks filter for sorting items alphabetically 
-and how it works in a for loop -->
-{% for schemaName in asyncapi.components().schemas() | dictsort %}
-  <li>{{ schemaName[0] }}</li>
-{% endfor %}
-```
-
-##### Official AsyncAPI Filters
-
-AsyncAPI Initiative provides a library of filters. You can also create such a library for your templates. You add such a library to `dependencies` in the `package.json` file and configure in the `generator.filters` section like:
-
-```json
-{
-  ...
-  "generator": {
-    ...
-    "filters": [
-      "@asyncapi/generator-filters"
-    ]
-  }
-}
-```
-
-What you get in exchange:
-
-- Access to all the filters listed [here](https://github.com/asyncapi/generator-filters/blob/master/docs/api.md#functions) like super useful `log` filter that works similar to Nunjucks `dump` filter but instead of dumping information in the template file, it logs it to the terminal.
-- Access to all [Lodash](https://lodash.com/docs/4.17.15) functions that are made available as filters.
-
-Check [partials/diagramContent.html](partials/diagramContent.html) to see how `log` filter is used. As you can see, it works like any other Nunjucks filter:
-
-```njk
-{{ "Template cannot generate proper diagram because you have no schemas defined in components section" | log }}
-```
-
-Also have a look at [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file to see `generateExample` filter in action:
-
-```html
-<pre class="hljs mb-4 border border-grey-darkest rounded">
-  <code>
-    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-    {{ schema.json() | generateExample | safe }}
-  </code>
-</pre>
-```
-
-##### Template Custom Filters
-
-Template custom filters are the ones attached to your Template. Check [Template specific filters](#template-specific-filters) section to understand how they work.
-
-Custom filters do not have to be part of the Template, they can be released as a separate package. You do it when you have more than one Template that uses the same filter. There is, for example, an official library of filters provided by the AsyncAPI Initiative. Check [Official AsyncAPI Filters](#official-asyncapi-filters) section for more details.
-
-#####  Chaining Filters
-
-You can use more than one filter on values passed by Nunjucks. It is called chaining and is done using pipe `|` as you can in [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) file:
-
-```html
-<pre class="hljs mb-4 border border-grey-darkest rounded">
-  <code>
-    <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-    {{ schema.json() | generateExample | safe }}
-  </code>
-</pre>
-```
-
-Also have a look at the [template/index.html](template/index.html) file to see how using chaining and Nunjucks built-in filters you can get a HTML link out of the link represented as a string:
-
-```html
-{% if asyncapi.hasExternalDocs() %}
-  <!-- You can see chaining of filters here, where one value is processed by two filters, one after another -->
-  Don't forget to visit our website {{ asyncapi.externalDocs().url() | urlize | safe }}.
-{% endif %}
-```
-
-#### What Else I Can Do?
-
-You can for example have conditions like in [partials/diagramContent.html](partials/diagramContent.html) file:
-
-```html
-{% if asyncapi.hasComponents() and asyncapi.components().schemas() %}
-...
-{% else %}
-...
-{% endif %}
-```
-
-Nunjucks templating engine is very powerful with many different options. Whenever you develop a template, always consult not only with Generator docs but also [Nunjucks docs](https://mozilla.github.io/nunjucks/templating.html).
-
-### Partials
-
-In the `partials_njk` directory, you can find two files, one is an example of Nunjucks [include](https://mozilla.github.io/nunjucks/templating.html#include), and another one is a [macro](https://mozilla.github.io/nunjucks/templating.html#macro). Use this feature to partition your Template into smaller chunks that make future maintenance of the Template easier.
-
-#### Includes
-
-Check our [partials/diagramContent.html](partials/diagramContent.html) file to see how `includes` work. It is just a simple file with content that can be included in another file. Have a look at [template/index.html](template/index.html) file to understand how to use include:
-
-```njk
-{% include "partials/diagramContent.html" %}
-```
-
-#### Macros
-
-Macros are like dynamic includes that change depending on the input that you pass to the macro. It is like a function with arguments. Check out [partials_njk/listChannels.html](partials/listChannels.html) file to see an example macro called `listChannels`:
-
-```html
-{% macro listChannels(channels, operationType) %}
-<h2>
-  Channels that you can {{ operationType }} to
-</h2>
-<hr />
-<br />
-<div class="container mx-auto px-8">
-  <ul class="list-disc"></ul>
-    {% for channelName, channel in channels %}
-      {% if operationType === 'publish' %} 
-          {% if channel.hasPublish() %} 
-              <li><strong>{{ channelName }}</strong></li>
-          {% endif %}
-      {% elif operationType === 'subscribe' %}
-          {% if channel.hasSubscribe() %} 
-              <li><strong>{{ channelName }}</strong></li>
-          {% endif %}
-      {% endif %}
-    {% endfor %}
-  </ul>
-</div>
-{% endmacro %}
-```
-
-This macro is used in the [template_njk/index.html](template/index.html) file:
-
-```njk
-{% from "partials/listChannels.html" import listChannels %}
-...
-{{ listChannels(asyncapi.channels(), 'subscribe') }}
-{{ listChannels(asyncapi.channels(), 'publish') }}
-```
-
-### File Templates
-
-The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
-
-- `schema` that is a Schema object map
-- `schemaName` that is the name of the schema
-
-Template file [template/schemas/$$schema$$-example.html](template/schemas/$$schema$$-example.html) is an example of such a file template:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container mx-auto px-4">       
-      This is an example for {{schemaName}} schema:
-      <pre class="hljs mb-4 border border-grey-darkest rounded">
-        <code>
-          <!-- Here you can see an example of chaining filters and also usage of a filter provided by @asyncapi/generator-filters package -->
-          {{ schema.json() | generateExample | safe }}
-        </code>
-      </pre>
-    </div>
-  </body>
-</html>
-```
-
-This one HTML template file results in multiple HTML files, one per schema.
-
 ### Configuration
 
 Put configuration of the Generator in the `package.json` file in the `generator` section. This Template covers most of the configuration options.
 
 #### `renderer`
 
-The template engine can be either `react` (recommended) or `nunjucks` (default). This can be controlled with the `renderer` property.
+You can write template using tool which you prefer more. The template engine can be either `react` (recommended) or `nunjucks` (default). This can be controlled with the `renderer` property.
 
 ```json
 "generator": {
@@ -571,15 +572,18 @@ Templates can be customizable using parameters. Parameters allow you to create m
 
 #### `nonRenderableFiles`
 
-This Template has a binary file that should not be rendered by the Generator to avoid generation errors.
+This Template has a binary and `.css` files that should not be rendered by the Generator to avoid generation errors.
 
 ```json
 "generator": {
   "nonRenderableFiles": [
+    "style.css",
     "sample.gif"
   ]
 }
 ```
+
+> **NOTE**: All mentioned files in the `nonRenderableFiles` field are copied to the output folder.
 
 #### `generator`
 
