@@ -16,6 +16,7 @@ describe('templateGenerationResult()', () => {
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
       forceWrite: true
     });
+    console.log('no idea');
     await generator.generateFromURL(dummySpecUrl);
   });
 
