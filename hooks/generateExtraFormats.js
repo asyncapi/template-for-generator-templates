@@ -12,11 +12,7 @@ async function generatePdfPngSvg(generator) {
   //all actions of this hook depend on parameters passed by the user, if non are provided we should just stop the hook
   if (!parameters) return;
 
-  const browser = await puppeteer.launch({ 
-    args: [
-      '--window-size=1920,1080'
-    ],
-    defaultViewport: null});
+  const browser = await puppeteer.launch();
   //mermaid has this strange behaviour that it generates the id of the diagram using current date which makes it totally not possible to test
   //we override date.now() here to make sure always the same number is returned, which is also fine for produciton as only one diagram will be on index.html
   browser.on('targetchanged', async target => {
