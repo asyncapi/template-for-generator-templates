@@ -199,7 +199,9 @@ Checkout [`template`](template) directory to see how different features of the g
 For the generator to render a file with React certain conditions are required:
 
 1. The file should export a default function (example see the [`template/index.js`](template/index.js) file).
-2. That function should return a `<File>` component as root component which contains the necessary metadata for the Generator to render the file. Returning `null`, `undefined` or another negative value forces the Generator to not create the file.
+2. That function should return a `<File>` component as root component which contains the necessary metadata for the Generator to render the file. Returning `null`, `undefined` or another negative value forces the Generator to not create the file. Metadata contains:
+  - `name` describes the filename for which should be used when generating the file. If none is specified the filename for the template are used.
+  - `permissions` describes the permissions the file should be created with. This is interpreted as an octal number such as .
 
 ```js
 /*
