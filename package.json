@@ -4,7 +4,10 @@
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "npm run testTemplate && npm run testHooks && npm run testFilters",
+    "testTemplate": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
+    "testHooks": "rimraf test/temp && jest --coverage -t 'generateExtraFormats'",
+    "testFilters": "rimraf test/temp && jest --coverage -t 'generateMermaidDiagram'",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
     "gen-readme-toc": "markdown-toc -i README.md",
@@ -102,6 +105,7 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^26.4.2",
     "markdown-toc": "^1.2.0",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1"
   },
   "jest": {
