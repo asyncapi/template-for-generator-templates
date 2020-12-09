@@ -11,7 +11,11 @@ describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
 
   it('generated correct index.html with diagram source', async () => {
-    await generator.generateFromURL(dummySpecUrl);
+    try {
+      await generator.generateFromURL(dummySpecUrl);
+    } catch (error) {
+      console.error(error);
+    }
     const index = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(index).toMatchSnapshot();
   });
