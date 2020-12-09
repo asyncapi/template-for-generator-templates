@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateExtraFormats() generated correct index.html with diagram source 1`] = `
+exports[`templateGenerationResult() generated correct index.html with diagram source 1`] = `
 "
 
 
