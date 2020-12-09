@@ -10,14 +10,14 @@ describe('templateGenerationResult()', () => {
 
   beforeAll(async() => {
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
-      forceWrite: true
+      forceWrite: true,
+      templateParams: {
+        svg: 'true',
+        png: 'true',
+        pdf: 'true'
+      }
     });
-    
-    try {
-      await generator.generateFromURL(dummySpecUrl);
-    } catch (e) {
-      console.error(e);
-    }
+    await generator.generateFromURL(dummySpecUrl);
   });
 
   it('generated correct index.html with diagram source', async () => {
