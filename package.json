@@ -4,7 +4,7 @@
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
   "main": "index.js",
   "scripts": {
-    "test": "rimraf test/temp && jest --coverage",
+    "test": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
     "gen-readme-toc": "markdown-toc -i README.md",
