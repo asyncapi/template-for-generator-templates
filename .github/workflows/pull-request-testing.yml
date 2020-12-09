@@ -9,7 +9,7 @@ jobs:
     if: github.event.pull_request.draft == false
     name: 'Testing pull request'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
