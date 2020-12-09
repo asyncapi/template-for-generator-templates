@@ -1,4 +1,4 @@
-const { readFile } = require('fs').promises;
+const { existsSync } = require('fs');
 const path = require('path');
 const Generator = require('@asyncapi/generator');
 const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
@@ -7,17 +7,31 @@ const outputDir = path.resolve('test/temp', Math.random().toString(36).substring
 const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
   forceWrite: true,
   templateParams: {
-    svg: 'true'
+    svg: 'true',
+    png: 'true',
+    pdf: 'true'
   }
 });
 
 describe('generateExtraFormats()', () => {
   jest.setTimeout(30000);
 
-  it('generates correct svg diagram', async () => {
+  it('svg diagram file is generated', async () => {
     await generator.generateFromURL(dummySpecUrl);
-    const svg = await readFile(path.join(outputDir, 'index.svg'), 'utf8');
-    expect(svg).toMatchSnapshot();
+    const svg = existsSync(path.join(outputDir, 'index.svg'));
+    expect(svg).toBeTruthy();
+  });
+
+  it('png diagram file is generated', async () => {
+    await generator.generateFromURL(dummySpecUrl);
+    const png = existsSync(path.join(outputDir, 'index.png'));
+    expect(png).toBeTruthy();
+  });
+
+  it('pdf diagram file is generated', async () => {
+    await generator.generateFromURL(dummySpecUrl);
+    const pdf = existsSync(path.join(outputDir, 'index.pdf'));
+    expect(pdf).toBeTruthy();
   });
 });
   
