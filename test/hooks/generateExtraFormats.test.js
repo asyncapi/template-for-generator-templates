@@ -16,20 +16,19 @@ const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, {
 describe('generateExtraFormats()', () => {
   jest.setTimeout(30000);
 
+  beforeAll(async() => await generator.generateFromURL(dummySpecUrl));
+
   it('svg diagram file is generated', async () => {
-    await generator.generateFromURL(dummySpecUrl);
     const svg = existsSync(path.join(outputDir, 'index.svg'));
     expect(svg).toBeTruthy();
   });
 
   it('png diagram file is generated', async () => {
-    await generator.generateFromURL(dummySpecUrl);
     const png = existsSync(path.join(outputDir, 'index.png'));
     expect(png).toBeTruthy();
   });
 
   it('pdf diagram file is generated', async () => {
-    await generator.generateFromURL(dummySpecUrl);
     const pdf = existsSync(path.join(outputDir, 'index.pdf'));
     expect(pdf).toBeTruthy();
   });
