@@ -1,12 +1,12 @@
 const { readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('@asyncapi/generator');
-const { 'generate:after': generatePdfPngSvg } = require('../../hooks/generateExtraFormats.js');
 const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
 
 describe('generateExtraFormats()', () => {
   //you always want to generate to new directory to make sure test runs in clear environment
   const outputDir = path.resolve('test/temp', Math.random().toString(36).substring(7));
+  console.log('__dirname', __dirname);
   const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
     forceWrite: true,
     templateParams: {
@@ -15,8 +15,9 @@ describe('generateExtraFormats()', () => {
     }
   });
   beforeAll(async () => {
+    console.log('before generation');
     await generator.generateFromURL(dummySpecUrl);
-    await generatePdfPngSvg(generator);
+    console.log('after generation');
   });
 
   it('generates correct svg diagram', async () => {
