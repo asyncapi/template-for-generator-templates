@@ -6,16 +6,16 @@ const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.
 describe('generateExtraFormats()', () => {
   //you always want to generate to new directory to make sure test runs in clear environment
   const outputDir = path.resolve('test/temp', Math.random().toString(36).substring(7));
-  console.log('__dirname', __dirname);
-  const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
-    forceWrite: true,
-    templateParams: {
-      svg: 'true',
-      png: 'true'
-    }
-  });
+
   beforeAll(async () => {
     console.log('before generation');
+    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
+      forceWrite: true,
+      templateParams: {
+        svg: 'true',
+        png: 'true'
+      }
+    });
     await generator.generateFromURL(dummySpecUrl);
     console.log('after generation');
   });
