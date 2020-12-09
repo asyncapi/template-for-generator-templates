@@ -43,7 +43,13 @@ To read more about Nunjuck's Tag called set go to https://mozilla.github.io/nunj
              * It is possible thanks to the functionality that makes it possuble for template developer to specify default values for parameters.
              * Check out package.json file and look for generator.parameters.maxTextSize and its description and default value.
              */
-            maxTextSize: {{ params.maxTextSize }}
+            maxTextSize: {{ params.maxTextSize }},
+            mermaid: {
+                callback:function() {
+                    var svg = document.getElementById('mermaid-0');
+                    svg.setAttribute('viewBox', '-55 -20 592.9453125 424');
+                }
+            }
         });
     </script>
 </body>

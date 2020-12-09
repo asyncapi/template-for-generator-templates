@@ -27,7 +27,7 @@ async function generatePdfPngSvg(generator) {
     });
   });
   const page = await browser.newPage();
-  await page.goto(`file://${path.join(targetDir, 'index.html')}`);
+  await page.goto(`file://${path.join(targetDir, 'index.html')}`, {waitUntil: 'networkidle2'});
   
   if (parameters.pdf === 'true') await page.pdf({ format: 'A4', path: `${targetDir}/index.pdf` });
 

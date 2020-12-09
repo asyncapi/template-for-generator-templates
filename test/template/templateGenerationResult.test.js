@@ -8,6 +8,8 @@ const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, {
   forceWrite: true
 });
 describe('generateExtraFormats()', () => {
+  jest.setTimeout(30000);
+
   it('generated correct index.html with diagram source', async () => {
     await generator.generateFromURL(dummySpecUrl);
     const index = await readFile(path.join(outputDir, 'index.html'), 'utf8');
