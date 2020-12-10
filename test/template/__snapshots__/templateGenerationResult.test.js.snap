@@ -144,7 +144,7 @@ sentAt string
 
 class dummyObject {
           dummyObjectProp1 string
-dummyObjectProp2 [CIRCULAR] object
+dummyObjectProp2 object
 }
           dummyObject --|&gt; sentAt
 dummyObject --|&gt; dummyRecursiveObject
