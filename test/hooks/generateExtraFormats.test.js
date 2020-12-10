@@ -1,32 +1,37 @@
-const os = require('os');
-const { readFile } = require('fs').promises;
+const { existsSync } = require('fs');
 const path = require('path');
 const Generator = require('@asyncapi/generator');
-const { 'generate:after': generatePdfPngSvg } = require('../../hooks/generateExtraFormats.js');
-const dummySpecUrl = 'https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
+const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
+//you always want to generate to new directory to make sure test runs in clear environment
+const outputDir = path.resolve('test/temp/generateExtraFormats', Math.random().toString(36).substring(7));
 
 describe('generateExtraFormats()', () => {
-  //you always want to generate to new directory to make sure test runs in clear environment
-  const outputDir = path.resolve(os.tmpdir(), Math.random().toString(36).substring(7));
-  const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
-    templateParams: {
-      svg: 'true',
-      png: 'true'
-    }
-  });
-  beforeAll(async () => {
+  jest.setTimeout(30000);
+
+  beforeAll(async() => {
+    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
+      forceWrite: true,
+      templateParams: {
+        svg: 'true',
+        png: 'true',
+        pdf: 'true'
+      }
+    });
     await generator.generateFromURL(dummySpecUrl);
-    await generatePdfPngSvg(generator);
+  });
+  it('svg diagram file is generated', async () => {
+    const svg = existsSync(path.join(outputDir, 'index.svg'));
+    expect(svg).toBeTruthy();
   });
 
-  it('generates correct svg diagram', async () => {
-    const svg = await readFile(path.join(outputDir, 'index.svg'), 'utf8');
-    expect(svg).toMatchSnapshot();
+  it('png diagram file is generated', async () => {
+    const png = existsSync(path.join(outputDir, 'index.png'));
+    expect(png).toBeTruthy();
   });
 
-  it('generates correct png diagram', async () => {
-    const png = await readFile(path.join(outputDir, 'index.png'), 'utf8');
-    expect(png).toMatchSnapshot();
+  it('pdf diagram file is generated', async () => {
+    const pdf = existsSync(path.join(outputDir, 'index.pdf'));
+    expect(pdf).toBeTruthy();
   });
 });
   
