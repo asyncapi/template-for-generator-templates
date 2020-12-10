@@ -135,21 +135,21 @@ There are two ways you can work on template development:
 
 # Template render engine
 
-The [Generator](https://github.com/asyncapi/generator) supports feature called templating engine. You can write template using tool which you prefer more. The template engine at the moment can be either [React](https://github.com/asyncapi/generator-react-sdk) (recommended) or [Nunjucks](https://mozilla.github.io/nunjucks/) (default). This can be controlled with the `renderer` property in the [template configuration](#renderer).
+The [Generator](https://github.com/asyncapi/generator) allows you to write templates using [React](https://github.com/asyncapi/generator-react-sdk) (recommended) or [Nunjucks](https://mozilla.github.io/nunjucks/) (default). This can be controlled with the `renderer` property in the [template configuration](#renderer).
 
 # Learning Resources
 
-Alwasy during template development consult for this documentation:
+While developing a new template, make sure you check out the following documentation:
 
 - [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs/authoring.md)
 - [AsyncAPI JavaScript Parser API reference](https://github.com/asyncapi/parser-js/blob/master/API.md)
 
-Additional resources for the React:
+If you're using React for your template:
 
 - [React SDK documentation](https://github.com/asyncapi/generator-react-sdk)
 - [React documentation](https://en.reactjs.org/docs/getting-started.html)
 
-Additional resources for the Nunjucks:
+If you're using Nunjucks for your template:
 
 - [Nunjucks documentation](https://mozilla.github.io/nunjucks/getting-started.html)
 
@@ -171,22 +171,21 @@ Every resource in this repository is essential for the overall template setup. N
 
 ## Sample Template That Presents Generator Features And Best Practices In Using Them
 
-Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) or [Nunjucks](https://mozilla.github.io/nunjucks/) templating engine. You can choose the one you prefer. Each render engine has a different way of working and a different set of features. Keep that in mind when familiarizing with the Generator functionality.
+Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) (if you're using React) or [Nunjucks](https://mozilla.github.io/nunjucks/) (if you're using Nunjucks) templating engine. You can choose the one you prefer. Each rendering engine has a different way of working and a different set of features. Keep that in mind when familiarizing yourself with the Generator functionality.
 
-Templates are highly configurable. This Template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
+Templates are highly configurable. This template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
 
-Both React and Nunjucks template has `hooks` directory. It's a place where you keep hooks that are special JavaScript functions. The [Hooks](#hooks) is a native Generator feature, not related to React or Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
+Both React and Nunjucks templates can have a `hooks` directory containing [**hooks**](#hooks),  which are special JavaScript functions. This is a native Generator feature and it's not related to React or Nunjucks. It allows you to plug into different stages of the generation process with some custom logic.
 
-This Template contains an example implementation of all features includes in the Generator, both in React and in Nunjucks.
+This template contains an example implementation of all the features included in Generator, both in React and in Nunjucks.
 
 ### React
 
-The list of resources that are relevant for this Template using React:
+The list of resources that are relevant for this template using React:
 
 - `template` is a directory where you keep all the files that will be processed by the Generator using React. Only files with the `.js`, `.jsx` and `.cjs` extensions are taken and processed by the Generator. The rest are skipped.
-- `partials` is a directory where you keep reusable parts (called also components) of the templates. You can also put there helper functions to handle perform actions on AsyncAPI data inside components.
 
-> **NOTE**: `partials` directory is recommended place to split reusable chunks/helpers. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+> **NOTE**: The reusable parts (components/helpers) can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
 > **NOTE**: If you are using React as a rendering engine, you should delete the given folders which are related to Nunjucks: `filters`, `template_njk`, `partials_njk`.
 
@@ -205,7 +204,7 @@ For the generator to render a file with React certain conditions are required:
 
 ```js
 /*
- * Each template to be rendered must have as a root component a File component or an array of File components,
+ * Each template to be rendered must have as a root component a File component,
  * otherwise it will be skipped.
  * 
  * If you don't want to render anything, you can return `null` and the Generator will skip the given template.
@@ -393,7 +392,7 @@ function BodyContent({ asyncapi }) {
 
 #### File Templates
 
-The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with a special syntax that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. The template gets the following variables in the context:
 
 - `schema` that is a Schema object map
 - `schemaName` that is the name of the schema
@@ -419,13 +418,13 @@ This one template file results in multiple HTML files, one per schema.
 
 ### Nunjucks
 
-The list of resources that are relevant for this Template using Nunjucks:
+The list of resources that are relevant for this template using Nunjucks:
 
 - `template_njk` is a directory where you keep all the files that will be processed by the Generator using Nunjucks. 
 - `partials_njk` is a directory where you keep [reusable parts](https://mozilla.github.io/nunjucks/templating.html#include) of the templates. You can also put there [Nunjucks macros](https://mozilla.github.io/nunjucks/templating.html#macro) that are like includes but customizable as you can pass custom arguments to them like to functions.
 - `filters` is a directory where you keep filters later used in files from the `template_njk` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
 
-> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`. You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials`, remove the `renderer` field from [`generator`](#configuration) section and remove `react`, `@asyncapi/generator-react-sdk` and `source-map-support` dependencies in the `package.json` file under `dependencies` field.
+> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`. You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials`, remove the `renderer` field from [`generator`](#configuration) section and remove `@asyncapi/generator-react-sdk` dependency in the `package.json` file under `dependencies` field.
 
 #### Template
 
@@ -679,7 +678,7 @@ This macro is used in the [template_njk/index.html](template_njk/index.html) fil
 
 #### File Templates
 
-The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with special that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this Template, during generation, `$$schema$$` is replaced with a schema name, and Template gets the following variables in the context:
+The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with a special syntax that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. In this template, during generation, `$$schema$$` is replaced with a schema name, and the template gets the following variables in the context:
 
 - `schema` that is a Schema object map
 - `schemaName` that is the name of the schema

@@ -11,7 +11,7 @@ import { ListChannels } from "../partials/ListChannels";
 import { DiagramContent } from "../partials/DiagramContent";
 
 /* 
- * Each template to be rendered must have as a root component a File component or an array of File components,
+ * Each template to be rendered must have as a root component a File component,
  * otherwise it will be skipped.
  * 
  * If you don't want to render anything, you can return `null` and the Generator will skip the given template.
