@@ -84,10 +84,9 @@
       }
     },
     "nonRenderableFiles": [
-      "style.css",
-      "sample.gif"
+      "style.css"
     ],
-    "generator": ">=1.0.0 <2.0.0",
+    "generator": ">=1.0.2 <2.0.0",
     "filters": [
       "@asyncapi/generator-filters"
     ],
