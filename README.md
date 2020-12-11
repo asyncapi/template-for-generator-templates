@@ -424,7 +424,7 @@ The list of resources that are relevant for this template using Nunjucks:
 - `partials_njk` is a directory where you keep [reusable parts](https://mozilla.github.io/nunjucks/templating.html#include) of the templates. You can also put there [Nunjucks macros](https://mozilla.github.io/nunjucks/templating.html#macro) that are like includes but customizable as you can pass custom arguments to them like to functions.
 - `filters` is a directory where you keep filters later used in files from the `template_njk` directory. Filters are normal JavaScript functions that you can apply to Nunjucks variables in the template files. It is [native Nunjucks functionality](https://mozilla.github.io/nunjucks/templating.html#filters), and we are just making it easier to provide them.
 
-> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`. You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials`, remove the `renderer` field from [`generator`](#configuration) section and remove `@asyncapi/generator-react-sdk` dependency in the `package.json` file under `dependencies` field.
+> **NOTE**: If you are using Nunjucks as a rendering engine, you should delete the given folders which are related to React: `template`, `partials`. You should also change names of folders: `template_njk` -> `template` and `partials_njk` -> `partials`, remove the `renderer` field from [`generator`](#configuration) section and remove `@asyncapi/generator-react-sdk`, `react` dependencies in the `package.json` file under `dependencies` field.
 
 #### Template
 

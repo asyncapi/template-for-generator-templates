@@ -34,10 +34,9 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^1.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "@asyncapi/generator-react-sdk": "file:../generator-react-sdk",
+    "@asyncapi/generator-react-sdk": "^0.1.1",
     "react": "^17.0.1",
-    "puppeteer": "^5.2.1",
-    "source-map-support": "^0.5.19"
+    "puppeteer": "^5.2.1"
   },
   "release": {
     "branches": [
@@ -86,7 +85,7 @@
     "nonRenderableFiles": [
       "style.css"
     ],
-    "generator": ">=1.0.1 <2.0.0",
+    "generator": ">=1.1.0 <2.0.0",
     "filters": [
       "@asyncapi/generator-filters"
     ],

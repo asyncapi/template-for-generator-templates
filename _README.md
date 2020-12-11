@@ -32,7 +32,7 @@ This template generates an HTML page with an overview of the data model provided
 Specify what version of the Generator is your template compatible with. This information should match the information provided in the template configuration under the `generator` property.
 -->
 
-- 1.0.0 =< [Generator](https://github.com/asyncapi/generator/) < 2.0.0,
+- 1.1.0 =< [Generator](https://github.com/asyncapi/generator/) < 2.0.0,
 - Generator specific [requirements](https://github.com/asyncapi/generator/#requirements)
 
 ## Specification requirements
