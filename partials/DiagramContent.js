@@ -3,12 +3,12 @@ import { normalizeSchemaName } from "./common";
 /* 
  * You can use in components also normal JS function. It is important that a given function should returns a string or its derivative.
  *
- * Notice also how it is checked if schemas are provided "asyncapi.components().hasSchemas()". It is risky because schemas object can still be empty.
+ * Notice also how it is checked if schemas are provided "asyncapi.hasComponents() && asyncapi.components().hasSchemas()". It is risky because components and schemas objects can still be empty.
  * Always when you see something useful could be added to the API of parsed AsyncAPI document, please create an issue 
  * https://github.com/asyncapi/parser-js/issues
  */
 export function DiagramContent({ asyncapi }) {
-  if (asyncapi.components().hasSchemas()) {
+  if (asyncapi.hasComponents() && asyncapi.components().hasSchemas()) {
     return schemasContent(asyncapi);
   }
   return fallback();

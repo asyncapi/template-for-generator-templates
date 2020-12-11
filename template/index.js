@@ -2,7 +2,6 @@
  * In every file when you use JSX you must import `react` package. 
  * More info here https://medium.com/@Zwenza/why-do-you-need-to-import-react-in-functional-components-7385e4329ffb
  */
-import React from "react";
 import { File, render } from "@asyncapi/generator-react-sdk";
 
 // Import custom components from file 

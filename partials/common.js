@@ -3,7 +3,6 @@
  * Check the files in the `template` folder to see how to import and use them within a template.
  */
 
-import React from "react";
 import { Indent, IndentationTypes, Text, withIndendation } from "@asyncapi/generator-react-sdk";
 
  /*

@@ -1,4 +1,3 @@
-import React from "react";
 import { File } from "@asyncapi/generator-react-sdk";
 import { generateExample } from "@asyncapi/generator-filters";
 
@@ -14,7 +13,7 @@ import { HTML, Head, Body, normalizeSchemaName } from "../../partials/common";
 export default function({ schemaName, schema }) {
   const name = normalizeSchemaName(schemaName);
   return (
-    <File name={`${name}-example.html`}>
+    <File name={`${name}.html`}>
       <SchemaFile schemaName={schemaName} schema={schema} />
     </File>
   );
