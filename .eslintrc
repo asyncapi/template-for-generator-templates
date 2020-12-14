@@ -6,14 +6,23 @@ env:
 plugins:
   - sonarjs
   - jest
+  - react
 
 extends:
-  - plugin:sonarjs/recommended
+  - eslint:recommended
   - plugin:jest/recommended
+  - plugin:react/recommended
   - plugin:sonarjs/recommended
+  - plugin:security/recommended
 
 parserOptions:
   ecmaVersion: 2018
+  sourceType: module
+  ecmaFeatures: 
+    jsx: true
+settings:
+  react:
+    version: detect
 
 rules:
   # Ignore Rules
@@ -98,3 +107,9 @@ rules:
   prefer-const: 2
   prefer-spread: 2
   prefer-template: 2
+
+  # React
+  react/jsx-uses-react: off
+  react/react-in-jsx-scope: off
+  react/display-name: off
+  react/prop-types: off

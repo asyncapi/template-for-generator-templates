@@ -12,11 +12,11 @@ describe('generateMermaidDiagram()', () => {
   });
 
   it('generation fails as parsed asyncapi file is not passed to the function', () => {
-    expect(() => generateMermaidDiagram('test')).toThrow('You need to pass entire parsed AsyncAPI document as an argument. Try this \"{{ asyncapi | generateMermaidDiagram }}\"');
+    expect(() => generateMermaidDiagram('test')).toThrow('You need to pass entire parsed AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"');
   });
 
   it('generation fails as no argument is passed to the function', () => {
-    expect(() => generateMermaidDiagram()).toThrow('You need to pass entire parsed AsyncAPI document as an argument. Try this \"{{ asyncapi | generateMermaidDiagram }}\"');
+    expect(() => generateMermaidDiagram()).toThrow('You need to pass entire parsed AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"');
   });
 });
 

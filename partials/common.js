@@ -3,9 +3,9 @@
  * Check the files in the `template` folder to see how to import and use them within a template.
  */
 
-import { Indent, IndentationTypes, Text, withIndendation } from "@asyncapi/generator-react-sdk";
+import { Indent, IndentationTypes, Text, withIndendation } from '@asyncapi/generator-react-sdk';
 
- /*
+/*
   * Each component has a `childrenContent` property.
   * It is the processed children content of a component into a pure string. You can use it for compositions in your component.
   * 
@@ -37,12 +37,13 @@ ${childrenContent}
  * If you need indent content inside template you can use `withIndendation` function or wrap content between `Indent` component.
  * The mentioned helper and component can be imported from `@asyncapi/generator-react-sdk` package.
  */
-export function Head({ cssLinks = [] }) {
+export function Head({ title, cssLinks = [] }) {
   const links = cssLinks.map(link => `<link rel="stylesheet" href="${link}">\n`).join('');
 
   const content = `
 <head>
   <meta charset="utf-8">
+  <title>${title}</title>
 ${withIndendation(links, 2, IndentationTypes.SPACES)}
 </head>  
 `;
@@ -81,5 +82,5 @@ export function Line({ childrenContent }) {
 }
 
 export function normalizeSchemaName(schemaName) {
-  return schemaName.replace(/\<|\>/gm, '');
+  return schemaName.replace(/<|>/gm, '');
 }

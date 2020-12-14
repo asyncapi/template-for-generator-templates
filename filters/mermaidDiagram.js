@@ -25,7 +25,7 @@ filter.generateMermaidDiagram = (asyncapi) => {
 
     switch (schema.type()) {
     //in case of object we need to traverse through all properties to list them in the class box
-    case 'object':
+    case 'object': {
       for (const [propName, propValueMap] of Object.entries(schema.properties())) {
         const circularProp = schema.circularProps() && schema.circularProps().includes(propName);
         classContent += circularProp ? `${propName} [CIRCULAR] ${propValueMap.type()}\n` : `${propName} ${propValueMap.type()}\n`;
@@ -34,14 +34,16 @@ filter.generateMermaidDiagram = (asyncapi) => {
         if (!isAnonymousSchema(propSchemaId)) relations += `${schemaId} --|> ${propSchemaId}\n`;
       }
       break;
-      //in case of array we only want to indicate the type of the array items. So far support for object in items is supported
-    case 'array':
+    }
+    //in case of array we only want to indicate the type of the array items. So far support for object in items is supported
+    case 'array': {
       classContent = schema.type();
       if (Array.isArray(schema.items())) return;
       
       const itemSchemaId = schema.items().uid();
       if (!isAnonymousSchema(itemSchemaId)) relations += `${schema.uid()} --|> ${itemSchemaId}\n`;
       break;
+    }
     default:
       classContent = schema.type();
     }

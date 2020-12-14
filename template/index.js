@@ -2,12 +2,12 @@
  * In every file when you use JSX you must import `react` package. 
  * More info here https://medium.com/@Zwenza/why-do-you-need-to-import-react-in-functional-components-7385e4329ffb
  */
-import { File, render } from "@asyncapi/generator-react-sdk";
+import { File, render } from '@asyncapi/generator-react-sdk';
 
 // Import custom components from file 
-import { HTML, Head, Body } from "../partials/common";
-import { ListChannels } from "../partials/ListChannels";
-import { DiagramContent } from "../partials/DiagramContent";
+import { HTML, Head, Body } from '../partials/common';
+import { ListChannels } from '../partials/ListChannels';
+import { DiagramContent } from '../partials/DiagramContent';
 
 /* 
  * Each template to be rendered must have as a root component a File component,
@@ -34,14 +34,17 @@ export default function({ asyncapi, params }) {
   return (
     <File name="index.html">
       <HTML>
-        <Head cssLinks={cssLinks} />
+        <Head 
+          title={asyncapi.info().title()}
+          cssLinks={cssLinks} 
+        />
         <Body>
           <BodyContent asyncapi={asyncapi} />
           <Scripts params={params} />
         </Body>
       </HTML>
     </File>
-  )
+  );
 }
 
 /*
@@ -75,12 +78,12 @@ function BodyContent({ asyncapi }) {
  */
 function Extension({ asyncapi }) {
   if (!asyncapi.info().hasExt('x-twitter')) return null;
-  return `Share your feedback with us on <a href="http://twitter.com/${asyncapi.info().ext('x-twitter')}">Twitter</a>.`
+  return `Share your feedback with us on <a href="http://twitter.com/${asyncapi.info().ext('x-twitter')}">Twitter</a>.`;
 }
 
 function ExternalDocs({ asyncapi }) {
   if (!asyncapi.hasExternalDocs()) return null;
-  return `Don't forget to visit our website ${asyncapi.externalDocs().url()}.`
+  return `Don't forget to visit our website ${asyncapi.externalDocs().url()}.`;
 }
 
 /*

@@ -1,7 +1,7 @@
-import { File } from "@asyncapi/generator-react-sdk";
-import { generateExample } from "@asyncapi/generator-filters";
+import { File } from '@asyncapi/generator-react-sdk';
+import { generateExample } from '@asyncapi/generator-filters';
 
-import { HTML, Head, Body, normalizeSchemaName } from "../../partials/common";
+import { HTML, Head, Body, normalizeSchemaName } from '../../partials/common';
 
 /*
  * Generator has a feature called "file templates" that allows you to create a template file with special name with $$ markers,
@@ -35,7 +35,10 @@ function SchemaFile({ schemaName, schema }) {
 
   return (
     <HTML>
-      <Head cssLinks={['https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css']} />
+      <Head 
+        title={`${schemaName} schema`}
+        cssLinks={['https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css']}
+      />
       <Body>
         {content}
       </Body>

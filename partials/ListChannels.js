@@ -5,14 +5,11 @@
 export function ListChannels({ channels, operationType = 'publish' }) {
   const namesList = Object.entries(channels)
     .map(([channelName, channel]) => {
-      if (operationType === 'publish') {
-        if (channel.hasPublish()) {
-          return `<li><strong>${channelName}</strong></li>`
-        }
-      } else if (operationType === 'subscribe') {
-        if (channel.hasSubscribe()) {
-          return `<li><strong>${channelName}</strong></li>`
-        }
+      if (
+        (operationType === 'publish' && channel.hasPublish()) || 
+        (operationType === 'subscribe' && channel.hasSubscribe())
+      ) {
+        return  `<li><strong>${channelName}</strong></li>`;
       }
     })
     .filter(Boolean);
