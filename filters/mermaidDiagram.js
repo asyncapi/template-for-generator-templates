@@ -9,7 +9,7 @@ const filter = module.exports;
  * 
  * @param {AsyncAPIDocument} asyncapi parsed AsyncAPI document 
  */
-filter.generateMermaidDiagram = (asyncapi) => {
+function generateMermaidDiagram(asyncapi) {
   if (!asyncapi || typeof asyncapi.version !== 'function') throw new Error('You need to pass entire parsed AsyncAPI document as an argument. Try this "{{ asyncapi | generateMermaidDiagram }}"');
 
   let diagram = '';
@@ -59,6 +59,7 @@ filter.generateMermaidDiagram = (asyncapi) => {
   asyncapi.traverseSchemas(generateDiagram);
   return diagram ? `classDiagram\n${  diagram}` : '';
 };
+filter.generateMermaidDiagram = generateMermaidDiagram;
 
 /**
  * Check if schema has anonymous id assigned during parsing of the asyncapi document

@@ -19,6 +19,7 @@ describe('generateExtraFormats()', () => {
     });
     await generator.generateFromURL(dummySpecUrl);
   });
+  
   it('svg diagram file is generated', async () => {
     const svg = existsSync(path.join(outputDir, 'index.svg'));
     expect(svg).toBeTruthy();

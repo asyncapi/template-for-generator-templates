@@ -85,7 +85,7 @@
     "nonRenderableFiles": [
       "style.css"
     ],
-    "generator": ">=1.0.2 <2.0.0",
+    "generator": ">=1.1.0 <2.0.0",
     "filters": [
       "@asyncapi/generator-filters"
     ],
@@ -108,11 +108,15 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^26.4.2",
+    "jest-esm-transformer": "^1.0.0",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1"
   },
   "jest": {
+    "transform": {
+      "\\.m?jsx?$": "jest-esm-transformer"
+    },
     "collectCoverageFrom": [
       "{filters,hooks}/**/*.js",
       "!hooks/generateExtraFormats.js"
