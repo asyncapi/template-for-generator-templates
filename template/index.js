@@ -1,7 +1,3 @@
-/*
- * In every file when you use JSX you must import `react` package. 
- * More info here https://medium.com/@Zwenza/why-do-you-need-to-import-react-in-functional-components-7385e4329ffb
- */
 import { File, render } from '@asyncapi/generator-react-sdk';
 
 // Import custom components from file 
@@ -13,7 +9,7 @@ import { DiagramContent } from '../partials/DiagramContent';
  * Each template to be rendered must have as a root component a File component,
  * otherwise it will be skipped.
  * 
- * If you don't want to render anything, you can return `null` and the Generator will skip the given template.
+ * If you don't want to render anything, you can return `null` or `undefined` and then Generator will skip the given template.
  * 
  * Below you can see how reusable chunks (components) could be called.
  * Just write a new component (or import it) and place it inside the File or another component.

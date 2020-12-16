@@ -1,5 +1,5 @@
 const parser = require('@asyncapi/parser');
-const { generateMermaidDiagram } = require('../../partials/DiagramContent.js');
+const { generateMermaidDiagram } = require('../../partials/mermaidDiagram.js');
 const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
 
 describe('generateMermaidDiagram()', () => {
