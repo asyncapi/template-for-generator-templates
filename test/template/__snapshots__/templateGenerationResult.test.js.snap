@@ -40,7 +40,7 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
     <hr>
     You have the following schemas named in components section:
     <div class=\\"container mx-auto px-8\\">
-      <ul class=\\"list-disc\\"><li><a href=\\"schemas/dummyCreated.html\\">dummyCreated</a></li><li><a href=\\"schemas/dummyInfo.html\\">dummyInfo</a></li><li><a href=\\"schemas/dummyArrayWithObject.html\\">dummyArrayWithObject</a></li><li><a href=\\"schemas/dummyArrayWithArray.html\\">dummyArrayWithArray</a></li><li><a href=\\"schemas/dummyObject.html\\">dummyObject</a></li><li><a href=\\"schemas/dummyRecursiveObject.html\\">dummyRecursiveObject</a></li><li><a href=\\"schemas/sentAt.html\\">sentAt</a></li></ul>
+      <ul class=\\"list-disc\\"><li><a href=\\"schemas/dummyArrayWithArray.html\\">dummyArrayWithArray</a></li><li><a href=\\"schemas/dummyArrayWithObject.html\\">dummyArrayWithObject</a></li><li><a href=\\"schemas/dummyCreated.html\\">dummyCreated</a></li><li><a href=\\"schemas/dummyInfo.html\\">dummyInfo</a></li><li><a href=\\"schemas/dummyObject.html\\">dummyObject</a></li><li><a href=\\"schemas/dummyRecursiveObject.html\\">dummyRecursiveObject</a></li><li><a href=\\"schemas/sentAt.html\\">sentAt</a></li></ul>
     </div>
     <div class=\\"mermaid\\">
       classDiagram
@@ -87,7 +87,7 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
     </div>
 
         Share your feedback with us on <a href=\\"http://twitter.com/@AsyncAPISpec\\">Twitter</a>.
-        Don't forget to visit our website https://www.asyncapi.com.
+        Don't forget to visit our website <a href=\\"https://www.asyncapi.com\\">https://www.asyncapi.com</a>.
       </p> 
     </div>  
 
