@@ -79,7 +79,8 @@ function Extension({ asyncapi }) {
 
 function ExternalDocs({ asyncapi }) {
   if (!asyncapi.hasExternalDocs()) return null;
-  return `Don't forget to visit our website ${asyncapi.externalDocs().url()}.`;
+  const url = asyncapi.externalDocs().url();
+  return `Don't forget to visit our website <a href="${url}">${url}</a>.`;
 }
 
 /*

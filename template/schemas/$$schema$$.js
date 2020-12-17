@@ -1,7 +1,8 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { generateExample } from '@asyncapi/generator-filters';
 
-import { HTML, Head, Body, normalizeSchemaName } from '../../partials/common';
+import { HTML, Head, Body } from '../../partials/common';
+import { normalizeSchemaName } from '../../helpers/normalizeSchemaName';
 
 /*
  * Generator has a feature called "file templates" that allows you to create a template file with special name with $$ markers,

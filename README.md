@@ -94,7 +94,7 @@ ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.y
 For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
 
 - `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler, 
-- `--watch-template` enables a watcher of changes that you make in the template. It regenerates your template whenever it detects a change,
+- `--watch-template` enables a watcher of changes that you make in a template. It regenerates your template whenever it detects a change,
 - `--install` enforces reinstallation of the template
 
 There are two ways you can work on template development:
@@ -251,7 +251,7 @@ function Scripts({ params }) {
 }
 ```
 
-### Custom (reusable) components
+#### Custom (reusable) components
 
 Check out [template/index.js](template/index.js) file to see an example how you can create reusable components and use them inside template:
 
@@ -296,9 +296,9 @@ Each custom component must returns as output pure `string`, another custom compo
 
 Recommended place to create reusable chunks is the `partials` folder. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
-### Using JS in template
+#### Using JS in template
 
-When you use React, you are actually using JS, so you can apply conditions to rendering, split functionality into separate/reusable functions, create compisition, extend/mix functions etc.
+When you use React, you are actually using JS, so you can apply conditions to rendering, split functionality into separate/reusable functions, create a composition, extend/mix functions etc.
 
 ```js
 /* 
@@ -311,7 +311,7 @@ function ExternalDocs({ asyncapi }) {
 }
 ```
 
-### Retrieve rendered content from children
+#### Retrieve rendered content from children
 
 Each component has a `childrenContent` property. It is the processed children content of a component into a pure string. You can use it for compositions in your component.
 
@@ -331,7 +331,7 @@ function RootComponent() {
 
 Then output from `RootComponent` will be `some text at the beginning: some text at the end.`.
 
-### Render component to string
+#### Render component to string
 
 If you need to process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms a given component (and its children) and returns the pure string representation. You can check the [template/index.js](template/index.js) to see how it could by done:
 
@@ -559,7 +559,7 @@ This template is tested using [Jest](https://jestjs.io/) framework. You can find
 These are the contents of the `test` director:
 
 - `hooks` where you can find a snapshot test of the hook generating PNG and SVG files. In other words, a test that generates extra files, check their content and compares to the previous successful result of the test
-- `partials` where you can discover unit tests for the function that generates a diagram
+- `helpers` where you can discover unit tests for the function that generates a diagram
 - `template` where you can find a snapshot tests of template generation result.
 
 This template generates static files, so you cannot find here examples of integration tests that would, for example, start a generated application to test if it works with a real broker.

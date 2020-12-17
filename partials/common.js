@@ -36,6 +36,12 @@ ${childrenContent}
 /*
  * If you need indent content inside template you can use `withIndendation` function or wrap content between `Indent` component.
  * The mentioned helper and component can be imported from `@asyncapi/generator-react-sdk` package.
+ * 
+ * `withIndendation` function performs action on pure string, but `Indent` can wraps part of template.
+ * You can see usage both cases below.
+ * 
+ * Also you can see how to create components using composition.
+ * You can use another component with the given parameters for the given use-case.
  */
 export function Head({ title, cssLinks = [] }) {
   const links = cssLinks.map(link => `<link rel="stylesheet" href="${link}">\n`).join('');
@@ -67,20 +73,4 @@ ${withIndendation(childrenContent, 2, IndentationTypes.SPACES)}
       {content}
     </Indent>
   );
-}
-
-/*
- * Below you can see how to create components using composition.
- * You can use another component with the given parameters for the given use-case.
- */
-export function Line({ childrenContent }) {
-  return (
-    <Text newLines={1}>
-      {childrenContent}
-    </Text>
-  );
-}
-
-export function normalizeSchemaName(schemaName) {
-  return schemaName.replace(/<|>/gm, '');
 }
