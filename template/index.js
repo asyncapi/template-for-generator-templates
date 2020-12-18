@@ -1,9 +1,9 @@
 import { File, render } from '@asyncapi/generator-react-sdk';
 
 // Import custom components from file 
-import { HTML, Head, Body } from '../partials/common';
-import { ListChannels } from '../partials/ListChannels';
-import { DiagramContent } from '../partials/DiagramContent';
+import { HTML, Head, Body } from '../components/common';
+import { ListChannels } from '../components/ListChannels';
+import { DiagramContent } from '../components/DiagramContent';
 
 /* 
  * Each template to be rendered must have as a root component a File component,

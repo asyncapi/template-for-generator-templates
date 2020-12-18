@@ -257,7 +257,7 @@ Check out [template/index.js](template/index.js) file to see an example how you 
 
 ```js
 // Import custom components from file 
-import { HTML, Head, Body } from "../partials/common";
+import { HTML, Head, Body } from "../components/common";
 
 /* 
  * Below you can see how reusable chunks (components) could be called.
@@ -294,7 +294,7 @@ function BodyContent({ asyncapi }) {
 
 Each custom component must returns as output pure `string`, another custom component, `null` or `undefined`. Nothing will be rendered for the last two.
 
-Recommended place to create reusable chunks is the `partials` folder. The reusable parts can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+Recommended place to create reusable chunks is the `components` folder, for helper functions is the `helpers` folder. The reusable parts (components/helpers) can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
 #### Using JS in template
 
@@ -527,7 +527,7 @@ Schemas provided in the AsyncAPI document may contain circular references. It is
 
 This template showcases situation when you want to provide support for handling circular refs in objects and their properties. 
 
-In the `generateMermaidDiagram` function in [partials/mermaidDiagram.js](partials/mermaidDiagram.js) you see usage of `circularProps()` function, where you check if the property that you want to add to the diagram, is a property that introduces a circle:
+In the `generateMermaidDiagram` function in [helpers/mermaidDiagram.js](helpers/mermaidDiagram.js) you see usage of `circularProps()` function, where you check if the property that you want to add to the diagram, is a property that introduces a circle:
 
 ```js
 const circularProp = schema.circularProps() && schema.circularProps().includes(propName);

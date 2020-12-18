@@ -1,7 +1,7 @@
 import { File } from '@asyncapi/generator-react-sdk';
 import { generateExample } from '@asyncapi/generator-filters';
 
-import { HTML, Head, Body } from '../../partials/common';
+import { HTML, Head, Body } from '../../components/common';
 import { normalizeSchemaName } from '../../helpers/normalizeSchemaName';
 
 /*
