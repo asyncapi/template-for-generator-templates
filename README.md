@@ -29,10 +29,10 @@ Generator knows what to generate because you supplement it with a generator temp
       - [Template Context](#template-context)
         * [AsyncAPI Document](#asyncapi-document)
         * [Parameters Passed To Generator By The User](#parameters-passed-to-generator-by-the-user)
-    + [Custom (reusable) components](#custom-reusable-components)
-    + [Using JS in template](#using-js-in-template)
-    + [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
-    + [Render component to string](#render-component-to-string)
+      - [Custom (reusable) components](#custom-reusable-components)
+      - [Using JS in template](#using-js-in-template)
+      - [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
+      - [Render component to string](#render-component-to-string)
     + [File templates](#file-templates)
     + [Hooks](#hooks)
       - [Custom template hooks](#custom-template-hooks)
@@ -141,7 +141,7 @@ Every resource in this repository is essential for the overall template setup. N
 
 ## Sample template that presents generator features and best practices in using them
 
-Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) (if you're using React) or [Nunjucks](https://mozilla.github.io/nunjucks/) (if you're using Nunjucks) templating engine. You can choose the one you prefer. Each rendering engine has a different way of working and a different set of features. Keep that in mind when familiarizing yourself with the Generator functionality. This repository is focused on React renderer.
+Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) (if you're using React) or [Nunjucks](https://mozilla.github.io/nunjucks/) (if you're using Nunjucks) templating engine. You can choose the one you prefer. Each rendering engine has a different way of working and a different set of features. Keep that in mind when familiarizing yourself with the Generator functionality. This repository is focused on React renderer. If you want use `Nunjucks`, check [`nunjucks`](https://github.com/asyncapi/template-for-generator-templates/tree/nunjucks) branch.
 
 The list of resources that are relevant for this template:
 
