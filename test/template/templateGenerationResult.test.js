@@ -7,17 +7,12 @@ const outputDir = path.resolve('test/temp/templateGenerationResult', Math.random
 
 describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
+
   beforeAll(async() => {
-    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
-      forceWrite: true,
-      templateParams: {
-        svg: 'true',
-        png: 'true',
-        pdf: 'true'
-      }
-    });
+    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
     await generator.generateFromURL(dummySpecUrl);
   });
+
   it('generated correct index.html with diagram source', async () => {
     const index = await readFile(path.join(outputDir, 'index.html'), 'utf8');
     expect(index).toMatchSnapshot();
