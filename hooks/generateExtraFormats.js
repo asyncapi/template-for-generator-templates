@@ -38,6 +38,7 @@ async function generatePdfPngSvg(generator) {
 
   if (parameters.svg === 'true') {
     const svg = await page.$eval('.mermaid', container => container.innerHTML);
+    /* eslint-disable-next-line security/detect-non-literal-fs-filename -- Safe as no value holds user input */
     fs.writeFileSync(`${targetDir}/index.svg`, svg);
   }
 

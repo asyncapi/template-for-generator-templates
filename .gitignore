@@ -2,4 +2,5 @@ coverage
 node_modules
 output
 .DS_Store
+__transpiled
 test/temp

@@ -9,14 +9,7 @@ describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
 
   beforeAll(async() => {
-    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
-      forceWrite: true,
-      templateParams: {
-        svg: 'true',
-        png: 'true',
-        pdf: 'true'
-      }
-    });
+    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
     await generator.generateFromURL(dummySpecUrl);
   });
 
