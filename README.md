@@ -624,14 +624,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://dev.to/derberg"><img src="https://avatars1.githubusercontent.com/u/6995927?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lukasz Gornicki</b></sub></a><br /><a href="https://github.com/asyncapi/Template for Generator Templates/commits?author=derberg" title="Code">💻</a> <a href="https://github.com/asyncapi/Template for Generator Templates/commits?author=derberg" title="Documentation">📖</a> <a href="#design-derberg" title="Design">🎨</a> <a href="#ideas-derberg" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-derberg" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="https://github.com/bszwarc"><img src="https://avatars1.githubusercontent.com/u/17266942?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Barbara Szwarc</b></sub></a><br /><a href="https://github.com/asyncapi/Template for Generator Templates/pulls?q=is%3Apr+reviewed-by%3Abszwarc" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://dev.to/derberg"><img src="https://avatars1.githubusercontent.com/u/6995927?v=4" width="100px;" alt=""/><br /><sub><b>Lukasz Gornicki</b></sub></a><br /><a href="https://github.com/asyncapi/template-for-generator-templates/commits?author=derberg" title="Code">💻</a> <a href="https://github.com/asyncapi/template-for-generator-templates/commits?author=derberg" title="Documentation">📖</a> <a href="#design-derberg" title="Design">🎨</a> <a href="#ideas-derberg" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-derberg" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/bszwarc"><img src="https://avatars1.githubusercontent.com/u/17266942?v=4" width="100px;" alt=""/><br /><sub><b>Barbara Szwarc</b></sub></a><br /><a href="https://github.com/asyncapi/template-for-generator-templates/pulls?q=is%3Apr+reviewed-by%3Abszwarc" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/magicmatatjahu"><img src="https://avatars2.githubusercontent.com/u/20404945?v=4" width="100px;" alt=""/><br /><sub><b>Maciej Urbańczyk</b></sub></a><br /><a href="https://github.com/asyncapi/template-for-generator-templates/commits?author=magicmatatjahu" title="Documentation">📖</a> <a href="https://github.com/asyncapi/template-for-generator-templates/commits?author=magicmatatjahu" title="Code">💻</a> <a href="#ideas-magicmatatjahu" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-restore -->
+<!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

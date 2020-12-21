@@ -1,5 +1,5 @@
 {
-  "projectName": "Template for Generator Templates",
+  "projectName": "template-for-generator-templates",
   "projectOwner": "asyncapi",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -30,6 +30,17 @@
       "profile": "https://github.com/bszwarc",
       "contributions": [
         "review"
+      ]
+    },
+    {
+      "login": "magicmatatjahu",
+      "name": "Maciej Urbańczyk",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/20404945?v=4",
+      "profile": "https://github.com/magicmatatjahu",
+      "contributions": [
+        "doc",
+        "code",
+        "ideas"
       ]
     }
   ],
