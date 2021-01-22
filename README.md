@@ -577,7 +577,7 @@ This is the list of resources that are relevant for this part, and you can remov
 
 - [.github/workflows/pull-request-testing.yml](.github/workflows/pull-request-testing.yml) workflow handles automated testing of changes introduces in a pull request.
 - [.github/workflows/automerge.yml](.github/workflows/automerge.yml) workflow handless automated merging of a pull request created by the bot to bump the template version in the `package.json` file. The best approach is always to create a separate bot user that handles automation, but you can also use `github-actions` bot.
-- [.github/workflows/update-docs-on-docs-commits.yml](.github/workflows/update-docs-on-docs-commits.yml) workflow is responsible for updating the table of contents in the `README.md` file. You need to modify GitHub logins and emails by following comments from the file. In the `package.json` file, you can find the `markdown-toc` package in `devDependencies` and a corresponding script `gen-readme-toc`. In case you do not want to have a table of contents and related dependencies and automation, you need to remove all those resources and the `npm run gen-readme-toc` step from the `.github/workflows/release.yml` document
+- [.github/workflows/update-docs-on-docs-commits.yml](.github/workflows/update-docs-on-docs-commits.yml) workflow is responsible for updating the table of contents in the `README.md` file. You need to modify GitHub logins and emails by following comments from the file. In the `package.json` file, you can find the `markdown-toc` package in `devDependencies` and a corresponding script `generate:readme:toc`. In case you do not want to have a table of contents and related dependencies and automation, you need to remove all those resources and the `npm run generate:readme:toc` step from the `.github/workflows/release.yml` document
 - [.github/workflows/release.yml](.github/workflows/release.yml) workflow is responsible for releasing the package to [npm](https://www.npmjs.com/) and creating a pull request with version change in the `package.json` file. In the `package.json` file, you can find the following `devDependencies` related to the release process:
 
   - @semantic-release/commit-analyzer
@@ -586,7 +586,7 @@ This is the list of resources that are relevant for this part, and you can remov
   - @semantic-release/release-notes-generator
   - conventional-changelog-conventionalcommits
 
-  These dependencies are configured in the `package.json` file in the `release` section. In case you are not interested in such a workflow, remember to remove this file and remove not needed parts from the `package.json` file, including `release` and `get-version` scripts.
+  These dependencies are configured in the `package.json` file in the `release` section. In case you are not interested in such a workflow, remember to remove this file and remove not needed parts from the `package.json` file, including `release` and `bump:version` scripts.
 
 ## (Optional) Quality assurance
 
