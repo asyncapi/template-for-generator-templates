@@ -1,4 +1,4 @@
-import { generateMermaidDiagram } from "../helpers/mermaidDiagram";
+import { generateMermaidDiagram } from '../helpers/mermaidDiagram';
 
 /* 
  * You can use in components also normal JS function. It is important that a given function should returns a string or its derivative.
