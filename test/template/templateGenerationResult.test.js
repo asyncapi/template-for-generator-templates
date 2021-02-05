@@ -9,7 +9,7 @@ describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
 
   beforeAll(async() => {
-    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
+    const generator = new Generator('./', outputDir, { forceWrite: true });
     await generator.generateFromURL(dummySpecUrl);
   });
 
