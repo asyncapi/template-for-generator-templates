@@ -12,7 +12,8 @@
     "lint": "eslint --max-warnings 0 --fix --config .eslintrc .",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run generate:readme:toc",
-    "bump:version": "echo 'We do not trigger releases for this template. Normally this script should invoke \"npm --no-git-tag-version --allow-same-version version $VERSION\"'"
+    "bump:version": "echo 'We do not trigger releases for this template. Normally this script should invoke \"npm --no-git-tag-version --allow-same-version version $VERSION\"'",
+    "postinstall": "cd \"node_modules/npmi\" && npm install global-npm@0.4.1"
   },
   "repository": {
     "type": "git",
