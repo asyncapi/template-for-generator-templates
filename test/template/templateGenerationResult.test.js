@@ -5,12 +5,13 @@ const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/
 //you always want to generate to new directory to make sure test runs in clear environment
 const outputDir = path.resolve('test/temp/templateGenerationResult', Math.random().toString(36).substring(7));
 console.log('output', outputDir);
-console.log('output2', path.resolve(__dirname,'test/temp/templateGenerationResult', Math.random().toString(36).substring(7)));
 console.log('template', path.resolve(__dirname, '../../'));
+
 describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
 
   beforeAll(async() => {
+    console.log('ole', await readFile(path.resolve(__dirname, '../../package.json'), 'utf8'));
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
     await generator.generateFromURL(dummySpecUrl);
   });
