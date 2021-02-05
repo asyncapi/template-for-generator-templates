@@ -11,8 +11,8 @@ describe('templateGenerationResult()', () => {
   jest.setTimeout(30000);
 
   beforeAll(async() => {
-    console.log('ole', await readFile(path.resolve(__dirname, '../../package.json'), 'utf8'));
-    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
+    console.log('ole', path.resolve('./'));
+    const generator = new Generator('./', outputDir, { forceWrite: true });
     await generator.generateFromURL(dummySpecUrl);
   });
 
