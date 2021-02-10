@@ -55,29 +55,29 @@ Generator knows what to generate because you supplement it with a generator temp
 
 # Minimum for your template
 
-Most basic template must have the following:
+The most basic template must have the following:
 
-- `template` directory where you keep files that at the end are ending up in the result of generation. In other words, the Generator processes all the files stored in this directory.
-- `package.json` file that is necessary even if your template doesn't need any external dependencies. Before the generation process, the Generator must install the template in its dependencies, and `package.json` is necessary to identify the template name.
+- `template` directory, this is where you keep the files that determine the output that will be generated. In other words, the Generator processes all the files stored in this directory.
+- `package.json` this file is necessary even if your template doesn't need any external dependencies. Before the generation process runs, the Generator must install the template into its dependencies, and `package.json` is necessary to identify the template name.
 
-Why this template has so many additional directories and files? It is because the purpose of this template is to provide you with an example that has all the best practices included, generator features presented, plus the extra stuff that is needed to provide a production-ready template. In the next section, you learn what features are included and which ones are optional.
+What are all the other directories and files? This template provides an example that includes: all of the best practices; a demonstration of the generator features; and anything else needed to provide a production-ready template. In the next section, we will cover which features are required and which features are optional.
 
 # How to reuse this template
 
 This repository is a GitHub template repository. Use it by just clicking the **Use this template** button visible on this repository's home page or check the [official documentation](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
 
-There is nothing :sunglasses: here, no :fireworks: after creating a repository using it as a template. It is not going to scaffold a project for you with some custom values (like, for example, [Yeoman](https://yeoman.io/) works). It is a boilerplate with all the features included that you can manually modify or remove. It just makes it easier to start a new project from a template. In case you are not using GitHub or simply do not want to show that your Generator template comes from a GitHub template, clone this repository and push manually to your desired Git hosting service.
+There is nothing :sunglasses: here, there are no :fireworks: after creating a repository using this template. It is not going to scaffold a project for you with some custom values (like, for example, [Yeoman](https://yeoman.io/)). It just creates a boilerplate repository that includes all the features, which you then manually modify or remove. It is just simplifies starting a new project to use a template. Alternatively, if you are not using GitHub, or simply do not want to expose your Generator templates origin as a GitHub template, you can just clone this repository locally and then push to your Git hosting service.
 
 # Technical Requirements
 
-The Generator is a Node.js application. Therefore, template features also depend on Node.js and generator technical requirements:
+The Generator is a Node.js application. Therefore, the template also depends on Node.js. The generator's technical requirements are:
 
 - Node.js v12.16+
 - npm v6.13.7+
 
 Install both using [official installer](https://nodejs.org/en/download/).
 
-Now install the [AsyncAPI Generator](https://github.com/asyncapi/generator) globally to use it as CLI:
+After that you can install the [AsyncAPI Generator](https://github.com/asyncapi/generator) globally to use its CLI:
 
 ```bash
 npm install -g @asyncapi/generator
@@ -91,7 +91,9 @@ The most straightforward command to use this template is:
 ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml https://github.com/asyncapi/template-for-generator-templates -o output
 ```
 
-For local development, you need different variations of this command. First of all, you need to know about three important CLI flags:
+For local development, you will need variations of this command. 
+
+There are three important CLI flags:
 
 - `--debug` enables the debug mode in Nunjucks engine what makes filters debugging simpler, 
 - `--watch-template` enables a watcher of changes that you make in a template. It regenerates your template whenever it detects a change,
@@ -99,14 +101,14 @@ For local development, you need different variations of this command. First of a
 
 There are two ways you can work on template development:
 
-- Use global Generator and template from your local sources:
+- Use the global Generator and the local template source directory:
 
   ```bash
   # assumption is that you run this command from the root of your template
   ag https://raw.githubusercontent.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml ./ -o output
   ```
 
-- Use Generator from sources and template also from local sources. This approach enables more debugging options with awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
+- Use both the Generator and the template from a local source directory. This approach provides more options when debugging such as the awesome `console.log` in the Generator sources or even the Parser located in `node_modules` of the Generator:
   
   ```bash
   # assumption is that you run this command from the root of your template
@@ -116,7 +118,7 @@ There are two ways you can work on template development:
 
 # Learning Resources
 
-While developing a new template, make sure you check out the following documentation:
+WHen developing a new template, please refer to the following documentation:
 
 - [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs/authoring.md)
 - [React SDK documentation](https://github.com/asyncapi/generator-react-sdk)
@@ -137,26 +139,26 @@ open output/index.html
 
 # What you get with this template
 
-Every resource in this repository is essential for the overall template setup. Nevertheless, not all the resources are necessary, and in case you are not interested in everything, you can remove or modify certain parts. Every resource in this repo is part of the template, except for the `.gitignore` file that is just standard for Git repositories. This is why you should first check the next sections to understand the meaning of a given resource and what you lose if you remove it or do not configure correctly.
+Every resource in this repository is essential for the overall template setup. Nevertheless, not all the resources are necessary, and if you are not interested in everything, you can remove or modify certain parts. Every resource in this repo is part of the template, except for the `.gitignore` file that is just standard for Git repositories. Check the next sections to understand the meaning of a given resource and what you will lose if you remove it or do not configure it correctly.
 
 ## Sample template that presents generator features and best practices in using them
 
-Generator depends on [React](https://github.com/asyncapi/generator-react-sdk) (if you're using React) or [Nunjucks](https://mozilla.github.io/nunjucks/) (if you're using Nunjucks) templating engine. You can choose the one you prefer. Each rendering engine has a different way of working and a different set of features. Keep that in mind when familiarizing yourself with the Generator functionality. This repository is focused on `React` renderer. If you want to use `Nunjucks`, check old [`nunjucks`](https://github.com/asyncapi/template-for-generator-templates/tree/nunjucks) branch.
+The Generator depends on either the [React](https://github.com/asyncapi/generator-react-sdk) (if you're using React) or [Nunjucks](https://mozilla.github.io/nunjucks/) (if you're using Nunjucks) templating engine. You can choose whichever one you prefer. Each rendering engine has a different way of working and a different set of features. Keep the template engine choice in mind when you are familiarizing yourself with the Generator functionality. This repository is focused on `React` renderer. If you want to use `Nunjucks`, check old [`nunjucks`](https://github.com/asyncapi/template-for-generator-templates/tree/nunjucks) branch.
 
 The list of resources that are relevant for this template:
 
 - `template` is a directory where you keep all the files that will be processed by the Generator using React. Only files with the `.js`, `.jsx` and `.cjs` extensions are taken and processed by the Generator. The rest are skipped.
-- `hooks` is a directory containing [**hooks**](#hooks), which are special JavaScript functions. The Hooks is a native generator feature, not related to render engine. It allows you to plug into different stages of the generation process with some custom logic.
+- `hooks` is a directory containing [**hooks**](#hooks), which are special JavaScript functions. Hooks are a native generator feature, and not related to the render engine. It allows you to plug into different stages of the generation process with some custom logic.
 
-> **NOTE**: The reusable parts (components/helpers) can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+> **NOTE**: The reusable parts (components/helpers) can be located both in the `template` folder or in another named folder. The only exception is the `hooks` folder, it is reserved solely for the Generator.
 
-Templates are highly configurable. This template also showcases most of the configuration options used in action. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
+Templates are highly configurable. This template also showcases most of the configuration options. Configurations are stored in the `package.json` file in the [`generator`](#configuration) section.
 
 This template contains an example implementation of all those features.
 
 ### Template
 
-Checkout [`template`](template) directory to see how different features of the generator are presented.
+Checkout the [`template`](template) directory to see how the different features of the generator are presented.
 
 #### File component
 
@@ -192,7 +194,7 @@ export default function({ asyncapi, params }) {
 
 #### Template Context
 
-Generator passes to render engine extra context that you can access in templates:
+The Generator passes to the render engine extra context, which you can access in templates:
 
 - `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
 - `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
@@ -201,7 +203,7 @@ Generator passes to render engine extra context that you can access in templates
 
 ##### AsyncAPI Document
 
-Check out [template/index.js](template/index.js) file to see an example of how you can access the contents of the AsyncAPI document:
+Check out the [template/index.js](template/index.js) file to see an example of how you can access the contents of the AsyncAPI document:
 
 ```js
 /*
@@ -216,11 +218,11 @@ function BodyContent({ asyncapi }) {
 }
 ```
 
-When accessing AsyncAPI document contents, use Parser's [API documentation](https://github.com/asyncapi/parser-js/blob/master/API.md).
+When accessing AsyncAPI document contents, use the Parser's [API documentation](https://github.com/asyncapi/parser-js/blob/master/API.md).
 
 ##### Parameters Passed To Generator By The User
 
-Check out [template/index.js](template/index.js) file to see an example of how you can access custom parameters passed by the user:
+Check out the [template/index.js](template/index.js) file to see an example of how you can access custom parameters passed by the user:
 
 ```js
 export default function({ asyncapi, params }) {
@@ -253,7 +255,7 @@ function Scripts({ params }) {
 
 #### Custom (reusable) components
 
-Check out [template/index.js](template/index.js) file to see an example how you can create reusable components and use them inside template:
+Check out the [template/index.js](template/index.js) file to see an example how you can create reusable components and use them inside template:
 
 ```js
 // Import custom components from file 
@@ -294,7 +296,7 @@ function BodyContent({ asyncapi }) {
 
 Each custom component must returns as output pure `string`, another custom component, `null` or `undefined`. Nothing will be rendered for the last two.
 
-Recommended place to create reusable chunks is the `components` folder, for helper functions is the `helpers` folder. The reusable parts (components/helpers) can be located both in the `template` folder as in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
+The recommended place to create reusable chunks is the `components` folder, for helper functions it is the `helpers` folder. The reusable parts (components/helpers) can be located both in the `template` folder and in another named folder. The only exception is the `hooks` folder, it is reserved for the Generator.
 
 #### Using JS in template
 
@@ -333,7 +335,7 @@ Then output from `RootComponent` will be `some text at the beginning: some text 
 
 #### Render component to string
 
-If you need to process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms a given component (and its children) and returns the pure string representation. You can check the [template/index.js](template/index.js) to see how it could by done:
+If you need to process the React component to string you should use `render` function from `@asyncapi/generator-react-sdk` package. This function transforms a given component (and its children) and returns the pure string representation. Look in [template/index.js](template/index.js) to see an example usage:
 
 ```js
 import { render } from "@asyncapi/generator-react-sdk";
@@ -387,12 +389,12 @@ Hooks are functions called by the generator on a specific moment in the generati
 
 #### Custom template hooks
 
-Check out [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to see an example of the hook. It is a hook that is invoked by the Generator after the template generation process is completed. Generator passes its context to hooks, which means you have access to data like `targetDir` that is a path to the directory where template is generated, or `templateParams` with information about custom parameters passed by the user. This example hook provides optional features to the template, like PNG/PDF/SVG generation, that the user decides on with custom parameters. That is not the only use case for the hook. There are more use cases like, for example, template cleanup operations after generation or modifications of the AsyncAPI document right before the generation.
+Check out the [hooks/generateExtraFormats.js](hooks/generateExtraFormats.js) file to see an example of a hook. The hook is invoked by the Generator once the template generation process completes. The Generator passes its context to hooks, which mean that you have access to data like `targetDir` (a path to the directory where the template is generated), or `templateParams` (information about custom parameters passed by the user). This example hook provides optional features to the template, like PNG/PDF/SVG generation, that the user decides on with custom parameters. That is not the only use case for a hook. There are many more use cases such as template cleanup operations after generation or modifications of the AsyncAPI document right before the generation.
 
 Important things to notice:
 
-- Hooks, like in the case of the filter, is a regular JavaScript function that can have its dependencies like `const puppeteer = require('puppeteer');` that you need to add to your `package.json` file.
-- Remember to specify what hook type your hook function belongs to:
+- Hooks, like the filter, are regular JavaScript functions that can have dependencies, for example: `const puppeteer = require('puppeteer');` that you will need to add to your `package.json` file.
+- Remember to specify the hook type for your function:
   
   ```js
   module.exports = {
@@ -400,7 +402,7 @@ Important things to notice:
   }
   ```
 
-- Generator is a library that also has a CLI. Parameters passed to the template using CLI are always of String type. This means that even if your parameter accepts Boolean values like true/false, you still need to check them like a String value:
+- The Generator is a library that also has a CLI. Parameters passed to the template using the CLI are always of String type. This means that even if your parameter accepts Boolean values like true/false, you still need to treat them as a String value:
   
   ```js
   const parameters = generator.templateParams;
@@ -409,7 +411,7 @@ Important things to notice:
 
 #### Official AsyncAPI hooks
 
-Hooks are reusable between templates. AsyncAPI Initiative provides a library of hooks. You can also create such a library for your templates. You add such a library to `dependencies` in the `package.json` file and configure in `generator.hooks` section like:
+Hooks are reusable between templates. The AsyncAPI Initiative provides a library of hooks. You can also create a library for your own templates; you will need to add the library to `dependencies` in the `package.json` file and configure in `generator.hooks` section like this:
 
 ```json
 {
@@ -423,7 +425,7 @@ Hooks are reusable between templates. AsyncAPI Initiative provides a library of 
 }
 ```
 
-Notice that you can specify one or many hooks you want to reuse from the library instead of all the hooks. In this template, we use `createAsyncapiFile` responsible for creating the `asyncapi.yaml` file in the directory where template files get generated. This hook also supports custom parameter that I can specify in my configuration:
+Notice that you can specify one or many hooks that you want to reuse from the library instead of all the hooks. In this template, we use `createAsyncapiFile` responsible for creating the `asyncapi.yaml` file in the directory where template files get generated. This hook also supports custom parameters that I can specify in my configuration:
 
 ```json
 "generator": {
@@ -435,11 +437,11 @@ Notice that you can specify one or many hooks you want to reuse from the library
 }
 ```
 
-Using, for example, the Generator CLI, you can, for example, pass `-p asyncapiFileDir=nested/dir`, and as a result, you get `asyncapi.yaml` file in `nested/dir` directory.
+Using, for example, the Generator CLI, you can, for example, pass `-p asyncapiFileDir=nested/dir`, and as a result, you will get `asyncapi.yaml` file in `nested/dir` directory.
 
 ### Configuration
 
-Put configuration of the Generator in the `package.json` file in the `generator` section. This template covers most of the configuration options.
+Put the configuration of the Generator in the `package.json` file in the `generator` section. This template covers most of the configuration options.
 
 #### `renderer`
 
@@ -453,11 +455,11 @@ You can write template using tool which you prefer more. The template engine can
 
 #### `parameters`
 
-Templates can be customizable using parameters. Parameters allow you to create more flexible templates. They can be required and also have default values that make their usage in template code less complicated. In this template, you have:
+Templates can be customized using parameters. Parameters allow you to create more flexible templates. They can be required and also have default values that make their usage in template code less complicated. In this template, you have:
 
-- `asyncapiFileDir` parameter is used in a reusable hook. For more details, read [Official AsyncAPI hooks](#official-asyncapi-hooks).
-- `pdf`, `png` and `svg` parameters are used in custom hook. For more details read [Custom template hooks](#custom-template-hooks).
-- `maxTextSize` parameter is used in a template file. For more details read [Parameters passed to generator by the user](#parameters-passed-to-generator-by-the-user).
+- `asyncapiFileDir` parameter is used in a reusable hook. For more details, see [Official AsyncAPI hooks](#official-asyncapi-hooks).
+- `pdf`, `png` and `svg` parameters are used in custom hook. For more details see [Custom template hooks](#custom-template-hooks).
+- `maxTextSize` parameter is used in a template file. For more details see [Parameters passed to generator by the user](#parameters-passed-to-generator-by-the-user).
 
 ```json
 "generator": {
@@ -487,7 +489,7 @@ Templates can be customizable using parameters. Parameters allow you to create m
 
 #### `nonRenderableFiles`
 
-This template has a binary and `.css` files that should not be rendered by the Generator to avoid generation errors.
+This template has the binary and `.css` files that should not be rendered by the Generator to avoid generation errors.
 
 ```json
 "generator": {
@@ -501,7 +503,7 @@ This template has a binary and `.css` files that should not be rendered by the G
 
 #### `generator`
 
-The `generator` property is used to specify the Generator's versions is your template compatible with. The template depends on the Generator version. In case of new major releases of the Generator, you want to make sure your template will not fail because of possible breaking changes.
+The `generator` property is used to specify the Generator's versions which your template is compatible with. The template depends on the Generator version. In case of new major releases of the Generator, this ensures that your template will not fail due to any breaking changes.
 
 ```json
 "generator": {
@@ -523,50 +525,50 @@ This template uses hooks from the official AsyncAPI Generator hooks library. For
 
 ## Handling circular references
 
-Schemas provided in the AsyncAPI document may contain circular references. It is not an error; circular references in the data model can happen. The Generator doesn't provide any features to handle circular references. Inside the template, the Generator gives you access to parsed AsyncAPI document with all the functions provided by AsyncAPI JavaScript Parser. This way, indirectly, you get access to special helpers for circular references. For more details read [this](https://github.com/asyncapi/parser-js/#circular-references) paragraph.
+Schemas provided in the AsyncAPI document may contain circular references. This is not an error; circular references in the data model can happen. The Generator doesn't provide any features to handle circular references. Inside the template, the Generator gives you access to parsed AsyncAPI document with all the functions provided by AsyncAPI JavaScript Parser. In this way, indirectly, you get access to helpers for circular references. For more details see [this](https://github.com/asyncapi/parser-js/#circular-references) paragraph.
 
-This template showcases situation when you want to provide support for handling circular refs in objects and their properties. 
+This template demonstrates providing support for handling circular refs in objects and their properties. 
 
-In the `generateMermaidDiagram` function in [helpers/mermaidDiagram.js](helpers/mermaidDiagram.js) you see usage of `circularProps()` function, where you check if the property that you want to add to the diagram, is a property that introduces a circle:
+In the `generateMermaidDiagram` function in [helpers/mermaidDiagram.js](helpers/mermaidDiagram.js) note the usage of the `circularProps()` function, where we check if the property that you want to add to the diagram, introduces a circlular reference:
 
 ```js
 const circularProp = schema.circularProps() && schema.circularProps().includes(propName);
 classContent += circularProp ? `${propName} [CIRCULAR] ${propValueMap.type()}\n` : `${propName} ${propValueMap.type()}\n`;
 ```
 
-Later in the same file you see how recursive traversing is stopped in case circular reference is spotted:
+Later in the same file there is an example of how to recursive traversing in the case of a circular reference:
 
 ```js
 if (propertySchema.circularProps() && propertySchema.circularProps().includes(propName)) return;
 recursiveSchema(propertySchema, callback, prop);
 ```
 
-The great thing is that if you are at an early stage of template development and do not have time to handle circular references, you can easily spot that given AsyncAPI document contains circular references. You just call this `asyncapi.hasCircular()` and drop a proper error message to the user. It is always better than `RangeError: Maximum call stack size exceeded`.
+If you are at an early stage of template development and do not have time to handle circular references, you can still confirm whether a given AsyncAPI document contains circular references by calling `asyncapi.hasCircular()` and provide a helpful error message to the user. This is always better than the less informative `RangeError: Maximum call stack size exceeded`.
 
 ## Documenting the template
 
-[This](_README.md) is a sample readme provided for this template that others should also use as a template for other readmes.
+[The](_README.md) file is a sample readme provided for this template. Use it as a guideline for writing your own template readmes.
 
 ## (Optional) Tests for each feature of the template
 
-This is the list of resources that are relevant for this part, and you can remove them if you do not want to use it:
+This is the list of resources that are relevant, and you can remove them if you do not want to use this feature:
 - `test` directory with all the tests
 
-You should also remove `@asyncapi/parser`, `@asyncapi/generator`, and `jest` from `devDependencies` in the `package.json` file and test-related configuration from the `jest` section.
+If you remove them, you should also remove `@asyncapi/parser`, `@asyncapi/generator`, and `jest` from `devDependencies` in the `package.json` file and test-related configuration from the `jest` section.
 
-This template is tested using [Jest](https://jestjs.io/) framework. You can find here tests for all integral template parts, filters, hooks, and the template generation result itself. Jest-related configuration from the `package.json` file is there only because of the code coverage tool conflicts with [puppeeteer](https://github.com/puppeteer/puppeteer) library. It is possible that you do not need it in your template.
+This template is tested using the [Jest](https://jestjs.io/) framework. There are tests for all integral template parts, filters, hooks, and the template generation result itself. Jest-related configuration from the `package.json` file are there only because the code coverage tool conflicts with the [puppeeteer](https://github.com/puppeteer/puppeteer) library. It is possible that you do not need it in your template.
 
-These are the contents of the `test` director:
+These are the contents of the `test` directory:
 
 - `hooks` where you can find a snapshot test of the hook generating PNG and SVG files. In other words, a test that generates extra files, check their content and compares to the previous successful result of the test
-- `helpers` where you can discover unit tests for the function that generates a diagram
-- `template` where you can find a snapshot tests of template generation result.
+- `helpers` where you can find unit tests for the function that generates a diagram
+- `template` where you can find aa snapshot test of template generation result.
 
-This template generates static files, so you cannot find here examples of integration tests that would, for example, start a generated application to test if it works with a real broker.
+This template generates static files, so there are no examples of integration tests that would, for example, start a generated application to test if it works with a real broker.
   
 ## (Optional) Release pipeline based on GitHub Actions and Conventional Commits specification
 
-Release pipeline is based on [GitHub Actions](https://github.com/features/actions) and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. In case you are using a different CI/CD solution or do not like to have commit messages prefixed with text like `fix: ` or `feat: ` then you should read the rest of this section carefully to understand what files should be removed.
+The release pipeline is based on [GitHub Actions](https://github.com/features/actions) and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. In case you are using a different CI/CD solution or do not like to have commit messages prefixed with text like `fix: ` or `feat: ` then you should read the rest of this section carefully to understand what files should be removed.
 
 If you want to keep this pipeline, make sure that you modify not only proper files but also put valid [secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in your repository settings:
 
@@ -590,7 +592,7 @@ This is the list of resources that are relevant for this part, and you can remov
 
 ## (Optional) Quality assurance
 
-This is the list of resources that are relevant for this part, and you can remove them if you do not want to use it:
+This is the list of resources that are relevant for this part, and you can remove them if you do not want to use this feature:
 
 - `.eslintignore` is a file where you can specify resources that should not be validated.
 - `.eslintrc` is a file where you keep the configuration of [ESLint](https://eslint.org/) and related plugins. This template, by default, uses plugins for:
