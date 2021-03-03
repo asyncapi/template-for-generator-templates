@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 const { readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('@asyncapi/generator');
@@ -6,7 +10,7 @@ const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/
 const outputDir = path.resolve('test/temp/templateGenerationResult', Math.random().toString(36).substring(7));
 
 describe('templateGenerationResult()', () => {
-  jest.setTimeout(30000);
+  jest.setTimeout(60000);
 
   beforeAll(async() => {
     const generator = new Generator('./', outputDir, { forceWrite: true });
