@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 const { readFile } = require('fs').promises;
 const path = require('path');
 const Generator = require('@asyncapi/generator');
