@@ -33,7 +33,7 @@ Generator knows what to generate because you supplement it with a generator temp
       - [Using JS in template](#using-js-in-template)
       - [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
       - [Render component to string](#render-component-to-string)
-    + [Rendering multiple files](#rendering-multiple-files)
+    + [Render multiple files](#render-multiple-files)
     + [Hooks](#hooks)
       - [Custom template hooks](#custom-template-hooks)
       - [Official AsyncAPI hooks](#official-asyncapi-hooks)
@@ -356,7 +356,7 @@ function BodyContent({ asyncapi }) {
 }
 ```
 
-### Rendering multiple files
+### Render multiple files
 
 To render multiple files, it is enough to return an array of `File` components in the rendering component. Template file [template/schemas/schema.js](template/schemas/schema.js) is an example of such a case:
 
