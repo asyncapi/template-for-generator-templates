@@ -5,14 +5,7 @@ import { HTML, Head, Body } from '../../components/common';
 import { normalizeSchemaName } from '../../helpers/normalizeSchemaName';
 
 /*
- * Generator has a feature called "file templates" that allows you to create a template file with special name with $$ markers,
- * like $$schema$$ (other types of file templates are available).
- * In case of this example, generator creates as many files as schemas you have in the components section of your AsyncAPI document.
- * $$schema$$ is replaced with the name of the schema
- * React also has another, more generic way to render multiple files. 
- * It is enough to return an array of "File" components in the rendering component, like in following example.
- *  
- * More info about "file templates" is here https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates
+ * To render multiple files, it is enough to return an array of "File" components in the rendering component, like in following example.
  */
 export default function({ asyncapi }) {
   const schemas = asyncapi.allSchemas();
