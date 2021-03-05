@@ -86,7 +86,7 @@
       "style.css",
       "sample.gif"
     ],
-    "generator": ">=1.1.0 <2.0.0",
+    "generator": ">=1.3.0 <2.0.0",
     "hooks": {
       "@asyncapi/generator-hooks": "createAsyncapiFile"
     }

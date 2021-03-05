@@ -33,7 +33,7 @@ Generator knows what to generate because you supplement it with a generator temp
       - [Using JS in template](#using-js-in-template)
       - [Retrieve rendered content from children](#retrieve-rendered-content-from-children)
       - [Render component to string](#render-component-to-string)
-    + [File templates](#file-templates)
+    + [Render multiple files](#render-multiple-files)
     + [Hooks](#hooks)
       - [Custom template hooks](#custom-template-hooks)
       - [Official AsyncAPI hooks](#official-asyncapi-hooks)
@@ -199,7 +199,6 @@ The Generator passes to the render engine extra context, which you can access in
 - `originalAsyncAPI` is a String of original AsyncAPI document that the user passed to the Generator.
 - `asyncapi` is a parsed AsyncAPI document with all additional functions and properties. You should use it to access document contents.
 - `params` is an Object with all the parameters passed to the Generator by the user.
-- ...and other parameters related to the [`File templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) feature.
 
 ##### AsyncAPI Document
 
@@ -357,23 +356,22 @@ function BodyContent({ asyncapi }) {
 }
 ```
 
-### File templates
+### Render multiple files
 
-The Generator has a feature called [`file templates`](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#file-templates) that allows you to create a template file with a special syntax that has `$$` markers, like `$$schema$$`. There are multiple different file templates available. The template gets the following variables in the context:
-
-- `schema` that is a Schema object map
-- `schemaName` that is the name of the schema
-
-Template file [template/schemas/$$schema$$.js](template/schemas/$$schema$$.js) is an example of such a file template:
+To render multiple files, it is enough to return an array of `File` components in the rendering component. Template file [template/schemas/schema.js](template/schemas/schema.js) is an example of such a case:
 
 ```js
-export default function({ schemaName, schema }) {
-  const name = normalizeSchemaName(schemaName);
-  return (
-    <File name={`${name}-example.html`}>
-      <SchemaFile schemaName={schemaName} schema={schema} />
-    </File>
-  );
+export default function({ asyncapi }) {
+  const schemas = asyncapi.allSchemas();
+  // schemas is an instance of the Map
+  return Array.from(schemas).map(([schemaName, schema]) => {
+    const name = normalizeSchemaName(schemaName);
+    return (
+      <File name={`${name}.html`}>
+        <SchemaFile schemaName={schemaName} schema={schema} />
+      </File>
+    );
+  });
 }
 
 function SchemaFile({ schemaName, schema }) {
