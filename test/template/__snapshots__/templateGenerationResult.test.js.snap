@@ -44,6 +44,9 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
     </div>
     <div class=\\"mermaid\\">
       classDiagram
+    class dummy {
+              string}
+          
     class dummyCreated {
               prop1 integer
     prop2 string
