@@ -35,7 +35,7 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^1.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "@asyncapi/generator-react-sdk": "^0.2.9",
+    "@asyncapi/generator-react-sdk": "^0.2.11",
     "puppeteer": "^5.2.1"
   },
   "release": {
@@ -92,7 +92,7 @@
     }
   },
   "devDependencies": {
-    "@asyncapi/generator": "^1.7.3",
+    "@asyncapi/generator": "^1.7.4",
     "@asyncapi/parser": "^1.6.0",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "^7.0.7",
