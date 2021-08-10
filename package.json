@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/asyncapi/template-for-generator-templates#readme",
   "dependencies": {
-    "@asyncapi/generator-filters": "^2.0.0",
+    "@asyncapi/generator-filters": "^2.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.11",
     "puppeteer": "^5.2.1"
