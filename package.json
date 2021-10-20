@@ -4,10 +4,11 @@
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
   "main": "index.js",
   "scripts": {
-    "test": "npm run testTemplate && npm run testHooks && npm run testFilters",
+    "test": "npm run testTemplate && npm run testHooks && npm run testFilters && npm run testComponents",
     "testTemplate": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
     "testHooks": "rimraf test/temp && jest --coverage -t 'generateExtraFormats'",
     "testFilters": "rimraf test/temp && jest --coverage -t 'generateMermaidDiagram'",
+    "testComponents": "rimraf test/temp && jest --coverage ./test/components",
     "release": "echo 'We do not trigger releases for this template. Normally this script should invoke \"semantic-release\"'",
     "lint": "eslint --max-warnings 0 --fix --config .eslintrc .",
     "generate:readme:toc": "markdown-toc -i README.md",
@@ -94,6 +95,8 @@
   "devDependencies": {
     "@asyncapi/generator": "^1.8.14",
     "@asyncapi/parser": "^1.10.0",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "^7.0.7",
     "@semantic-release/npm": "^7.0.5",
@@ -105,19 +108,38 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "jest": "^26.4.2",
-    "jest-esm-transformer": "^1.0.0",
+    "jest": "^27.2.5",
     "markdown-toc": "^1.2.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1"
   },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
+  },
   "jest": {
-    "transform": {
-      "\\.m?jsx?$": "jest-esm-transformer"
-    },
     "collectCoverageFrom": [
-      "{filters,hooks}/**/*.js",
+      "{filters,hooks,components}/**/*.js",
       "!hooks/generateExtraFormats.js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
     ]
   }
 }

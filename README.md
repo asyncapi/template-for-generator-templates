@@ -552,17 +552,20 @@ If you are at an early stage of template development and do not have time to han
 This is the list of resources that are relevant, and you can remove them if you do not want to use this feature:
 - `test` directory with all the tests
 
-If you remove them, you should also remove `@asyncapi/parser`, `@asyncapi/generator`, and `jest` from `devDependencies` in the `package.json` file and test-related configuration from the `jest` section.
+If you remove them, you should also remove `@asyncapi/parser`, `@asyncapi/generator`, `jest`, `@babel/preset-env` and `@babel/preset-react` from `devDependencies` in the `package.json` file and test-related configuration from the `jest` and `babel` sections.
 
 This template is tested using the [Jest](https://jestjs.io/) framework. There are tests for all integral template parts, filters, hooks, and the template generation result itself. Jest-related configuration from the `package.json` file are there only because the code coverage tool conflicts with the [puppeeteer](https://github.com/puppeteer/puppeteer) library. It is possible that you do not need it in your template.
 
 These are the contents of the `test` directory:
 
+- `components` where you can find unit tests for the custom components
 - `hooks` where you can find a snapshot test of the hook generating PNG and SVG files. In other words, a test that generates extra files, check their content and compares to the previous successful result of the test
 - `helpers` where you can find unit tests for the function that generates a diagram
 - `template` where you can find aa snapshot test of template generation result.
 
 This template generates static files, so there are no examples of integration tests that would, for example, start a generated application to test if it works with a real broker.
+
+> NOTE:  The`@babel/preset-env` dependency is needed to transform your code to the appropriate version of NodeJS that you're using.  The `@babel/preset-react` dependency is needed to transform JSX expressions into normal JS functions.  The `babel` section in the `package.json` applies the [BabelJS](https://babeljs.io/) configuration to the `jest`.
   
 ## (Optional) Release pipeline based on GitHub Actions and Conventional Commits specification
 
