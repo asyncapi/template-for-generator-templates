@@ -565,7 +565,7 @@ These are the contents of the `test` directory:
 
 This template generates static files, so there are no examples of integration tests that would, for example, start a generated application to test if it works with a real broker.
 
-> NOTE: `@babel/preset-env` dependency is needed to transform your code to the appropriate version of NodeJS that you are using. `@babel/preset-react` dependency is needed to transform JSX expressions to normal JS functions. `babel` section in `package.json` apply [BabelJS](https://babeljs.io/) configuration to the `jest`.
+> NOTE:  The`@babel/preset-env` dependency is needed to transform your code to the appropriate version of NodeJS that you're using.  The `@babel/preset-react` dependency is needed to transform JSX expressions into normal JS functions.  The `babel` section in the `package.json` applies the [BabelJS](https://babeljs.io/) configuration to the `jest`.
   
 ## (Optional) Release pipeline based on GitHub Actions and Conventional Commits specification
 
