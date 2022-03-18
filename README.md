@@ -1,12 +1,6 @@
-<h5 align="center">
-  <br>
-  <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
-  <br>
-  Template for Generator Templates
-</h5>
-<p align="center">
-  <em>This repository is a template for generator templates to make it much easier to start writing your own generator template.</em>
-</p>
+[![AsyncAPI logo](./assets/github-repobanner-generic.png)](https://www.asyncapi.com)  
+
+_This repository is a template for generator templates to make it much easier to start writing your own generator template._
 
 Now, wait a minute. First, what is the Generator? Second, what is the generator template?
 A generator is a tool that you can use to generate whatever you want to base on the AsyncAPI specification file as an input.
