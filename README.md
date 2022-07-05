@@ -114,7 +114,7 @@ There are two ways you can work on template development:
 
 WHen developing a new template, please refer to the following documentation:
 
-- [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs/authoring.md)
+- [Generator documentation](https://github.com/asyncapi/generator/blob/master/docs)
 - [React SDK documentation](https://github.com/asyncapi/generator-react-sdk)
 - [React documentation](https://en.reactjs.org/docs/getting-started.html)
 - [AsyncAPI JavaScript Parser API reference](https://github.com/asyncapi/parser-js/blob/master/API.md)
@@ -377,7 +377,7 @@ This one template file results in multiple HTML files, one per schema.
 
 ### Hooks
 
-Hooks are functions called by the generator on a specific moment in the generation process. For more details, read about [hooks](https://github.com/asyncapi/generator/blob/master/docs/authoring.md#hooks).
+Hooks are functions called by the generator on a specific moment in the generation process. For more details, read about [hooks](https://github.com/asyncapi/generator/blob/master/docs/hooks.md).
 
 #### Custom template hooks
 
