@@ -94,7 +94,7 @@
   },
   "devDependencies": {
     "@asyncapi/generator": "^1.9.3",
-    "@asyncapi/parser": "^1.15.0",
+    "@asyncapi/parser": "^1.15.1",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@semantic-release/commit-analyzer": "^8.0.1",
