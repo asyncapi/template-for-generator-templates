@@ -1,7 +1,7 @@
 const { existsSync } = require('fs');
 const path = require('path');
 const Generator = require('@asyncapi/generator');
-const dummySpecUrl = 'https://rawcdn.githack.com/asyncapi/generator/v1.0.1/test/docs/dummy.yml';
+const dummySpecPath = 'test/fixtures/dummy.yml';
 //you always want to generate to new directory to make sure test runs in clear environment
 const outputDir = path.resolve('test/temp/generateExtraFormats', Math.random().toString(36).substring(7));
 
@@ -17,7 +17,7 @@ describe('generateExtraFormats()', () => {
         pdf: 'true'
       }
     });
-    await generator.generateFromURL(dummySpecUrl);
+    await generator.generateFromFile(dummySpecPath);
   });
   
   it('svg diagram file is generated', async () => {
