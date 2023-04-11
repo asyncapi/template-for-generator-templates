@@ -4,12 +4,11 @@
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
   "main": "index.js",
   "scripts": {
-    "test": "npm run testTemplate && npm run testHooks && npm run testFilters && npm run testComponents",
-    "testTemplate": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
-    "testHooks": "rimraf test/temp && jest --coverage -t 'generateExtraFormats'",
-    "testFilters": "rimraf test/temp && jest --coverage -t 'generateMermaidDiagram'",
-    "testComponents": "rimraf test/temp && jest --coverage ./test/components",
-    "release": "echo 'We do not trigger releases for this template. Normally this script should invoke \"semantic-release\"'",
+    "test": "npm run test:template && npm run test:hooks && npm run test:filters && npm run test:components",
+    "test:template": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
+    "test:hooks": "rimraf test/temp && jest --coverage -t 'generateExtraFormats'",
+    "test:filters": "rimraf test/temp && jest --coverage -t 'generateMermaidDiagram'",
+    "test:components": "rimraf test/temp && jest --coverage ./test/components",
     "lint": "eslint --max-warnings 0 --fix --config .eslintrc .",
     "generate:readme:toc": "markdown-toc -i README.md",
     "generate:assets": "npm run generate:readme:toc",
@@ -38,27 +37,6 @@
     "@asyncapi/generator-hooks": "^0.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.23",
     "puppeteer": "^5.2.1"
-  },
-  "release": {
-    "branches": [
-      "master"
-    ],
-    "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits"
-        }
-      ],
-      [
-        "@semantic-release/release-notes-generator",
-        {
-          "preset": "conventionalcommits"
-        }
-      ],
-      "@semantic-release/npm",
-      "@semantic-release/github"
-    ]
   },
   "generator": {
     "renderer": "react",
@@ -97,21 +75,14 @@
     "@asyncapi/parser": "^1.15.1",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
-    "@semantic-release/commit-analyzer": "^8.0.1",
-    "@semantic-release/github": "^7.0.7",
-    "@semantic-release/npm": "^7.0.5",
-    "@semantic-release/release-notes-generator": "^9.0.1",
-    "all-contributors-cli": "^6.19.0",
-    "conventional-changelog-conventionalcommits": "^4.4.0",
-    "eslint": "^7.7.0",
-    "eslint-plugin-jest": "^23.20.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-sonarjs": "^0.19.0",
     "jest": "^27.2.5",
     "markdown-toc": "^1.2.0",
-    "rimraf": "^3.0.2",
-    "semantic-release": "^17.1.1"
+    "rimraf": "^3.0.2"
   },
   "babel": {
     "presets": [
