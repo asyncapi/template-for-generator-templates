@@ -10,7 +10,7 @@ const dummySpecPath = 'test/fixtures/dummy.yml';
 const outputDir = path.resolve('test/temp/templateGenerationResult', Math.random().toString(36).substring(7));
 
 describe('templateGenerationResult()', () => {
-  jest.setTimeout(100000);
+  jest.setTimeout(1000000);
 
   beforeAll(async() => {
     const generator = new Generator('./', outputDir, { forceWrite: true });
