@@ -8,7 +8,7 @@ const outputDir = path.resolve('test/temp/generateExtraFormats', Math.random().t
 describe('generateExtraFormats()', () => {
   jest.setTimeout(30000);
 
-  beforeAll(async() => {
+  before(async() => {
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
       forceWrite: true,
       templateParams: {
