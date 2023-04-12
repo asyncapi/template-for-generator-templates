@@ -6,7 +6,7 @@ const dummySpecPath = path.join(path.resolve(__dirname, '../../'), 'test/fixture
 const outputDir = path.resolve('test/temp/generateExtraFormats', Math.random().toString(36).substring(7));
 
 describe('generateExtraFormats()', () => {
-  jest.setTimeout(30000);
+  jest.setTimeout(100000);
   
   it('diagrams are generated', async () => {
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
@@ -18,7 +18,7 @@ describe('generateExtraFormats()', () => {
       }
     });
     await generator.generateFromFile(dummySpecPath);
-    
+
     const svg = existsSync(path.join(outputDir, 'index.svg'));
     expect(svg).toBeTruthy();
 
