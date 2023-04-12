@@ -12,10 +12,12 @@ describe('templateGenerationResult()', () => {
   beforeAll(async() => {
     console.log('output dir', outputDir)
     console.log('template path', path.resolve(__dirname, '../../'))
+    console.log('dummy path', dummySpecPath)
+    console.log('dummy is exists', existsSync(dummySpecPath))
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
     await generator.generateFromFile(dummySpecPath);
     console.log('index.html location', path.join(outputDir, 'index.html'))
-    console.log('index.html isexists', existsSync(path.join(outputDir, 'index.html')))
+    console.log('index.html is exists', existsSync(path.join(outputDir, 'index.html')))
   });
 
   it('generated correct index.html with diagram source', async () => {
