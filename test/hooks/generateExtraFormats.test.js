@@ -7,8 +7,8 @@ const outputDir = path.resolve('test/temp/generateExtraFormats', Math.random().t
 
 describe('generateExtraFormats()', () => {
   jest.setTimeout(30000);
-
-  before(async() => {
+  
+  it('diagrams are generated', async () => {
     const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { 
       forceWrite: true,
       templateParams: {
@@ -18,19 +18,13 @@ describe('generateExtraFormats()', () => {
       }
     });
     await generator.generateFromFile(dummySpecPath);
-  });
-  
-  it('svg diagram file is generated', async () => {
+    
     const svg = existsSync(path.join(outputDir, 'index.svg'));
     expect(svg).toBeTruthy();
-  });
 
-  it('png diagram file is generated', async () => {
     const png = existsSync(path.join(outputDir, 'index.png'));
     expect(png).toBeTruthy();
-  });
 
-  it('pdf diagram file is generated', async () => {
     const pdf = existsSync(path.join(outputDir, 'index.pdf'));
     expect(pdf).toBeTruthy();
   });
