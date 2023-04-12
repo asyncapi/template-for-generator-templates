@@ -14,7 +14,7 @@ describe('templateGenerationResult()', () => {
     console.log('template path', path.resolve(__dirname, '../../'))
     console.log('dummy path', dummySpecPath)
     console.log('dummy is exists', existsSync(dummySpecPath))
-    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true });
+    const generator = new Generator(path.resolve(__dirname, '../../'), outputDir, { forceWrite: true, debug: true });
     await generator.generateFromFile(dummySpecPath);
     console.log('index.html location', path.join(outputDir, 'index.html'))
     console.log('index.html is exists', existsSync(path.join(outputDir, 'index.html')))
