@@ -3,16 +3,16 @@
 exports[`templateGenerationResult() generated correct index.html with diagram source 1`] = `
 "
 <!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\">
+    <meta charset="utf-8">
     <title>Dummy example with all spec features included</title>
-    <link rel=\\"stylesheet\\" href=\\"https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css\\">
-    <link rel=\\"stylesheet\\" href=\\"style.css\\">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+    <link rel="stylesheet" href="style.css">
 
   </head>  
   <body>
-    <div class=\\"container mx-auto px-4\\">        
+    <div class="container mx-auto px-4">        
       <p> 
         <h1>Dummy example with all spec features included</h1>
     
@@ -21,8 +21,8 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
     </h2>
     <hr />
     <br />
-    <div class=\\"container mx-auto px-8\\">
-      <ul class=\\"list-disc\\"><li><strong>dummy/channel/without/parameter</strong></li></ul>
+    <div class="container mx-auto px-8">
+      <ul class="list-disc"><li><strong>dummy/channel/without/parameter</strong></li></ul>
     </div>
 
     
@@ -31,18 +31,18 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
     </h2>
     <hr />
     <br />
-    <div class=\\"container mx-auto px-8\\">
-      <ul class=\\"list-disc\\"><li><strong>dummy/channel/with/{dummy}/parameter/create</strong></li></ul>
+    <div class="container mx-auto px-8">
+      <ul class="list-disc"><li><strong>dummy/channel/with/{dummy}/parameter/create</strong></li></ul>
     </div>
 
     
     <h2>Schemas</h2>
     <hr>
     You have the following schemas named in components section:
-    <div class=\\"container mx-auto px-8\\">
-      <ul class=\\"list-disc\\"><li><a href=\\"schemas/dummyArrayWithArray.html\\">dummyArrayWithArray</a></li><li><a href=\\"schemas/dummyArrayWithObject.html\\">dummyArrayWithObject</a></li><li><a href=\\"schemas/dummyCreated.html\\">dummyCreated</a></li><li><a href=\\"schemas/dummyInfo.html\\">dummyInfo</a></li><li><a href=\\"schemas/dummyObject.html\\">dummyObject</a></li><li><a href=\\"schemas/dummyRecursiveObject.html\\">dummyRecursiveObject</a></li><li><a href=\\"schemas/sentAt.html\\">sentAt</a></li></ul>
+    <div class="container mx-auto px-8">
+      <ul class="list-disc"><li><a href="schemas/dummyArrayWithArray.html">dummyArrayWithArray</a></li><li><a href="schemas/dummyArrayWithObject.html">dummyArrayWithObject</a></li><li><a href="schemas/dummyCreated.html">dummyCreated</a></li><li><a href="schemas/dummyInfo.html">dummyInfo</a></li><li><a href="schemas/dummyObject.html">dummyObject</a></li><li><a href="schemas/dummyRecursiveObject.html">dummyRecursiveObject</a></li><li><a href="schemas/sentAt.html">sentAt</a></li></ul>
     </div>
-    <div class=\\"mermaid\\">
+    <div class="mermaid">
       classDiagram
     class dummy {
               string}
@@ -89,12 +89,12 @@ exports[`templateGenerationResult() generated correct index.html with diagram so
 
     </div>
 
-        Share your feedback with us on <a href=\\"http://twitter.com/@AsyncAPISpec\\">Twitter</a>.
-        Don't forget to visit our website <a href=\\"https://www.asyncapi.com\\">https://www.asyncapi.com</a>.
+        Share your feedback with us on <a href="http://twitter.com/@AsyncAPISpec">Twitter</a>.
+        Don't forget to visit our website <a href="https://www.asyncapi.com">https://www.asyncapi.com</a>.
       </p> 
     </div>  
 
-    <script src=\\"https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js\\"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       mermaid.initialize({
         startOnLoad: true,
