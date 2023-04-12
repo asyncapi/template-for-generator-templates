@@ -4,7 +4,7 @@
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test:template && npm run test:filters && npm run test:components",
+    "test": "npm run test:template && npm run test:hooks && npm run test:filters && npm run test:components",
     "test:template": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
     "test:hooks": "rimraf test/temp && jest --coverage -t 'generateExtraFormats'",
     "test:filters": "rimraf test/temp && jest --coverage -t 'generateMermaidDiagram'",
@@ -36,7 +36,7 @@
     "@asyncapi/generator-filters": "^2.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
     "@asyncapi/generator-react-sdk": "^0.2.25",
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^19.8.5"
   },
   "generator": {
     "renderer": "react",
