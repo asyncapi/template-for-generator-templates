@@ -71,7 +71,7 @@
     }
   },
   "devDependencies": {
-    "@asyncapi/generator": "^2.11.0",
+    "@asyncapi/generator": "^3.2.0",
     "@asyncapi/parser": "^3.6.0",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
